@@ -13,35 +13,12 @@
       inherit (prev) lib;
     in
     {
-      # example = prev.example.overrideAttrs (oldAttrs: rec {
-      # ...
-      # });
-
-      #code-cursor = prev.code-cursor.overrideAttrs (
-      #  import ./code-cursor.nix {
-      #    inherit (prev) stdenvNoCC lib fetchurl appimageTools rsync;
-      #  }
-      #);
-
       openssh-no-checkperm = prev.openssh.overrideAttrs (
         import ./ssh-no-perm.nix {
           inherit lib;
           patchFile = ../patches/openssh-no-checkperm.patch;
         }
       );
-
-      # gemini-cli overlay disabled; using custom package in pkgs instead
-      # gemini-cli = prev.gemini-cli.overrideAttrs (
-      #   import ./gemini-cli.nix {
-      #     inherit (prev) lib fetchurl fetchFromGitHub fetchNpmDeps;
-      #   }
-      # );
-
-      #ghostty = prev.ghostty.overrideAttrs (
-      #  import ./ghostty.nix {
-      #    inherit (prev) fetchFromGitHub;
-      #  }
-      #);
 
     };
 

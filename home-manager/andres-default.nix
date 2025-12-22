@@ -9,8 +9,8 @@
   # You can import other home-manager modules here
   imports = [
     ./hm-common.nix
-    outputs.homeManagerModules.plasma
-    outputs.homeManagerModules.aistech
+    outputs.homeManagerModules.gnome
+    outputs.homeManagerModules.home
   ];
 
   nixpkgs = {
@@ -35,8 +35,8 @@
   };
 
   home = {
-    username = "xavier";
-    homeDirectory = "/home/xavier";
+    username = "andres";
+    homeDirectory = "/home/andres";
   };
 
   # Add stuff for your user as you see fit:

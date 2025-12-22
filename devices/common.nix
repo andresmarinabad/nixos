@@ -59,19 +59,15 @@
     };
 
   users.users = {
-    xavier = {
+    andres = {
       initialHashedPassword = "*";
       isNormalUser = true;
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIApzCHCSQflPkh7oPjpQ+V9MAFR5fvlE/1PAvMoYoSN3 xavier@gurb"
-      ];
       shell = pkgs.fish;
 
       extraGroups = [
         "wheel"
         "networkmanager"
         "docker"
-        "samba"
       ];
     };
   };
@@ -92,12 +88,6 @@
       };
       secret_xvi_ssh_key = {
         file = ../secrets/secret_xvi_ssh_key.age;
-        owner = "xavier";
-        group = "users";
-        mode = "0600";
-      };
-      secret_github_aistechspace_runner = {
-        file = ../secrets/secret_github_aistechspace_runner.age;
         owner = "xavier";
         group = "users";
         mode = "0600";
@@ -186,11 +176,11 @@
     };
 
     users = {
-      xavier =
-        if builtins.pathExists (../home-manager + "/xavier-at-${config.networking.hostName}.nix") then
-          import (../home-manager + "/xavier-at-${config.networking.hostName}.nix")
+      andres =
+        if builtins.pathExists (../home-manager + "/andres-${config.networking.hostName}.nix") then
+          import (../home-manager + "/andres-${config.networking.hostName}.nix")
         else
-          import ../home-manager/xavier-default.nix; # fallback
+          import ../home-manager/andres-default.nix; # fallback
     };
   };
 

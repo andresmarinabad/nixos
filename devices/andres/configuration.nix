@@ -9,17 +9,16 @@
   imports = [
     ./hardware-configuration.nix
     ../common.nix
-    outputs.nixosModules.plasma-desktop
+    outputs.nixosModules.gnome-desktop
+    outputs.nixosModules.developer-tools
   ];
 
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  # FIXME: Add the rest of your current configuration
 
   # TODO: Set your hostname
-  networking.hostName = "nixos-vm";
+  networking.hostName = "makinon";
 
+  networking.networkmanager.enable = true;
   networking.wireless.iwd.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
 

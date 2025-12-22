@@ -3,8 +3,7 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
-  plasma-desktop = import ./plasma-desktop.nix;
+  gnome-desktop = import ./gnome-desktop.nix;
   agenix = import ./agenix.nix;
   developer-tools = import ./developer-tools.nix;
-  winbox = import ./winbox.nix;
 }

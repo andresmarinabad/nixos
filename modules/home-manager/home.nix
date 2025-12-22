@@ -13,8 +13,8 @@
     enable = true;
     settings = {
       user = {
-        name = "Xavier Franquet";
-        email = "xavier@franquet.es";
+        name = "Andres Marin";
+        email = "andres.marin.abad+git@gmail.com";
       };
     };
   };
@@ -35,7 +35,7 @@
         "vs-kubernetes" = {
           "vs-kubernetes.crd-code-completion" = "enabled";
         };
-        "terminal.external.linuxExec" = "kitty";
+        "terminal.external.linuxExec" = "gnome-terminal";
         "terminal.integrated.defaultProfile.linux" = "fish";
         "editor.fontFamily" = "'Fira Code Symbol'";
         "editor.inlayHints.fontFamily" = "Fira Code SymbolSymbol";
@@ -65,20 +65,14 @@
       };
       "github.com" = {
         hostname = "github.com";
-        identityFile = secrets.secret_xvi_ssh_key.path;
-        user = "git";
-        port = 22;
-      };
-      "as.bitbucket.org" = {
-        hostname = "github.com";
-        identityFile = secrets.secret_as-xvi_ssh_key.path;
+        identityFile = secrets.secret_andres_ssh_key.path;
         user = "git";
         port = 22;
       };
       "as.github.com" = {
         addKeysToAgent = "no";
         hostname = "github.com";
-        identityFile = secrets.secret_as-xvi_ssh_key.path;
+        identityFile = secrets.secret_gandalf_ssh_key.path;
         user = "git";
         port = 22;
       };

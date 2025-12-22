@@ -3,11 +3,8 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
-  plasma = import ./plasma.nix;
+  gnome = import ./gnome.nix;
   aistech = import ./aistech.nix;
   home = import ./home.nix;
-  print-3d-tools = import ./3d-printer.nix;
   agenix = import ./agenix.nix;
-  uping = import ./uping.nix;
-  ghosttyX = import ./ghosttyX.nix;
 }

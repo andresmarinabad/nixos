@@ -21,8 +21,8 @@
     enable = true;
     settings = {
       user = {
-        name = "Xavier Franquet";
-        email = "xavier.franquet@aistechspace.com";
+        name = "Gandalf";
+        email = "andres.marin@aistechspace.com";
       };
       url."git@github.com:aistechspace/".insteadOf = [ "https://github.com/aistechspace/" ];
       rerere.enabled = true;
@@ -51,7 +51,7 @@
         "editor.fontLigatures" = true;
         "editor.fontSize" = 14;
 
-        "terminal.external.linuxExec" = "kitty";
+        "terminal.external.linuxExec" = "gnome-terminal";
         "terminal.integrated.defaultProfile.linux" = "fish";
         "terminal.integrated.fontFamily" = "'JetBrainsMono Nerd Font'";
         "terminal.integrated.fontWeight" = "Regular";
@@ -115,13 +115,7 @@
       };
       "github.com" = {
         hostname = "github.com";
-        identityFile = secrets.secret_as-xvi_ssh_key.path;
-        user = "git";
-        port = 22;
-      };
-      "bitbucket.org" = {
-        hostname = "github.com";
-        identityFile = secrets.secret_as-xvi_ssh_key.path;
+        identityFile = secrets.secret_gandalf_ssh_key.path;
         user = "git";
         port = 22;
       };
@@ -129,22 +123,9 @@
         addKeysToAgent = "no";
         hostname = "github.com";
         identityAgent = "none";
-        identityFile = secrets.secret_xvi_ssh_key.path;
+        identityFile = secrets.secret_andres_ssh_key.path;
         user = "git";
         port = 22;
-      };
-      "192.168.14.254" = {
-        addKeysToAgent = "no";
-        identityAgent = "none";
-        identityFile = secrets.secret_xvi_ssh_key.path;
-        user = "xavier";
-        port = 1179;
-      };
-      "192.168.14.21" = {
-        addKeysToAgent = "no";
-        identityAgent = "none";
-        identityFile = secrets.secret_xvi_ssh_key.path;
-        user = "xavier";
       };
     };
   };

@@ -8,7 +8,6 @@
 {
   imports = [
     outputs.homeManagerModules.agenix
-    outputs.homeManagerModules.uping
   ];
 
   home.packages = with pkgs; [
@@ -16,17 +15,13 @@
     nixfmt-rfc-style
   ];
 
-  # chromium is global
-  programs.chromium = {
+  # firefox is global
+  programs.firefox = {
     enable = true;
-    extensions = [
-      "nngceckbapebfimnlniiiahkandclblb" # bitwarden
-      "haipckejfdppjfblgondaakgckohcihp" # milk cookie manager
-      "eifflpmocdbdmepbjaopkkhbfmdgijcc" # JSON Viewer Pro
-      # "cimiefiiaegbelhefglklhhakcgmhkai" # plasma integration
-    ];
+    package = pkgs.firefox; # o firefox-esr
   };
 
+  
   # btop is global
   programs.btop = {
     enable = true;
@@ -101,34 +96,7 @@
     };
   };
 
-  programs.konsole.enable = false;
-  programs.ghostty = {
-    enable = true;
-    enableFishIntegration = true;
-    settings = {
-      background-opacity = 0.95;
-      background-blur = 40;
-      shell-integration = "fish";
-      command = "fish";
-      #bell-features = "system"; # enable in 1.1.4
-      keybind = [
-        "ctrl+backspace=text:\\x15"
-      ];
-    };
-  };
-
-  programs.kitty = {
-    enable = true;
-    shellIntegration.enableFishIntegration = true;
-    keybindings = {
-      "ctrl+backspace" = "text:\\x15";
-    };
-    themeFile = "Monokai";
-    font = {
-      name = "JetBrainsMono Nerd Font";
-      size = 14;
-    };
-  };
+  programs.gnome-terminal.enable = true;
 
   programs.fish = {
     enable = true;

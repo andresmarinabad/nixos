@@ -1,5 +1,5 @@
 {
-  description = "Xvifr NixOS Config";
+  description = "Andres NixOS Config";
 
   inputs = {
     # Nixpkgs
@@ -58,62 +58,22 @@
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
-        # Test VM
-        nixos-vm = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./devices/nixos-vm/configuration.nix
-          ];
-        };
-
         # Home laptop
-        gurb = nixpkgs.lib.nixosSystem {
+        andres = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            ./devices/gurb/configuration.nix
+            ./devices/andres/configuration.nix
           ];
         };
 
         # Work laptop
-        as-xvi = nixpkgs.lib.nixosSystem {
+        gandalf = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            ./devices/as-xvi/configuration.nix
+            ./devices/gandalf/configuration.nix
           ];
         };
 
       };
-
-      # Standalone home-manager configuration entrypoint
-      # Available through 'home-manager --flake .#your-username@your-hostname'
-      /*
-        homeConfigurations = {
-          "xavier@nixos-vm" = home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-            extraSpecialArgs = {inherit inputs outputs;};
-            modules = [
-              # > Our main home-manager configuration file <
-              ./home-manager/xavier.nix
-            ];
-          };
-
-          "xavier@gurb" = home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-            extraSpecialArgs = {inherit inputs outputs;};
-            modules = [
-              # > Our main home-manager configuration file <
-              ./home-manager/xavier.nix
-            ];
-          };
-          "xavier@as-xvi" = home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-            extraSpecialArgs = {inherit inputs outputs;};
-            modules = [
-              # > Our main home-manager configuration file <
-              ./home-manager/xavier.nix
-            ];
-          };
-        };
-      */
     };
 }

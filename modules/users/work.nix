@@ -5,9 +5,9 @@
   home.homeDirectory = "/home/gandalf";
   home.stateVersion = "23.11";
 
-  # home.packages = with pkgs; [
-    
-  # ];
+  home.packages = with pkgs; [
+    pkgs.google-cloud-sdk
+  ];
 
   programs.git = {
     enable = true;

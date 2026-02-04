@@ -1,34 +1,32 @@
-# Instalación de NixOS con Flake y Home Manager
+# NixOS Config
 
-Este README explica cómo instalar NixOS en un nuevo ordenador usando la configuración flake y Home Manager de este repositorio.
+## Pasos para la instalación
 
----
+### 1. Preparar el repositorio
 
-### 1. Preparar el sistema
+```bash
+# Descargar el repositorio y entrar en la carpeta
+cd nixos
 
-1. Arranca desde un USB live de NixOS.
-2. Instala NixOS
+# Copiar el hardware generado por el instalador
+cp /etc/nixos/hardware-configuration.nix ./hosts/linux/
 
-### 2. Instalar Nix y habilitar flakes
-
-```
-nix-env -iA nixpkgs.git nixpkgs.nixFlakes
-echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-```
-
-### 3. Clonar el repo 
-
-### 4. Aplicar tu configuración NixOS desde el flake
-
-```
-sudo nixos-rebuild switch --flake /etc/nixos#<device>
+# IMPORTANTE: Nix Flakes solo ve archivos trackeados por Git
+git init
+git add .
 ```
 
-### 5. Aplicar Home Manager (usuario)
+### 2. Aplicar la configuración por primera vez
 
 ```
-home-manager switch --flake /etc/nixos#<home-manager>
+sudo nixos-rebuild switch --flake .#linux --extra-experimental-features "nix-command flakes"
 ```
 
-### 6. Reboot
+### 3. Definir las contraseñas para los usuarios
 
+```
+sudo passwd andres
+sudo passwd gandalf
+```
+
+### 4. Reiniciar

@@ -6,17 +6,17 @@
   # Red y Tiempo
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Madrid"; # Ajusta a tu zona
-  i18n.defaultLocale = "es_ES.UTF-8";
+  i18n.defaultLocale = "ca_ES.UTF-8";
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "es_ES.UTF-8";
-    LC_IDENTIFICATION = "es_ES.UTF-8";
-    LC_MEASUREMENT = "es_ES.UTF-8";
-    LC_MONETARY = "es_ES.UTF-8";
-    LC_NAME = "es_ES.UTF-8";
-    LC_NUMERIC = "es_ES.UTF-8";
-    LC_PAPER = "es_ES.UTF-8";
-    LC_TELEPHONE = "es_ES.UTF-8";
-    LC_TIME = "es_ES.UTF-8";
+    LC_ADDRESS = "ca_ES.UTF-8";
+    LC_IDENTIFICATION = "ca_ES.UTF-8";
+    LC_MEASUREMENT = "ca_ES.UTF-8";
+    LC_MONETARY = "ca_ES.UTF-8";
+    LC_NAME = "ca_ES.UTF-8";
+    LC_NUMERIC = "ca_ES.UTF-8";
+    LC_PAPER = "ca_ES.UTF-8";
+    LC_TELEPHONE = "ca_ES.UTF-8";
+    LC_TIME = "ca_ES.UTF-8";
   };
 
   # Habilitar zsh
@@ -38,7 +38,7 @@
     shell = pkgs.zsh; 
     extraGroups = [ "networkmanager" "wheel" "docker" ];
 
-    icon = ./../users/profile/andres.png;
+    #icon = ./../users/profile/andres.png;
   };
 
   users.users.gandalf = {
@@ -46,7 +46,7 @@
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "docker" "wheel" ];
 
-    icon = ./../users/profile/gandalf.png;
+    #icon = ./../users/profile/gandalf.png;
   };
 
   # Habilitar el entorno de escritorio (ejemplo con GNOME)

@@ -37,6 +37,11 @@
       dock-position = "BOTTOM";        # Abajo como en mac
       dash-max-icon-size = 45;         # Tamaño de iconos
       show-mounts = true;              # Mostrar pendrives/discos
+      pressure-threshold = 10;
+      autohide = false;
+      custom-theme-shrink = true;
+      click-action = "previews";
+      scroll-action = "cycle-windows";
     };
   };
 

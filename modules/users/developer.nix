@@ -56,6 +56,13 @@
   # Varaibles para el usuario
   home.sessionVariables = {
     EDITOR = "vim";
+    BROWSER = "brave";
+    LANG = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
+  };
+
+  home.keyboard = {
+    layout = "es";
   };
 
   programs.vim = {
@@ -165,7 +172,7 @@
       "editor.defaultFormatter" = "esbenp.prettier-vscode";
       "git.autofetch" = true;
       "python.defaultInterpreterPath" = "./.venv/bin/python";
-      "workbench.colorTheme" = "Quiet Light"; 
+      "workbench.colorTheme" = "Default Dark+"; # Quiet Light
       "window.autoDetectColorScheme" = false;
     };
   };

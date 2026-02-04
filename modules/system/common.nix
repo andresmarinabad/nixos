@@ -6,7 +6,8 @@
   # Red y Tiempo
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Madrid"; # Ajusta a tu zona
-  i18n.defaultLocale = "ca_ES.UTF-8";
+  i18n.defaultLocale = "en_US.UTF-8";
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "ca_ES.UTF-8";
     LC_IDENTIFICATION = "ca_ES.UTF-8";
@@ -53,6 +54,14 @@
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+
+  services.xserver.xkb = {
+    layout = "es"; # El teclado catalán usa la distribución española estándar
+    variant = "";
+  };
+
+  # Configuración para la terminal (TTY)
+  console.keyMap = "es";
 
   # Habilitar flatpak
   services.flatpak.enable = true;

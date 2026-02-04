@@ -27,6 +27,17 @@
     userEmail = "andres.marin.abad+git@gmail.com";
   };
 
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "github.com" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/andres"; 
+      };
+    };
+  };
+
   systemd.user.services.megasync = {
     Unit = { Description = "MegaSync Client"; };
     Install = { WantedBy = [ "graphical-session.target" ]; };

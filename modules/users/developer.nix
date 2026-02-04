@@ -15,9 +15,11 @@
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-history-substring-search
-    bitwarden
+    bitwarden-desktop
     gnomeExtensions.dash-to-dock
     gnome-tweaks
+    nil 
+    nixpkgs-fmt
   ];
 
   # Dock estilo ubuntu
@@ -33,7 +35,7 @@
       dock-fixed = true;               # Esto hace que no se oculte
       extend-height = false;           # Que no ocupe todo el espacio
       dock-position = "BOTTOM";        # Abajo como en mac
-      dash-max-icon-size = 32;         # Tamaño de iconos
+      dash-max-icon-size = 45;         # Tamaño de iconos
       show-mounts = true;              # Mostrar pendrives/discos
     };
   };
@@ -47,7 +49,7 @@
   };
 
   # Varaibles para el usuario
-  sessionVariables = {
+  home.sessionVariables = {
     EDITOR = "vim";
   };
 
@@ -109,7 +111,6 @@
     enable = true;
     settings = {
       add_newline = false;
-      char_symbol = "➜";
       # Aquí podrías tunear el prompt a tu gusto
     };
   };
@@ -139,7 +140,7 @@
       zhuangtongfa.material-theme
       redhat.ansible
       github.vscode-github-actions
-      opentofu.opentofu
+      hashicorp.terraform
       esbenp.prettier-vscode
       ms-python.python
       davidanson.vscode-markdownlint
@@ -152,7 +153,6 @@
       "editor.fontSize" = 14;
       "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'";
       "editor.fontLigatures" = true;
-      "workbench.colorTheme" = "One Dark Pro"; # Si instalas el tema arriba
       "workbench.iconTheme" = "material-icon-theme";
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil"; # Un LSP rápido para Nix
@@ -160,12 +160,8 @@
       "editor.defaultFormatter" = "esbenp.prettier-vscode";
       "git.autofetch" = true;
       "python.defaultInterpreterPath" = "./.venv/bin/python";
+      "workbench.colorTheme" = "Quiet Light"; 
+      "window.autoDetectColorScheme" = false;
     };
   };
-
-  # Instalamos 'nil' para que la extensión de Nix funcione
-  home.packages = with pkgs; [
-    nil 
-    nixpkgs-fmt # Para que formatee tu código Nix al guardar
-  ];
 }

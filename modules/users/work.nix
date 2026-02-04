@@ -1,13 +1,13 @@
 { pkgs, ... }: {
-  imports = [ developer.nix ]; 
+  imports = [ ./developer.nix ]; 
 
   home.username = "gandalf";
   home.homeDirectory = "/home/gandalf";
   home.stateVersion = "23.11";
 
-  home.packages = with pkgs; [
+  # home.packages = with pkgs; [
     
-  ];
+  # ];
 
   programs.git = {
     enable = true;

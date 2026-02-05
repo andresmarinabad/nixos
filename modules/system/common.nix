@@ -38,16 +38,12 @@
     isNormalUser = true;
     shell = pkgs.zsh; 
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-
-    #icon = ./../users/profile/andres.png;
   };
 
   users.users.gandalf = {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "docker" "wheel" ];
-
-    #icon = ./../users/profile/gandalf.png;
   };
 
   # Habilitar el entorno de escritorio (ejemplo con GNOME)
@@ -56,7 +52,7 @@
   services.xserver.desktopManager.gnome.enable = true;
 
   services.xserver.xkb = {
-    layout = "es"; # El teclado catalán usa la distribución española estándar
+    layout = "es";
     variant = "";
   };
 

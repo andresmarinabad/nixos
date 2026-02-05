@@ -5,9 +5,6 @@
     curl
     wget
     docker-compose
-    opentofu
-    nodejs
-    python3
     docker
     postman
     zsh

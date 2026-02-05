@@ -1,16 +1,12 @@
 { pkgs, ... }: {
-  imports = [ ./developer.nix ]; 
+  imports = [ ./common.nix ]; 
 
   home.username = "andres";
   home.homeDirectory = "/home/andres";
-  home.stateVersion = "23.11";
 
   home.activation = {
     setupFlatpak = ''
-      # Añadir el repositorio de Flathub si no existe (a nivel de usuario)
       ${pkgs.flatpak}/bin/flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-      
-      # Instalar Bambu Studio desde Flathub
       ${pkgs.flatpak}/bin/flatpak install --user --noninteractive flathub com.bambulab.BambuStudio
     '';
   };

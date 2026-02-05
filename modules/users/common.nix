@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  # Herramientas que quieres en AMBOS perfiles
+  # Herramientas para todos los perfiles
   home.packages = with pkgs; [
     htop
     curl
@@ -61,10 +61,12 @@
     LC_ALL = "en_US.UTF-8";
   };
 
+  # Teclado
   home.keyboard = {
     layout = "es";
   };
 
+  # VIM
   programs.vim = {
   enable = true;
   plugins = with pkgs.vimPlugins; [
@@ -95,7 +97,7 @@
     };
   };
 
-  # Configuración compartida de la Shell (ejemplo zsh)
+  # ZSH con OMZ
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -115,32 +117,31 @@
         "python"
         "opentofu"
       ];
-      # No necesitas poner un tema de OMZ porque Starship lo sobrescribirá
     };
   };
 
+  # Starchip prompt
   programs.starship = {
     enable = true;
     settings = {
       add_newline = false;
-      # Aquí podrías tunear el prompt a tu gusto
     };
   };
 
+  # Direnv
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true; 
     enableZshIntegration = true; 
   };
 
+  # VSCode
   programs.vscode = {
     enable = true;
-    # Esto instala el binario de VS Code
     package = pkgs.vscode; 
 
-    # Extensiones de programador
+    # Extensiones para vscode
     extensions = with pkgs.vscode-extensions; [
-      # Fundamentales
       jnoortheen.nix-ide 
       mkhl.direnv 
       christian-kohler.path-intellisense
@@ -176,4 +177,6 @@
       "window.autoDetectColorScheme" = false;
     };
   };
+
+  home.stateVersion = "26.05";
 }

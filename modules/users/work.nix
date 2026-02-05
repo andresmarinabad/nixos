@@ -6,6 +6,7 @@
 
   home.packages = with pkgs; [
     pkgs.google-cloud-sdk
+    pkgs.code-cursor
   ];
 
   programs.git = {

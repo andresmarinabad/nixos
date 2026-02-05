@@ -104,6 +104,7 @@
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake .#linux";
       v = "vim";
+      ns = "nix-shell -p";
     };
     oh-my-zsh = {
       enable = true;

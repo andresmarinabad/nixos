@@ -9,15 +9,15 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "ca_ES.UTF-8";
-    LC_IDENTIFICATION = "ca_ES.UTF-8";
-    LC_MEASUREMENT = "ca_ES.UTF-8";
-    LC_MONETARY = "ca_ES.UTF-8";
-    LC_NAME = "ca_ES.UTF-8";
-    LC_NUMERIC = "ca_ES.UTF-8";
-    LC_PAPER = "ca_ES.UTF-8";
-    LC_TELEPHONE = "ca_ES.UTF-8";
-    LC_TIME = "ca_ES.UTF-8";
+    LC_ADDRESS = "es_ES.UTF-8";
+    LC_IDENTIFICATION = "es_ES.UTF-8";
+    LC_MEASUREMENT = "es_ES.UTF-8";
+    LC_MONETARY = "es_ES.UTF-8";
+    LC_NAME = "es_ES.UTF-8";
+    LC_NUMERIC = "es_ES.UTF-8";
+    LC_PAPER = "es_ES.UTF-8";
+    LC_TELEPHONE = "es_ES.UTF-8";
+    LC_TIME = "es_ES.UTF-8";
   };
 
   # Habilitar zsh

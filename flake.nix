@@ -19,6 +19,7 @@
           
           home-manager.users.andres = import ./modules/users/home.nix;
           home-manager.users.gandalf = import ./modules/users/work.nix;
+          # home-manager.users.sara = import ./modules/users/sara.nix;
         }
       ];
     };

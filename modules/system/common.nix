@@ -48,6 +48,13 @@
     description = "Gandalf";
   };
 
+  # users.users.sara = {
+  #   isNormalUser = true;
+  #   shell = pkgs.bash;
+  #   extraGroups = [ "networkmanager" ];
+  #   description = "Sara";
+  # };
+
   # Habilitar el entorno de escritorio (ejemplo con GNOME)
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;

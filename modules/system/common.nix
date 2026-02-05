@@ -38,12 +38,14 @@
     isNormalUser = true;
     shell = pkgs.zsh; 
     extraGroups = [ "networkmanager" "wheel" "docker" ];
+    description = "Andrés";
   };
 
   users.users.gandalf = {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "docker" "wheel" ];
+    description = "Gandalf";
   };
 
   # Habilitar el entorno de escritorio (ejemplo con GNOME)

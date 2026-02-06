@@ -1,6 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   # Herramientas para muggles
-  imports = [ ./basic.nix ]; 
+  imports = [ ./basic.nix ];
 
   # Configuración de Chrome
   programs.google-chrome = {

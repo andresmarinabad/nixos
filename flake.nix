@@ -8,22 +8,30 @@
     agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, ... }: {
-    nixosConfigurations.linux = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./hosts/linux/configuration.nix
-        agenix.nixosModules.default
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          
-          home-manager.users.andres = import ./modules/users/home.nix;
-          home-manager.users.gandalf = import ./modules/users/work.nix;
-          # home-manager.users.sara = import ./modules/users/sara.nix;
-        }
-      ];
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      agenix,
+      ...
+    }:
+    {
+      nixosConfigurations.linux = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/linux/configuration.nix
+          agenix.nixosModules.default
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.andres = import ./modules/users/home.nix;
+            home-manager.users.gandalf = import ./modules/users/work.nix;
+            home-manager.users.sara = import ./modules/users/sara.nix;
+          }
+        ];
+      };
     };
-  };
 }

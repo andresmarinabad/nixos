@@ -1,6 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   # Herramientas developers
-  imports = [ ./basic.nix ]; 
+  imports = [ ./basic.nix ];
 
   home.packages = with pkgs; [
     bottom
@@ -16,6 +17,7 @@
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-history-substring-search
+    nixfmt
   ];
 
   # Configuración de Brave
@@ -29,7 +31,7 @@
   programs.git = {
     enable = true;
     extraConfig = {
-        core.editor = "vim";
+      core.editor = "vim";
     };
   };
 
@@ -47,10 +49,10 @@
     };
     oh-my-zsh = {
       enable = true;
-      plugins = [ 
-        "git" 
-        "docker" 
-        "sudo" 
+      plugins = [
+        "git"
+        "docker"
+        "sudo"
         "python"
         "opentofu"
       ];
@@ -68,8 +70,8 @@
   # Direnv
   programs.direnv = {
     enable = true;
-    nix-direnv.enable = true; 
-    enableZshIntegration = true; 
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
   };
 
   # VIM
@@ -99,12 +101,12 @@
   # VSCode
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode; 
+    package = pkgs.vscode;
 
     # Extensiones para vscode
     extensions = with pkgs.vscode-extensions; [
-      jnoortheen.nix-ide 
-      mkhl.direnv 
+      jnoortheen.nix-ide
+      mkhl.direnv
       christian-kohler.path-intellisense
       naumovs.color-highlight
       eamodio.gitlens
@@ -138,8 +140,6 @@
       "window.autoDetectColorScheme" = false;
     };
   };
-
-
 
   # Servicio de Syncthing para las carpetas de archivos de la Home
   services.syncthing = {

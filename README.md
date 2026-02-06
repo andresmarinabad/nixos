@@ -10,31 +10,28 @@ cd nixos
 
 # Copiar el hardware generado por el instalador
 cp /etc/nixos/hardware-configuration.nix ./hosts/linux/
-
-# IMPORTANTE: Nix Flakes solo ve archivos trackeados por Git
-git init
-git add .
 ```
-Pero git no viene instalado por defecto
+
+Nix Shell para ejecutar `git` y poder usar `flake`
+
 ```
 nix-shell -p git --run "git init && git add ."
 ```
 
-### 2. Aplicar la configuración por primera vez
+### 2. Copiar la clave para descifrar los secretos
 
-```
-sudo nixos-rebuild switch --flake .#linux --extra-experimental-features "nix-command flakes"
-```
-Como flakes no viene instalado en vez de tocar configuracion que luego se borrará, mejor:
+Copiar desde Bitwarden las claves a `~/.ssh/master` y `~/.ssh/master.pub`
+
+### 3. Aplicar la configuración por primera vez
+
 ```
 sudo NIX_CONFIG="extra-experimental-features = nix-command flakes" nixos-rebuild switch --flake .#linux
 ```
 
-### 3. Definir las contraseñas para los usuarios
+En adelante puedes re-aplicar con:
 
 ```
-sudo passwd andres
-sudo passwd gandalf
+rebuild
 ```
 
 ### 4. Reiniciar

@@ -1,11 +1,10 @@
 # Quien puede descifrar el secreto
 let
-  andres = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICqImXgnyR1mINurbZY0xV5EJmKUQWGv6BxQihpsgxiD andres.marin.abad+git@gmail.com"; # /home/andres/.ssh/andres.pub
-  sistema = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICfvCyUc8mSkjGjH5hywMni0ciTo6PseFheOj6/pF9vy root@nixos"; # /etc/ssh/ssh_host_ed25519_key.pub)
+  master = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINUSCff7KgC/9Dttohkdp/R2SG0NS8q0wyMjwLd9HNxD"; # Bitwarden
 in
 {
-  "pass-andres.age".publicKeys = [ andres sistema ];
-  "pass-gandalf.age".publicKeys = [ andres sistema ];
-  "pass-sara.age".publicKeys = [ andres sistema ];
-  "github-andres.age".publicKeys = [ andres sistema ];
+  "pass-andres.age".publicKeys = [ master ];
+  "pass-gandalf.age".publicKeys = [ master ];
+  "pass-sara.age".publicKeys = [ master ];
+  "github-andres.age".publicKeys = [ master ];
 }

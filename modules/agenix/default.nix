@@ -1,5 +1,8 @@
 # Declara aqui los secretos y donde estará el descifrado
 { ... }: {
+  # Solo descifrar con Master Key
+  age.identityPaths = [ "/home/andres/.ssh/master" ];
+
   # PASSWORDS
   age.secrets.pass-andres.file = ./pass-andres.age;
   age.secrets.pass-gandalf.file = ./pass-gandalf.age;

@@ -1,15 +1,14 @@
 ## Cifrar secretos
 
-1. Colocate en esta ruta.
-2. Define el secreto en `default.nix` y quien puede descifrarlo en `secrets.nix`
-3. Cifra el secreto con
+1. Entra en modules/agenix
+2. Define el secreto en `default.nix` y configura quién puede descifrarlo en `secrets.nix`
+3. Cifra el secreto:
 
 ```bash
-nix run github:ryantm/agenix -- -e <secreto>.age -i ~/.ssh/master
+nix run github:ryantm/agenix -- -e <secreto>.age
 ```
 
-[!IMPORTANT]
-Recuerda añadir los secretos a stage de git para que flake los detecte
+Recuerda añadir los secretos al stage de git para que flake los detecte
 
 ## Passwords
 

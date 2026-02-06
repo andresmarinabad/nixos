@@ -1,5 +1,7 @@
 { pkgs, ... }: {
-  # Herramientas para todos los perfiles
+  # Herramientas developers
+  imports = [ ./basic.nix ]; 
+
   home.packages = with pkgs; [
     bottom
     bat
@@ -14,35 +16,7 @@
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-history-substring-search
-    bitwarden-desktop
-    gnomeExtensions.dash-to-dock
-    gnome-tweaks
-    nil 
-    nixpkgs-fmt
   ];
-
-  # Dock estilo ubuntu
-  dconf.settings = {
-    "org/gnome/shell" = {
-      disable-user-extensions = false;
-      enabled-extensions = [
-        "dash-to-dock@micxgx.gmail.com"
-      ];
-    };
-
-    "org/gnome/shell/extensions/dash-to-dock" = {
-      dock-fixed = true;               # Esto hace que no se oculte
-      extend-height = false;           # Que no ocupe todo el espacio
-      dock-position = "BOTTOM";        # Abajo como en mac
-      dash-max-icon-size = 45;         # Tamaño de iconos
-      show-mounts = true;              # Mostrar pendrives/discos
-      pressure-threshold = 10;
-      autohide = false;
-      custom-theme-shrink = true;
-      click-action = "previews";
-      scroll-action = "cycle-windows";
-    };
-  };
 
   # Configuración de Brave
   programs.brave = {
@@ -50,43 +24,6 @@
     extensions = [
       { id = "nngceckbapebfimnlniiiahkandclblb"; } # Extensión de Bitwarden para el navegador
     ];
-  };
-
-  # Varaibles para el usuario
-  home.sessionVariables = {
-    EDITOR = "vim";
-    BROWSER = "brave";
-    LANG = "en_US.UTF-8";
-    LC_ALL = "en_US.UTF-8";
-  };
-
-  # Teclado
-  home.keyboard = {
-    layout = "es";
-  };
-
-  # VIM
-  programs.vim = {
-  enable = true;
-  plugins = with pkgs.vimPlugins; [
-    vim-nix
-    vim-airline
-    nerdtree
-    vim-gitgutter
-    fzf-vim
-    indentLine
-  ];
-  extraConfig = ''
-    set relativenumber
-    set shiftwidth=2
-    set expandtab
-    set number              " Mostrar números de línea
-    set mouse=a             " Poder usar el ratón para hacer scroll
-    set cursorline          " Resaltar la línea actual
-    syntax enable           " Activar colores
-    " Abrir NERDTree automáticamente con Ctrl+n
-    map <C-n> :NERDTreeToggle<CR> 
-  '';
   };
 
   programs.git = {
@@ -133,6 +70,30 @@
     enable = true;
     nix-direnv.enable = true; 
     enableZshIntegration = true; 
+  };
+
+  # VIM
+  programs.vim = {
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+      vim-nix
+      vim-airline
+      nerdtree
+      vim-gitgutter
+      fzf-vim
+      indentLine
+    ];
+    extraConfig = ''
+      set relativenumber
+      set shiftwidth=2
+      set expandtab
+      set number              " Mostrar números de línea
+      set mouse=a             " Poder usar el ratón para hacer scroll
+      set cursorline          " Resaltar la línea actual
+      syntax enable           " Activar colores
+      " Abrir NERDTree automáticamente con Ctrl+n
+      map <C-n> :NERDTreeToggle<CR> 
+    '';
   };
 
   # VSCode

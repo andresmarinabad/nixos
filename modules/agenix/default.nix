@@ -16,4 +16,12 @@
     group = "users";
     mode = "600";
   };
+
+  age.secrets.github-aistech = {
+    file = ./github-aistech.age;
+    path = "/home/gandalf/.ssh/gandalf";
+    owner = "gandalf";
+    group = "users";
+    mode = "600";
+  };
 }

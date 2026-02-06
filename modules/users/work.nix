@@ -15,6 +15,9 @@
     userEmail = "andres.marin@aistechspace.com";
   };
 
+  # GitHub Public Key
+  home.file.".ssh/gandalf.pub".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICi4Cx3fx7uXitvSOTBzTRsi1ATKLI8dDs0RZy8iKp5c andres.marin@aistechspace.com";
+
   programs.ssh = {
     enable = true;
     matchBlocks = {

@@ -103,8 +103,8 @@
     enable = true;
     package = pkgs.vscode;
 
-    # Extensiones para vscode
-    extensions = with pkgs.vscode-extensions; [
+    # Extensiones para vscode 
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       jnoortheen.nix-ide
       mkhl.direnv
       christian-kohler.path-intellisense
@@ -125,7 +125,7 @@
     ];
 
     # Configuración de settings.json
-    userSettings = {
+    profiles.default.userSettings = {
       "editor.fontSize" = 14;
       "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'";
       "editor.fontLigatures" = true;

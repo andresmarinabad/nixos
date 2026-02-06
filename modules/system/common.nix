@@ -120,12 +120,6 @@
     "flakes"
   ];
 
-  # Variables
-  # environment.variables = {
-  #   EDITOR = "vim";
-  #   VISUAL = "vim";
-  # };
-
   # Quitar nano
   programs.nano.enable = false;
 }

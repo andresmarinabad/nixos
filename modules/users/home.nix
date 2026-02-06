@@ -22,8 +22,8 @@
   # GIT
   programs.git = {
     enable = true;
-    userName = "Andres";
-    userEmail = "andres.marin.abad+git@gmail.com";
+    settings.user.name = "Andres";
+    settings.user.email = "andres.marin.abad+git@gmail.com";
   };
 
   # GitHub Public Key

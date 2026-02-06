@@ -109,10 +109,10 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Variables
-  environment.variables = {
-    EDITOR = "vim";
-    VISUAL = "vim";
-  };
+  # environment.variables = {
+  #   EDITOR = "vim";
+  #   VISUAL = "vim";
+  # };
 
   # Quitar nano
   programs.nano.enable = false;

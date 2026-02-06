@@ -5,8 +5,11 @@
 3. Cifra el secreto con
 
 ```bash
-nix run github:ryantm/agenix -- -e <secreto>.age -i ~/.ssh/andres
+nix run github:ryantm/agenix -- -e <secreto>.age -i ~/.ssh/master
 ```
+
+[!IMPORTANT]
+Recuerda añadir los secretos a stage de git para que flake los detecte
 
 ## Passwords
 

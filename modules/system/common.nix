@@ -1,4 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   # Bootloader y Kernel
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -38,8 +39,12 @@
   # Usuarios con su shell
   users.users.andres = {
     isNormalUser = true;
-    shell = pkgs.zsh; 
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    shell = pkgs.zsh;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     description = "Andrés";
     hashedPasswordFile = config.age.secrets.pass-andres.path;
   };
@@ -47,18 +52,22 @@
   users.users.gandalf = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "docker" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "docker"
+      "wheel"
+    ];
     description = "Gandalf";
     hashedPasswordFile = config.age.secrets.pass-gandalf.path;
   };
 
-  # users.users.sara = {
-  #   isNormalUser = true;
-  #   shell = pkgs.bash;
-  #   extraGroups = [ "networkmanager" ];
-  #   description = "Sara";
-  #   hashedPasswordFile = config.age.secrets.pass-sara.path;
-  # };
+  users.users.sara = {
+    isNormalUser = true;
+    shell = pkgs.bash;
+    extraGroups = [ "networkmanager" ];
+    description = "Sara";
+    hashedPasswordFile = config.age.secrets.pass-sara.path;
+  };
 
   # Habilitar el entorno de escritorio (ejemplo con GNOME)
   services.xserver.enable = true;
@@ -82,7 +91,7 @@
   # SSH
   services.openssh = {
     enable = true;
-    settings.PasswordAuthentication = false; 
+    settings.PasswordAuthentication = false;
     # Esto asegura que se generen las llaves de host si no existen
   };
 
@@ -106,7 +115,10 @@
   nixpkgs.config.allowUnfree = true;
 
   # Habilitar Flakes permanentemente
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Variables
   # environment.variables = {

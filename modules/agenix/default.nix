@@ -1,5 +1,6 @@
 # Declara aqui los secretos y donde estará el descifrado
-{ ... }: {
+{ ... }:
+{
   # Solo descifrar con Master Key
   age.identityPaths = [ "/home/andres/.ssh/master" ];
 

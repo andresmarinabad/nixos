@@ -1,10 +1,12 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   # Bootloader y Kernel
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Red y Tiempo
+  # Red
   networking.networkmanager.enable = true;
+
+  # Reloj
   time.timeZone = "Europe/Madrid"; # Ajusta a tu zona
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -39,6 +41,7 @@
     shell = pkgs.zsh; 
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     description = "Andrés";
+    hashedPasswordFile = config.age.secrets.pass-andres.path;
   };
 
   users.users.gandalf = {
@@ -46,6 +49,7 @@
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "docker" "wheel" ];
     description = "Gandalf";
+    hashedPasswordFile = config.age.secrets.pass-gandalf.path;
   };
 
   # users.users.sara = {
@@ -53,6 +57,7 @@
   #   shell = pkgs.bash;
   #   extraGroups = [ "networkmanager" ];
   #   description = "Sara";
+  #   hashedPasswordFile = config.age.secrets.pass-sara.path;
   # };
 
   # Habilitar el entorno de escritorio (ejemplo con GNOME)
@@ -60,9 +65,25 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  # Quitar default apps
+  services.xserver.excludePackages = with pkgs; [ xterm ];
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-tour
+    yelp
+    gnome-contacts
+    gnome-weather
+  ];
+
   services.xserver.xkb = {
     layout = "es";
     variant = "";
+  };
+
+  # SSH
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false; 
+    # Esto asegura que se generen las llaves de host si no existen
   };
 
   # Configuración para la terminal (TTY)
@@ -95,9 +116,4 @@
 
   # Quitar nano
   programs.nano.enable = false;
-
-  # Poner vim
-  environment.systemPackages = with pkgs; [
-    vim
-  ];
 }

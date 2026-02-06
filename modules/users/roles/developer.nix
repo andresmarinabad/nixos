@@ -1,7 +1,9 @@
 { pkgs, ... }: {
   # Herramientas para todos los perfiles
   home.packages = with pkgs; [
-    htop
+    bottom
+    bat
+    ripgrep
     curl
     wget
     docker-compose
@@ -85,7 +87,7 @@
     " Abrir NERDTree automáticamente con Ctrl+n
     map <C-n> :NERDTreeToggle<CR> 
   '';
-};
+  };
 
   programs.git = {
     enable = true;
@@ -173,6 +175,71 @@
       "python.defaultInterpreterPath" = "./.venv/bin/python";
       "workbench.colorTheme" = "Default Dark+"; # Quiet Light
       "window.autoDetectColorScheme" = false;
+    };
+  };
+
+
+
+  # Servicio de Syncthing para las carpetas de archivos de la Home
+  services.syncthing = {
+    enable = true;
+    tray.enable = false;
+
+    settings = {
+      options = {
+        urAccepted = -1;
+        relaysEnabled = true;
+        localAnnounceEnabled = true;
+        natEnabled = true;
+        crashReportingEnabled = false;
+      };
+
+      folders = {
+        "Documents" = {
+          path = "~/Documents";
+          type = "sendreceive";
+          versioning = {
+            type = "simple";
+            params = {
+              keep = "5";
+            };
+          };
+        };
+
+        "Downloads" = {
+          path = "~/Downloads";
+          type = "sendreceive";
+          versioning = {
+            type = "simple";
+            params = {
+              keep = "5";
+            };
+          };
+        };
+
+        "Desktop" = {
+          path = "~/Desktop";
+          type = "sendreceive";
+          versioning = {
+            type = "simple";
+            params = {
+              keep = "5";
+            };
+          };
+        };
+
+        "Pictures" = {
+          path = "~/Pictures";
+          type = "sendreceive";
+          versioning = {
+            type = "simple";
+            params = {
+              keep = "5";
+            };
+          };
+        };
+
+      };
     };
   };
 

@@ -18,6 +18,7 @@
     zsh-syntax-highlighting
     zsh-history-substring-search
     nixfmt
+    fzf
   ];
 
   # Configuración de Brave
@@ -72,30 +73,6 @@
     enable = true;
     nix-direnv.enable = true;
     enableZshIntegration = true;
-  };
-
-  # VIM
-  programs.vim = {
-    enable = true;
-    plugins = with pkgs.vimPlugins; [
-      vim-nix
-      vim-airline
-      nerdtree
-      vim-gitgutter
-      fzf-vim
-      indentLine
-    ];
-    extraConfig = ''
-      set relativenumber
-      set shiftwidth=2
-      set expandtab
-      set number              " Mostrar números de línea
-      set mouse=a             " Poder usar el ratón para hacer scroll
-      set cursorline          " Resaltar la línea actual
-      syntax enable           " Activar colores
-      " Abrir NERDTree automáticamente con Ctrl+n
-      map <C-n> :NERDTreeToggle<CR> 
-    '';
   };
 
   # VSCode

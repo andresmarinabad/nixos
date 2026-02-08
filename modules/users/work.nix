@@ -12,8 +12,8 @@
 
   programs.git = {
     enable = true;
-    userName = "Gandalf";
-    userEmail = "andres.marin@aistechspace.com";
+    settings.user.name = "Gandalf";
+    settings.user.email = "andres.marin@aistechspace.com";
   };
 
   # GitHub Public Key
@@ -22,6 +22,7 @@
 
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     matchBlocks = {
       "github.com" = {
         hostname = "github.com";

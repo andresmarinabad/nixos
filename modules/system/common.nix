@@ -120,6 +120,43 @@
     "flakes"
   ];
 
-  # Quitar nano
+  # Quitar nano del sistema
   programs.nano.enable = false;
+  
+  # VIM Global (en configuration.nix)
+  environment.systemPackages = [
+    (pkgs.vim-full.customize {
+      name = "vim";
+      # Aquí va tu configuración (el antiguo extraConfig)
+      vimrcConfig.customRC = ''
+        " set relativenumber
+        set shiftwidth=2
+        set expandtab
+        set number              " Mostrar números de línea
+        set mouse=a             " Poder usar el ratón para hacer scroll
+        set cursorline          " Resaltar la línea actual
+        syntax enable           " Activar colores
+
+        " Abrir NERDTree automáticamente con Ctrl+n
+        map <C-n> :NERDTreeToggle<CR> 
+        " Busqueda con fzf
+        map <C-p> :Files<CR>
+      '';
+
+      # Aquí van los plugins
+      vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
+        start = [ 
+          vim-nix
+          vim-airline
+          nerdtree
+          vim-gitgutter
+          fzf-vim
+          indentLine
+        ];
+      };
+    })
+  ];
+
+  # Esto asegura que este Vim sea el editor por defecto
+  environment.variables.EDITOR = "vim";
 }

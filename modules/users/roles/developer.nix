@@ -19,6 +19,7 @@
     zsh-history-substring-search
     nixfmt
     fzf
+    google-cloud-sdk
   ];
 
   # Configuración de Brave

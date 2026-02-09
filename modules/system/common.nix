@@ -69,6 +69,9 @@
     hashedPasswordFile = config.age.secrets.pass-sara.path;
   };
 
+  # Habilitar el daemon de Docker
+  virtualisation.docker.enable = true;
+
   # Habilitar el entorno de escritorio (ejemplo con GNOME)
   services.xserver.enable = true;
   services.displayManager.gdm.enable = true;

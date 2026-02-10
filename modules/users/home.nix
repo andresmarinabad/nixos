@@ -17,6 +17,9 @@
     calibre
     megasync
     telegram-desktop
+    feather
+    protonvpn-gui
+    xmrig
   ];
 
   # GIT
@@ -57,5 +60,20 @@
     StartupNotify=false
     X-GNOME-Autostart-enabled=true
   '';
+
+  # XMRig para Monero
+  home.file.".local/bin/tomine.sh" = {
+    executable = true;
+    text = ''
+      #!/bin/sh
+      # Este script lanza el minero con prioridad baja para no molestar
+      nice -n 19 xmrig \
+        -o gulf.moneroocean.stream:20128 \
+        -u 88dEzih2X518UiiwBdWezwa6d4Cvu1ve646opRiuyiBv7kuDGKsetk6ZG8cK2WfDPKZCRzVPg5cYwM5bECKsWnzgVFfFR6m \
+        -p andres \
+        --tls \
+        --cpu-max-threads-hint=50
+    '';
+  };
 
 }

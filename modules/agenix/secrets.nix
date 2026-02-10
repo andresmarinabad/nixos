@@ -8,4 +8,5 @@ in
   "pass-sara.age".publicKeys = [ master ];
   "github-andres.age".publicKeys = [ master ];
   "github-aistech.age".publicKeys = [ master ];
+  "feather-seed.age".publicKeys = [ master ];
 }

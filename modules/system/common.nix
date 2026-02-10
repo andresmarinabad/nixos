@@ -74,6 +74,9 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
+  # Proton necesita un lugar donde guardar la contraseña cifrada
+  services.gnome.gnome-keyring.enable = true;
+
   # Quitar default apps
   services.xserver.excludePackages = with pkgs; [ xterm ];
   environment.gnome.excludePackages = with pkgs; [

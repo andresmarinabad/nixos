@@ -21,6 +21,11 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/linux/configuration.nix
+          {
+            nixpkgs.config.permittedInsecurePackages = [
+              "python3.13-ecdsa-0.19.1"
+            ];
+          }
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           {

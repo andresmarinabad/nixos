@@ -20,6 +20,8 @@
     feather
     protonvpn-gui
     xmrig
+    trezor-suite
+    trezorctl
   ];
 
   # GIT

@@ -165,4 +165,10 @@
 
   # Esto asegura que este Vim sea el editor por defecto
   environment.variables.EDITOR = "vim";
+
+  # Habilita el servicio Trezor Bridge
+  services.trezord.enable = true;
+
+  # Asegúrate de tener las reglas UDEV para el dispositivo
+  services.udev.packages = with pkgs; [ trezor-udev-rules ];
 }

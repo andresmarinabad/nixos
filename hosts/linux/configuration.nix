@@ -18,6 +18,7 @@
     options = "--delete-older-than 7d";
   };
 
+  # Monero 
   boot.kernelParams = [ "msr.allow_writes=on" ];
   boot.kernelModules = [ "msr" ];
   boot.kernel.sysctl = {

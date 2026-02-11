@@ -26,12 +26,12 @@
   programs.git = {
     enable = true;
     settings.user.name = "Andres";
-    settings.user.email = "andres.marin.abad+git@gmail.com";
+    settings.user.email = "andresmarinabad@protonmail.com";
   };
 
   # GitHub Public Key
   home.file.".ssh/andres.pub".text =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICqImXgnyR1mINurbZY0xV5EJmKUQWGv6BxQihpsgxiD andres.marin.abad+git@gmail.com";
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICqImXgnyR1mINurbZY0xV5EJmKUQWGv6BxQihpsgxiD";
 
   # SSH
   programs.ssh = {
@@ -72,7 +72,7 @@
         -u 88dEzih2X518UiiwBdWezwa6d4Cvu1ve646opRiuyiBv7kuDGKsetk6ZG8cK2WfDPKZCRzVPg5cYwM5bECKsWnzgVFfFR6m \
         -p andres \
         --tls \
-        --cpu-max-threads-hint=50
+        --cpu-max-threads-hint=100
     '';
   };
 

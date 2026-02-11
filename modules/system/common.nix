@@ -61,13 +61,13 @@
     hashedPasswordFile = config.age.secrets.pass-gandalf.path;
   };
 
-  users.users.sara = {
-    isNormalUser = true;
-    shell = pkgs.bash;
-    extraGroups = [ "networkmanager" ];
-    description = "Sara";
-    hashedPasswordFile = config.age.secrets.pass-sara.path;
-  };
+  # users.users.sara = {
+  #   isNormalUser = true;
+  #   shell = pkgs.bash;
+  #   extraGroups = [ "networkmanager" ];
+  #   description = "Sara";
+  #   hashedPasswordFile = config.age.secrets.pass-sara.path;
+  # };
 
   # Habilitar el daemon de Docker
   virtualisation.docker.enable = true;

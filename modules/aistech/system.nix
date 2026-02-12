@@ -7,6 +7,7 @@
   
   # Añadir trabajo
   environment.shellAliases = {
-    rebuild = "sudo nixos-rebuild switch --flake .#aistech";
+    nr = "sudo nixos-rebuild switch --flake .#aistech";
   };
+  
 }

@@ -6,7 +6,12 @@
   home.homeDirectory = "/home/gandalf";
 
   home.packages = with pkgs; [
-    pkgs.code-cursor
+    code-cursor
+    lens
+    (google-cloud-sdk.withExtraComponents [
+      google-cloud-sdk.components.gke-gcloud-auth-plugin
+      google-cloud-sdk.components.kubectl
+    ])
   ];
 
   programs.git = {
@@ -30,4 +35,5 @@
       };
     };
   };
+
 }

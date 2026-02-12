@@ -20,6 +20,7 @@
     protonvpn-gui
     trezor-suite
     trezorctl
+    google-cloud-sdk
   ];
 
   # GIT

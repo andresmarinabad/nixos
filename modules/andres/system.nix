@@ -19,6 +19,6 @@
   services.udev.packages = with pkgs; [ trezor-udev-rules ];
 
   environment.shellAliases = {
-    rebuild = "sudo nixos-rebuild switch --flake .#home";
+    nr = "sudo nixos-rebuild switch --flake .#home";
   };
 }

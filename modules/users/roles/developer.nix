@@ -19,7 +19,6 @@
     zsh-history-substring-search
     nixfmt
     fzf
-    google-cloud-sdk
     protonvpn-gui
   ];
 

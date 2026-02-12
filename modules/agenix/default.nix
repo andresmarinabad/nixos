@@ -26,7 +26,4 @@
     mode = "600";
   };
 
-  # Crypo Wallet Seed
-  age.secrets.feather-seed.file = ./feather-seed.age;
-
 }

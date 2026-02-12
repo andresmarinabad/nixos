@@ -20,6 +20,7 @@
     nixfmt
     fzf
     google-cloud-sdk
+    protonvpn-gui
   ];
 
   # Configuración de Brave

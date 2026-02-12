@@ -25,7 +25,13 @@ Copiar desde Bitwarden las claves a `~/.ssh/master` y `~/.ssh/master.pub`
 ### 3. Aplicar la configuración por primera vez
 
 ```
-sudo NIX_CONFIG="extra-experimental-features = nix-command flakes" nixos-rebuild switch --flake .#linux
+sudo NIX_CONFIG="extra-experimental-features = nix-command flakes" nixos-rebuild switch --flake .#home
+```
+
+y
+
+```
+sudo NIX_CONFIG="extra-experimental-features = nix-command flakes" nixos-rebuild switch --flake .#aistech
 ```
 
 En adelante puedes re-aplicar con:

@@ -1,8 +1,8 @@
 { pkgs, config, ... }:
 {
   imports = [
-    ../system/common.nix
-    ../agenix
+    ../common.nix
+    ../../agenix
   ];
 
   # Usuario extra solo para casa

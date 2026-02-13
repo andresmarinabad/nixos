@@ -2,7 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/aistech/system.nix
+    ../../modules/system/aistech/system.nix
     ../../modules/agenix/default.nix
   ];
 

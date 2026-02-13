@@ -35,7 +35,7 @@
         hostName = "aistech";
         systemModules = [
           ./hosts/aistech/configuration.nix
-          ./modules/aistech/system.nix
+          ./modules/system/aistech/system.nix
           agenix.nixosModules.default 
         ];
         users = {
@@ -55,7 +55,7 @@
               "python3.13-ecdsa-0.19.1"
             ];
           }
-          ./modules/andres/system.nix
+          ./modules/system/andres/system.nix
           agenix.nixosModules.default
         ];
         users = {

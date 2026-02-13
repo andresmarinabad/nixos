@@ -1,8 +1,8 @@
 { ... }:
 {
   imports = [
-    ../system/common.nix
-    ../agenix 
+    ../common.nix
+    ../../agenix 
   ];
   
   # Añadir trabajo

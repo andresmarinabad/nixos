@@ -18,6 +18,7 @@
     megasync
     telegram-desktop
     protonvpn-gui
+    proton-vpn-cli
     trezor-suite
     trezorctl
     google-cloud-sdk

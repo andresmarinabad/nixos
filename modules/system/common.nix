@@ -4,7 +4,10 @@
   # Bootloader, Red, Reloj, Locales, Fonts, Docker, GNOME, Sonido, etc.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  
   networking.networkmanager.enable = true;
+  networking.firewall.checkReversePath = "loose";
+
   time.timeZone = "Europe/Madrid";
   i18n.defaultLocale = "en_US.UTF-8";
 

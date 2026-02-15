@@ -17,6 +17,7 @@
     calibre
     megasync
     telegram-desktop
+    protonvpn-gui
   ];
 
   # GIT

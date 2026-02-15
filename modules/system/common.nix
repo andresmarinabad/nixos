@@ -44,12 +44,8 @@
 
   virtualisation.docker.enable = true;
   services.xserver.enable = true;
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-  services.gnome.gnome-keyring.enable = true;
 
   services.xserver.excludePackages = with pkgs; [ xterm ];
-  environment.gnome.excludePackages = with pkgs; [ gnome-tour yelp gnome-contacts gnome-weather ];
   services.xserver.xkb = { layout = "es"; variant = ""; };
 
   services.openssh = { enable = true; settings.PasswordAuthentication = false; };
@@ -57,7 +53,6 @@
 
   services.flatpak.enable = true;
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   security.rtkit.enable = true;
   services.pipewire = { enable = true; alsa.enable = true; pulse.enable = true; };

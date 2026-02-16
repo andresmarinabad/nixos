@@ -6,9 +6,15 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
+
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, plasma-manager, agenix, ... }@inputs:
   let
     inherit (nixpkgs) lib;
     
@@ -23,7 +29,12 @@
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs hostName; };
           # Mapeamos los usuarios
-          home-manager.users = users;
+          home-manager.users = lib.mapAttrs (name: path: {
+            imports = [ 
+              path 
+              plasma-manager.homeManagerModules.plasma-manager 
+            ];
+          }) users;
         }
       ] ++ systemModules;
     };

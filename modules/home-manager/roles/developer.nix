@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   # Herramientas developers
-  imports = [ ./basic.nix ];
+  imports = [ ../common.nix ../desktop/plasma.nix ];
 
   home.packages = with pkgs; [
     bottom

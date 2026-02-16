@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [ ../developer.nix ];
+  imports = [ ../roles/developer.nix ];
 
   home.username = "andres";
   home.homeDirectory = "/home/andres";
@@ -17,8 +17,6 @@
     calibre
     megasync
     telegram-desktop
-    protonvpn-gui
-    proton-vpn-cli
     trezor-suite
     trezorctl
     google-cloud-sdk

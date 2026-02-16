@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [ ../muggle.nix ];
+  imports = [ ../roles/muggle.nix ];
 
   home.username = "sara";
   home.homeDirectory = "/home/sara";

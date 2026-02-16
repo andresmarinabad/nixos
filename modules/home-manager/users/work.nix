@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [ ../developer.nix ];
+  imports = [ ../roles/developer.nix ];
 
   home.username = "gandalf";
   home.homeDirectory = "/home/gandalf";
@@ -12,7 +12,6 @@
       google-cloud-sdk.components.gke-gcloud-auth-plugin
       google-cloud-sdk.components.kubectl
     ])
-    protonvpn-gui
   ];
 
   programs.git = {

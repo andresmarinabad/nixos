@@ -20,12 +20,5 @@
     options = "--delete-older-than 7d";
   };
 
-  # Monero 
-  # boot.kernelParams = [ "msr.allow_writes=on" ];
-  # boot.kernelModules = [ "msr" ];
-  # boot.kernel.sysctl = {
-  #   "vm.nr_hugepages" = 1280;
-  # };
-
   system.stateVersion = "26.05";
 }

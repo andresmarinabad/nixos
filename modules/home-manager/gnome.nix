@@ -1,12 +1,8 @@
 { pkgs, ... }:
 {
-  # Herramientas para todos los perfiles
   home.packages = with pkgs; [
-    bitwarden-desktop
     gnomeExtensions.dash-to-dock
     gnome-tweaks
-    nil
-    nixpkgs-fmt
   ];
 
   # Dock estilo ubuntu
@@ -36,17 +32,6 @@
       min-alpha = 0.0;
       max-alpha = 0.0;
     };
-  };
-
-  # Varaibles para el usuario
-  home.sessionVariables = {
-    LANG = "en_US.UTF-8";
-    LC_ALL = "en_US.UTF-8";
-  };
-
-  # Teclado
-  home.keyboard = {
-    layout = "es";
   };
 
   home.stateVersion = "26.05";

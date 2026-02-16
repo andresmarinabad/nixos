@@ -39,8 +39,8 @@
           agenix.nixosModules.default 
         ];
         users = {
-          andres = import ./modules/users/andres-aistech.nix;
-          gandalf = import ./modules/users/work.nix;
+          andres = import ./modules/home-manager/users/andres-aistech.nix;
+          gandalf = import ./modules/home-manager/users/work.nix;
         };
       };
 
@@ -59,9 +59,9 @@
           agenix.nixosModules.default
         ];
         users = {
-          andres = import ./modules/users/andres.nix;
-          gandalf = import ./modules/users/work.nix;
-          sara = import ./modules/users/sara.nix;
+          andres = import ./modules/home-manager/users/andres.nix;
+          gandalf = import ./modules/home-manager/users/work.nix;
+          sara = import ./modules/home-manager/users/sara.nix;
         };
       };
       

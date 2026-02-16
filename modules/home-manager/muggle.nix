@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   # Herramientas para muggles
+  #imports = [ ./gnome.nix ];
   imports = [ ./basic.nix ];
 
   # Configuración de Chrome

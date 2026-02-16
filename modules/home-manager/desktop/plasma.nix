@@ -8,7 +8,7 @@
     kdePackages.spectacle kdePackages.ark kdePackages.gwenview
     kdePackages.kcalc kdePackages.partitionmanager kdePackages.filelight
     kdePackages.kate kdePackages.qtstyleplugin-kvantum
-    catppuccin-kde papirus-icon-theme fastfetch
+    papirus-icon-theme fastfetch klassy
   ];
 
   programs.plasma = {
@@ -54,6 +54,23 @@
         ];
       }
     ];
+
+    # 1. Forzamos a KWin a usar Klassy como decorador de ventanas
+    configFile."kwinrc"."org.kde.kdecoration2"."library" = "org.kde.klassy";
+    configFile."kwinrc"."org.kde.kdecoration2"."theme" = "org.kde.klassy";
+
+    # 2. Configuración "Chula" de Klassy (Efectos Visuales)
+    configFile."klassyrc"."Common"."CornerRadius" = 12; # Esquinas bien redondeadas
+    configFile."klassyrc"."Common"."ThinWindowFrames" = true; # Bordes finos y elegantes
+    
+    # 3. Botones "Top" (Tamaño y Estilo)
+    # Aquí puedes poner "Breeze", "macOS", "Windos", etc.
+    configFile."klassyrc"."Common"."ButtonIconStyle" = "Breeze"; 
+    configFile."klassyrc"."Common"."ButtonSize" = 2; # 2 es "Large", más fácil de clicar
+    configFile."klassyrc"."Common"."ButtonSpacing" = 4; # Más espacio entre botones para que respiren
+    
+    # 4. Color del borde (Para que resalten las ventanas)
+    configFile."klassyrc"."WindEco"."ActiveWindowFrameColor" = "AccentColor";
   };
 
   # Forzar estética Kvantum para transparencias

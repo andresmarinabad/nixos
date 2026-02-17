@@ -60,24 +60,4 @@
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   programs.nano.enable = false;
-
-  environment.systemPackages = [
-    (pkgs.vim-full.customize {
-      name = "vim";
-      vimrcConfig.customRC = ''
-        set shiftwidth=2
-        set expandtab
-        set number
-        set mouse=a
-        set cursorline
-        syntax enable
-        map <C-n> :NERDTreeToggle<CR> 
-        map <C-p> :Files<CR>
-      '';
-      vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
-        start = [ vim-nix vim-airline nerdtree vim-gitgutter fzf-vim indentLine ];
-      };
-    })
-  ];
-  environment.variables.EDITOR = "vim";
 }

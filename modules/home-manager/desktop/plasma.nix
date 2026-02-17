@@ -1,97 +1,176 @@
-# home.nix
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
+ let
+  wallpaperImg = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/KDE/plasma-workspace-wallpapers/30568e2caa78cc253b89bb3efa62819d6c66ecd0/DarkestHour/contents/images/2560x1600.jpg";
+    sha256 = "1kpianm9v074afhin1wd4s20awnkdiq9nf9bzjqighm3wgx06dwf";
+  };
+ in
 {
-  # Apps y Estética
   home.packages = with pkgs; [
     inter kanit-font
     kdePackages.spectacle kdePackages.ark kdePackages.gwenview
     kdePackages.kcalc kdePackages.partitionmanager kdePackages.filelight
     kdePackages.kate kdePackages.qtstyleplugin-kvantum
-    papirus-icon-theme fastfetch klassy
+    papirus-icon-theme fastfetch 
   ];
 
   programs.plasma = {
     enable = true;
 
-    workspace = {
-      lookAndFeel = "org.kde.breezedark.desktop";
-      cursor.theme = "Breeze";
-      theme = "breeze-dark";
-      iconTheme = "Papirus-Dark";
-      colorScheme = "BreezeDark";
-      wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/DarkestHour/contents/images/5120x2880.jpg";
+    configFile.kdeglobals.General = {
+      TerminalApplication = "kitty";
+      TerminalService = "kitty.desktop";
     };
 
+    # Workspace settings
+    workspace = {
+      lookAndFeel = "org.kde.breezedark.desktop";
+      colorScheme = "BreezeDark";
+      theme = "breeze-dark";
+      cursor.theme = "Breeze";
+      iconTheme = "Papirus-Dark";
+      wallpaper = wallpaperImg;
+    };
+
+    kwin = {
+      virtualDesktops = {
+        rows = 2;
+        number = 4;
+        names = [
+          "Desktop 1"
+          "Desktop 2"
+          "Desktop 3"
+          "Desktop 4"
+        ];
+      };
+
+      effects = {
+        blur.enable = true;
+        translucency.enable = true;
+      };
+    };
+
+    input.keyboard = {
+      numlockOnStartup = "on";
+    };
+
+    # Fonts configuration
     fonts = {
       general = { family = "Inter"; pointSize = 10; };
       fixedWidth = { family = "JetBrainsMono Nerd Font"; pointSize = 10; };
       windowTitle = { family = "Kanit"; pointSize = 11; };
     };
 
-    kwin = {
-      effects = {
-        blur.enable = true;
-        translucency.enable = true;
+    # Shortcuts
+    shortcuts = {
+      "services/kitty.desktop" = {
+        "_launch" = [
+          "Ctrl+Alt+T"
+        ];
       };
-      scripts.polonium.enable = false;
+      "services/org.kde.spectacle.desktop" = {
+        "RectangularRegionScreenShot" = [
+          "Print"
+          "Meta+Shift+S"
+        ];
+      };
     };
 
-    configFile."kwinrc"."Plugins"."magiclampEnabled" = true;
-
+    # Panel configuration
     panels = [
       {
         location = "bottom";
-        height = 44;
-        floating = true;
+        screen = 0;
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.pager"
-          "org.kde.plasma.icontasks" 
+          "org.kde.plasma.taskmanager"
           "org.kde.plasma.marginsseparator"
           "org.kde.plasma.systemtray"
-          "org.kde.plasma.digitalclock"
+          {
+            name = "org.kde.plasma.digitalclock";
+            config = {
+              Appearance = {
+                firstDayOfWeek = "monday";
+                showWeekNumbers = true;
+                showSeconds = "Always";
+              };
+            };
+          }
+          "org.kde.plasma.showdesktop"
+        ];
+      }
+      {
+        location = "bottom";
+        screen = 1;
+        widgets = [
+          "org.kde.plasma.kickoff"
+          "org.kde.plasma.pager"
+          "org.kde.plasma.taskmanager"
+          "org.kde.plasma.marginsseparator"
+          "org.kde.plasma.systemtray"
+          {
+            name = "org.kde.plasma.digitalclock";
+            config = {
+              Appearance = {
+                firstDayOfWeek = "monday";
+                showWeekNumbers = true;
+                showSeconds = "Always";
+              };
+            };
+          }
+          "org.kde.plasma.showdesktop"
+        ];
+      }
+      {
+        location = "bottom";
+        screen = 2;
+        widgets = [
+          "org.kde.plasma.kickoff"
+          "org.kde.plasma.pager"
+          "org.kde.plasma.taskmanager"
+          "org.kde.plasma.marginsseparator"
+          "org.kde.plasma.systemtray"
+          {
+            name = "org.kde.plasma.digitalclock";
+            config = {
+              Appearance = {
+                firstDayOfWeek = "monday";
+                showWeekNumbers = true;
+                showSeconds = "Always";
+              };
+            };
+          }
+          "org.kde.plasma.showdesktop"
         ];
       }
     ];
 
-    # 1. Forzamos a KWin a usar Klassy como decorador de ventanas
-    configFile."kwinrc"."org.kde.kdecoration2"."library" = "org.kde.klassy";
-    configFile."kwinrc"."org.kde.kdecoration2"."theme" = "org.kde.klassy";
+    # Window rules
+    window-rules = [
+    ];
 
-    # 2. Configuración "Chula" de Klassy (Efectos Visuales)
-    configFile."klassyrc"."Common"."CornerRadius" = 12; # Esquinas bien redondeadas
-    configFile."klassyrc"."Common"."ThinWindowFrames" = true; # Bordes finos y elegantes
-    
-    # 3. Botones "Top" (Tamaño y Estilo)
-    # Aquí puedes poner "Breeze", "macOS", "Windos", etc.
-    configFile."klassyrc"."Common"."ButtonIconStyle" = "Oxygen"; 
-    configFile."klassyrc"."Common"."ButtonSize" = 2; # 2 es "Large", más fácil de clicar
-    configFile."klassyrc"."Common"."ButtonSpacing" = 4; # Más espacio entre botones para que respiren
-    
-    # 4. Color del borde (Para que resalten las ventanas)
-    configFile."klassyrc"."WindEco"."ActiveWindowFrameColor" = "AccentColor";
+    configFile."kwinrc"."Plugins"."magiclampEnabled" = true;
+    configFile."kwinrc"."Effect-magiclamp"."AnimationDuration" = 250;
+
+    configFile."kwinrc"."Effect-Blur"."BlurRadius" = 12;
+    configFile."kwinrc"."Effect-Blur"."NoiseStrength" = 10;
+
   };
 
-  # Forzar estética Kvantum para transparencias
   qt = {
     enable = true;
-    platformTheme.name = "kvantum";
-    style.name = "kvantum";
+  #   platformTheme.name = "kde";
+  #   style.name = "breeze";
   };
-
-  programs.konsole = {
+  
+  programs.konsole.enable = false;
+  programs.kitty = {
     enable = true;
-    defaultProfile = "NixConfig";
-    profiles.NixConfig = {
-      colorScheme = "Breeze";
-      font.name = "JetBrainsMono Nerd Font";
-      font.size = 11;
-    };
+    themeFile = "Monokai";
+    font = { name = "JetBrainsMono Nerd Font"; size = 14; };
   };
 
-  # Esto asegura que las variables de entorno fuercen el modo oscuro
-  home.sessionVariables = {
-    "COLORTERM" = "truecolor";
-  };
+  home.stateVersion = "26.05"; 
 }

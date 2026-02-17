@@ -20,6 +20,7 @@
     nixfmt
     fzf
     protonvpn-gui
+    vim
   ];
 
   # Configuración de Brave
@@ -65,7 +66,7 @@
   programs.starship = {
     enable = true;
     settings = {
-      add_newline = false;
+      add_newline = true;
     };
   };
 

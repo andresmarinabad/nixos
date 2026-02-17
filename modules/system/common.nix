@@ -60,4 +60,5 @@
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   programs.nano.enable = false;
+  programs.vim.enable = true;
 }

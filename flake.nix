@@ -32,7 +32,7 @@
           home-manager.users = lib.mapAttrs (name: path: {
             imports = [ 
               path 
-              plasma-manager.homeManagerModules.plasma-manager 
+              plasma-manager.homeModules.plasma-manager 
             ];
           }) users;
         }

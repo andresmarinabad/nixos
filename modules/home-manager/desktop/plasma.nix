@@ -16,11 +16,11 @@
 
     workspace = {
       lookAndFeel = "org.kde.breezedark.desktop";
-      cursorTheme = "Breeze";
+      cursor.theme = "Breeze";
       theme = "breeze-dark";
       iconTheme = "Papirus-Dark";
       colorScheme = "BreezeDark";
-      wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Patina/contents/images/5120x2880.jpg";
+      wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/DarkestHour/contents/images/5120x2880.jpg";
     };
 
     fonts = {
@@ -65,7 +65,7 @@
     
     # 3. Botones "Top" (Tamaño y Estilo)
     # Aquí puedes poner "Breeze", "macOS", "Windos", etc.
-    configFile."klassyrc"."Common"."ButtonIconStyle" = "Breeze"; 
+    configFile."klassyrc"."Common"."ButtonIconStyle" = "Oxygen"; 
     configFile."klassyrc"."Common"."ButtonSize" = 2; # 2 es "Large", más fácil de clicar
     configFile."klassyrc"."Common"."ButtonSpacing" = 4; # Más espacio entre botones para que respiren
     

@@ -82,6 +82,8 @@
       {
         location = "bottom";
         screen = 0;
+        height = 46;
+        floating = true;
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.pager"
@@ -104,6 +106,8 @@
       {
         location = "bottom";
         screen = 1;
+        height = 46;
+        floating = true;
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.pager"
@@ -126,6 +130,8 @@
       {
         location = "bottom";
         screen = 2;
+        height = 46;
+        floating = true;
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.pager"

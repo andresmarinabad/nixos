@@ -1,5 +1,11 @@
 # modules/system-common.nix
 { pkgs, config, ... }:
+
+let
+  user = "andres";
+  imagen = ../home-manager/profile/andres.png;
+in
+
 {
   # Bootloader, Red, Reloj, Locales, Fonts, Docker, GNOME, Sonido, etc.
   boot.loader.systemd-boot.enable = true;
@@ -53,4 +59,14 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   programs.nano.enable = false;
   programs.vim.enable = true;
+
+  system.activationScripts.script.text = ''
+    mkdir -p /var/lib/AccountsService/{icons,users}
+    cp ${imagen} /var/lib/AccountsService/icons/${user}
+    echo -e "[User]\nIcon=/var/lib/AccountsService/icons/${user}" > /var/lib/AccountsService/users/${user}
+    chown root:root /var/lib/AccountsService/users/${user}
+    chmod 0600 /var/lib/AccountsService/users/${user}
+    chown root:root /var/lib/AccountsService/icons/${user}
+    chmod 0444 /var/lib/AccountsService/icons/${user}
+  '';
 }

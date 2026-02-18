@@ -27,7 +27,7 @@
   programs.brave = {
     enable = true;
     extensions = [
-      { id = "nngceckbapebfimnlniiiahkandclblb"; } # Extensión de Bitwarden para el navegador
+      { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
     ];
   };
 

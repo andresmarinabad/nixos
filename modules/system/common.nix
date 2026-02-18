@@ -34,14 +34,6 @@
     hashedPasswordFile = config.age.secrets.pass-andres.path;
   };
 
-  users.users.gandalf = {
-    isNormalUser = true;
-    shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "docker" "wheel" ];
-    description = "Gandalf";
-    hashedPasswordFile = config.age.secrets.pass-gandalf.path;
-  };
-
   virtualisation.docker.enable = true;
   services.xserver.enable = true;
 

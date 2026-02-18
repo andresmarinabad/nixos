@@ -165,11 +165,11 @@
 
   };
 
-  qt = {
-    enable = true;
-  #   platformTheme.name = "kde";
-  #   style.name = "breeze";
-  };
+  # qt = {
+  #   enable = true;
+  # #   platformTheme.name = "kde";
+  # #   style.name = "breeze";
+  # };
   
   programs.konsole.enable = false;
   programs.kitty = {

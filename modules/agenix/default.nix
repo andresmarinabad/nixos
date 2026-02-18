@@ -6,7 +6,6 @@
 
   # PASSWORDS
   age.secrets.pass-andres.file = ./pass-andres.age;
-  age.secrets.pass-gandalf.file = ./pass-gandalf.age;
   age.secrets.pass-sara.file = ./pass-sara.age;
 
   # GITHUB SSH
@@ -20,8 +19,8 @@
 
   age.secrets.github-aistech = {
     file = ./github-aistech.age;
-    path = "/home/gandalf/.ssh/gandalf";
-    owner = "gandalf";
+    path = "/home/andres/.ssh/gandalf";
+    owner = "andres";
     group = "users";
     mode = "600";
   };

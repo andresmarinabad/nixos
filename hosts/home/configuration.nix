@@ -1,9 +1,8 @@
-{ pkgs, ... }:
+{ ... }:
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/system/andres/system.nix
-    # ../../modules/desktop/gnome.nix
     ../../modules/desktop/plasma.nix
     ../../modules/agenix/default.nix
   ];

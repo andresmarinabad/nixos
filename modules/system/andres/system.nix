@@ -20,5 +20,6 @@
 
   environment.shellAliases = {
     nr = "sudo nixos-rebuild switch --flake .#home";
+    ncg = "sudo nix-collect-garbage -d";
   };
 }

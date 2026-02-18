@@ -41,7 +41,7 @@
           "Desktop 1"
           "Desktop 2"
           "Desktop 3"
-          "Desktop 4"
+          "Personal"
         ];
       };
 

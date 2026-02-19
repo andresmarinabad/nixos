@@ -1,17 +1,14 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
  let
-  wallpaperImg = builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/KDE/plasma-workspace-wallpapers/30568e2caa78cc253b89bb3efa62819d6c66ecd0/DarkestHour/contents/images/2560x1600.jpg";
-    sha256 = "1kpianm9v074afhin1wd4s20awnkdiq9nf9bzjqighm3wgx06dwf";
-  };
+  wallpaperImg = ./wallpaper/desierto.jpeg;
  in
 {
   home.packages = with pkgs; [
     inter kanit-font
     kdePackages.spectacle kdePackages.ark kdePackages.gwenview
     kdePackages.kcalc kdePackages.partitionmanager kdePackages.filelight
-    kdePackages.kate kdePackages.qtstyleplugin-kvantum
+    kdePackages.kate 
     papirus-icon-theme fastfetch 
   ];
 
@@ -164,19 +161,14 @@
     configFile."kwinrc"."Effect-Blur"."NoiseStrength" = 10;
 
   };
-
-  # qt = {
-  #   enable = true;
-  # #   platformTheme.name = "kde";
-  # #   style.name = "breeze";
-  # };
   
-  programs.konsole.enable = false;
   programs.kitty = {
     enable = true;
     themeFile = "Monokai";
     font = { name = "JetBrainsMono Nerd Font"; size = 14; };
   };
+
+  programs.konsole.enable = false;
 
   home.stateVersion = "26.05"; 
 }

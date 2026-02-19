@@ -1,6 +1,24 @@
 { pkgs, ... }:
+
+let
+  codeSettings = {
+    "editor.fontSize" = 14;
+    "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'";
+    "editor.fontLigatures" = true;
+    "workbench.iconTheme" = "material-icon-theme";
+    "nix.enableLanguageServer" = true;
+    "nix.serverPath" = "nil";
+    "editor.formatOnSave" = true;
+    "editor.defaultFormatter" = "esbenp.prettier-vscode";
+    "git.autofetch" = true;
+    "python.defaultInterpreterPath" = "./.venv/bin/python";
+    "workbench.colorTheme" = "Default Dark+";
+    "window.autoDetectColorScheme" = false;
+  };
+in
+
 {
-  imports = [ ../roles/developer.nix ];
+  imports = [ ../common.nix ../desktop/plasma.nix ];
 
   home.username = "andres";
   home.homeDirectory = "/home/andres";
@@ -25,13 +43,39 @@
       google-cloud-sdk.components.gke-gcloud-auth-plugin
       google-cloud-sdk.components.kubectl
     ])
+    bottom
+    bat
+    ripgrep
+    curl
+    wget
+    docker-compose
+    docker
+    postman
+    zsh
+    starship
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-history-substring-search
+    nixfmt
+    fzf
+    protonvpn-gui
+    protonmail-desktop
   ];
+
+  # Configuración de Brave
+  programs.brave = {
+    enable = true;
+    extensions = [
+      { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
+    ];
+  };
 
   # GIT
   programs.git = {
     enable = true;
     settings.user.name = "Andres";
     settings.user.email = "andresmarinabad@protonmail.com";
+    settings.core.editor = "vim";
 
     extraConfig = {
       includeIf."gitdir:~/code/work/" = {
@@ -92,4 +136,78 @@
     X-GNOME-Autostart-enabled=true
   '';
 
+  # ZSH con OMZ
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    historySubstringSearch.enable = true;
+    shellAliases = {
+      v = "vim";
+      ns = "nix-shell -p";
+    };
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "docker"
+        "sudo"
+        "python"
+        "opentofu"
+      ];
+    };
+  };
+
+  # Starchip prompt
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = true;
+    };
+  };
+
+  # Direnv
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
+  };
+
+  # VSCode
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode;
+
+    # Extensiones para vscode 
+    profiles.default.extensions = with pkgs.vscode-extensions; [
+      jnoortheen.nix-ide
+      mkhl.direnv
+      christian-kohler.path-intellisense
+      naumovs.color-highlight
+      eamodio.gitlens
+      ms-azuretools.vscode-docker
+      ms-vscode-remote.remote-ssh
+      pkief.material-icon-theme
+      zhuangtongfa.material-theme
+      redhat.ansible
+      github.vscode-github-actions
+      hashicorp.terraform
+      esbenp.prettier-vscode
+      ms-python.python
+      davidanson.vscode-markdownlint
+      ritwickdey.liveserver
+      redhat.vscode-yaml
+    ];
+
+    # Configuración de settings.json
+    profiles.default.userSettings = codeSettings;
+  };
+
+  # Sinc settigns de vscode con cursor
+  xdg.configFile."Cursor/User/settings.json".text = builtins.toJSON codeSettings;
+
+  home.stateVersion = "26.05"; 
+
 }
+

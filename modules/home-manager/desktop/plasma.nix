@@ -1,8 +1,9 @@
 { pkgs, lib, num_panels, ... }:
 
- let
-  wallpaperImg = ./wallpaper/desierto.jpeg;
- in
+  let
+    wallpaperImg = ../../../assets/img/wallpaper/desierto.jpeg;
+  in
+
 {
   home.packages = with pkgs; [
     inter kanit-font
@@ -100,99 +101,6 @@
           "org.kde.plasma.showdesktop"
         ];
     }) num_panels;
-
-    # panels = [
-    #   {
-    #     location = "bottom";
-    #     screen = 0;
-    #     height = 46;
-    #     floating = true;
-    #     widgets = [
-    #       "org.kde.plasma.kickoff"
-    #       {
-    #         name = "org.kde.plasma.pager";
-    #         config = {
-    #           General.showOnlyCurrentScreen = true;
-    #           General.showWindowIcons = false;
-    #         };
-    #       }
-    #       "org.kde.plasma.taskmanager"
-    #       "org.kde.plasma.marginsseparator"
-    #       "org.kde.plasma.systemtray"
-    #       {
-    #         name = "org.kde.plasma.digitalclock";
-    #         config = {
-    #           Appearance = {
-    #             firstDayOfWeek = "monday";
-    #             showWeekNumbers = true;
-    #             showSeconds = "Always";
-    #           };
-    #         };
-    #       }
-    #       "org.kde.plasma.showdesktop"
-    #     ];
-    #   }
-    #   # {
-    #   #   location = "bottom";
-    #   #   screen = 1;
-    #   #   height = 46;
-    #   #   floating = true;
-    #   #   widgets = [
-    #   #     "org.kde.plasma.kickoff"
-    #   #     {
-    #   #       name = "org.kde.plasma.pager";
-    #   #       config = {
-    #   #         General.showOnlyCurrentScreen = true;
-    #   #         General.showWindowIcons = false;
-    #   #       };
-    #   #     }
-    #   #     "org.kde.plasma.taskmanager"
-    #   #     "org.kde.plasma.marginsseparator"
-    #   #     "org.kde.plasma.systemtray"
-    #   #     {
-    #   #       name = "org.kde.plasma.digitalclock";
-    #   #       config = {
-    #   #         Appearance = {
-    #   #           firstDayOfWeek = "monday";
-    #   #           showWeekNumbers = true;
-    #   #           showSeconds = "Always";
-    #   #         };
-    #   #       };
-    #   #     }
-    #   #     "org.kde.plasma.showdesktop"
-    #   #   ];
-    #   # }
-    #   # {
-    #   #   location = "bottom";
-    #   #   screen = 2;
-    #   #   height = 46;
-    #   #   floating = true;
-    #   #   widgets = [
-    #   #     "org.kde.plasma.kickoff"
-    #   #     {
-    #   #       name = "org.kde.plasma.pager";
-    #   #       config = {
-    #   #         General.showOnlyCurrentScreen = true;
-    #   #         General.showWindowIcons = false;
-    #   #       };
-    #   #     }
-    #   #     "org.kde.plasma.taskmanager"
-    #   #     "org.kde.plasma.marginsseparator"
-    #   #     "org.kde.plasma.systemtray"
-    #   #     {
-    #   #       name = "org.kde.plasma.digitalclock";
-    #   #       config = {
-    #   #         Appearance = {
-    #   #           firstDayOfWeek = "monday";
-    #   #           showWeekNumbers = true;
-    #   #           showSeconds = "Always";
-    #   #         };
-    #   #       };
-    #   #     }
-    #   #     "org.kde.plasma.showdesktop"
-    #   #   ];
-    #   # }
-    # ];
 
     # Window rules
     window-rules = [

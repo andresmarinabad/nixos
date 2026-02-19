@@ -3,7 +3,7 @@
 
 let
   user = "andres";
-  imagen = ../home-manager/profile/andres.png;
+  imagen = ../../assets/img/profiles/andres.png;
 in
 
 {

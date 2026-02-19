@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, num_panels, ... }:
 
 let
   codeSettings = {
@@ -18,7 +18,10 @@ let
 in
 
 {
-  imports = [ ../common.nix ../desktop/plasma.nix ];
+  imports = [ 
+    ../common.nix  
+    (import ../desktop/plasma.nix { inherit pkgs lib num_panels; })
+  ];
 
   home.username = "andres";
   home.homeDirectory = "/home/andres";

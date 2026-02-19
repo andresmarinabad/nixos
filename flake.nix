@@ -47,16 +47,15 @@
         systemModules = [
           ./hosts/aistech/configuration.nix
           # el paquete de trazor tiene una vulnerabilidad
-          {
-            nixpkgs.config.permittedInsecurePackages = [
-              "python3.13-ecdsa-0.19.1"
-            ];
-          }
+          { nixpkgs.config.permittedInsecurePackages = [ "python3.13-ecdsa-0.19.1" ]; }
           #./modules/system/aistech/system.nix
           agenix.nixosModules.default 
         ];
         users = {
-          andres = import ./modules/home-manager/users/andres.nix;
+          andres = { ... }: { 
+            imports = [ ./modules/home-manager/users/andres.nix ];
+            _module.args.num_panels = 3; 
+          };
         };
       };
 
@@ -66,16 +65,15 @@
         systemModules = [
           ./hosts/home/configuration.nix
           # el paquete de trazor tiene una vulnerabilidad
-          {
-            nixpkgs.config.permittedInsecurePackages = [
-              "python3.13-ecdsa-0.19.1"
-            ];
-          }
+          { nixpkgs.config.permittedInsecurePackages = [ "python3.13-ecdsa-0.19.1" ]; }
           #./modules/system/andres/system.nix
           agenix.nixosModules.default
         ];
         users = {
-          andres = import ./modules/home-manager/users/andres.nix;
+          andres = { ... }: { 
+            imports = [ ./modules/home-manager/users/andres.nix ];
+            _module.args.num_panels = 1; 
+          };
           sara = import ./modules/home-manager/users/sara.nix;
         };
       };

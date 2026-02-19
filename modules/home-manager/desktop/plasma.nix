@@ -41,11 +41,6 @@
           "Personal"
         ];
       };
-
-      effects = {
-        blur.enable = true;
-        translucency.enable = true;
-      };
     };
 
     input.keyboard = {
@@ -83,7 +78,13 @@
         floating = true;
         widgets = [
           "org.kde.plasma.kickoff"
-          "org.kde.plasma.pager"
+          {
+            name = "org.kde.plasma.pager";
+            config = {
+              General.showOnlyCurrentScreen = true;
+              General.showWindowIcons = false;
+            };
+          }
           "org.kde.plasma.taskmanager"
           "org.kde.plasma.marginsseparator"
           "org.kde.plasma.systemtray"
@@ -107,7 +108,13 @@
         floating = true;
         widgets = [
           "org.kde.plasma.kickoff"
-          "org.kde.plasma.pager"
+          {
+            name = "org.kde.plasma.pager";
+            config = {
+              General.showOnlyCurrentScreen = true;
+              General.showWindowIcons = false;
+            };
+          }
           "org.kde.plasma.taskmanager"
           "org.kde.plasma.marginsseparator"
           "org.kde.plasma.systemtray"
@@ -131,7 +138,13 @@
         floating = true;
         widgets = [
           "org.kde.plasma.kickoff"
-          "org.kde.plasma.pager"
+          {
+            name = "org.kde.plasma.pager";
+            config = {
+              General.showOnlyCurrentScreen = true;
+              General.showWindowIcons = false;
+            };
+          }
           "org.kde.plasma.taskmanager"
           "org.kde.plasma.marginsseparator"
           "org.kde.plasma.systemtray"

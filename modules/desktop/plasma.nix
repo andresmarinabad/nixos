@@ -1,7 +1,7 @@
 { pkgs, lib, num_panels, ... }:
 
   let
-    wallpaperImg = ../../../assets/img/wallpaper/desierto.jpeg;
+    wallpaperImg = ../../assets/img/wallpaper/desierto.jpeg;
   in
 
 {

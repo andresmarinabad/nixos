@@ -59,7 +59,6 @@ in
     nixfmt
     fzf
     protonvpn-gui
-    protonmail-desktop
   ];
 
   # Configuración de Brave

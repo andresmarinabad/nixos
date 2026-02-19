@@ -10,5 +10,5 @@
   services.desktopManager.plasma6.enable = true;
   
   # Necesario para que Home Manager pueda tocar la config de Plasma
-  programs.dconf.enable = true; 
+  programs.dconf.enable = true;
 }

@@ -9,7 +9,7 @@
     kdePackages.spectacle kdePackages.ark kdePackages.gwenview
     kdePackages.kcalc kdePackages.partitionmanager kdePackages.filelight
     kdePackages.kate 
-    papirus-icon-theme fastfetch 
+    papirus-icon-theme fastfetch
   ];
 
   programs.plasma = {

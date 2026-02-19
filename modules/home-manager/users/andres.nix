@@ -20,7 +20,7 @@ in
 {
   imports = [ 
     ../common.nix  
-    (import ../desktop/plasma.nix { inherit pkgs lib num_panels; })
+    (import ../../desktop/plasma.nix { inherit pkgs lib num_panels; })
   ];
 
   home.username = "andres";

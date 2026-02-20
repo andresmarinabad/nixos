@@ -12,6 +12,7 @@ Flake con dos hosts: **aistech** (PC trabajo) y **home** (PC casa).
 Tras clonar (o copiar) el repo, el sistema aún no tiene flakes activos y Nix exige que el flake esté en un repo git con los archivos commiteados. Haz lo siguiente:
 
 1. **Entrar al directorio del repo**
+
    ```bash
    cd /path/to/nixos
    ```
@@ -28,6 +29,7 @@ Tras clonar (o copiar) el repo, el sistema aún no tiene flakes activos y Nix ex
      ```
 
 3. **Activar flakes para este comando** (si tu NixOS actual aún no tiene `nix-command` y `flakes` en config):
+
    ```bash
    # PC de casa
    sudo nixos-rebuild switch --flake .#home --option experimental-features 'nix-command flakes'
@@ -37,6 +39,7 @@ Tras clonar (o copiar) el repo, el sistema aún no tiene flakes activos y Nix ex
    ```
 
    Si tu NixOS ya tiene flakes activados, puedes omitir `--option ...`:
+
    ```bash
    sudo nixos-rebuild switch --flake .#home
    sudo nixos-rebuild switch --flake .#aistech
@@ -66,6 +69,15 @@ sudo nixos-rebuild switch --flake /path/to/repo#home
 - `modules/home-manager/` – usuarios y common.
 - `modules/desktop/` – Plasma (solo andres).
 - `modules/agenix/` – definición de secretos.
+
+## Marcadores del navegador
+
+Los marcadores de **Brave** (andres) y **Chromium** (sara) se generan desde Nix. Edita la lista dentro del `let` que genera el JSON:
+
+- `modules/home-manager/users/andres.nix` (Brave): variable `braveBookmarksJson`, lista `bookmarksList`.
+- `modules/home-manager/users/sara.nix` (Chromium): variable `chromiumBookmarks`, lista `bookmarksList`.
+
+Cada entrada puede ser `{ name = "..."; url = "https://..."; }` o una carpeta: `{ name = "..."; folder = true; children = [ ... ]; }`. Tras cambiar, `home-manager switch` sobrescribe el archivo del perfil por defecto.
 
 ## Formatear Nix
 

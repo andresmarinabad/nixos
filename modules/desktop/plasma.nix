@@ -85,10 +85,10 @@
       };
     };
 
-    # Panel configuration
+    # Panel configuration (un panel por pantalla: 0, 1, 2 en aistech; 1 en home)
     panels = lib.genList (i: {
       location = "bottom";
-      screen = 0;
+      screen = i;
       height = 46;
       floating = true;
       widgets = [

@@ -79,7 +79,7 @@ in
     settings.user.email = "andresmarinabad@protonmail.com";
     settings.core.editor = "vim";
 
-    extraConfig = {
+    settings = {
       includeIf."gitdir:~/code/work/" = {
         path = "~/code/work/.gitconfig-work";
       };

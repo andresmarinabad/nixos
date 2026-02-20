@@ -1,8 +1,8 @@
 {
   pkgs,
   lib,
-  num_panels,
   hostName ? "home",
+  self ? null,
   ...
 }:
 
@@ -60,10 +60,25 @@ let
   ];
 in
 
+let
+  num_panels = if hostName == "aistech" then 3 else 1;
+  wallpaperPath =
+    if self != null then
+      self + "/assets/img/wallpaper/desierto.jpeg"
+    else
+      ../../assets/img/wallpaper/desierto.jpeg;
+in
 {
   imports = [
     ../common.nix
-    (import ../../desktop/plasma.nix { inherit pkgs lib num_panels; })
+    (import ../../desktop/plasma.nix {
+      inherit
+        pkgs
+        lib
+        num_panels
+        wallpaperPath
+        ;
+    })
   ];
 
   home.username = "andres";

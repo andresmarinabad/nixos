@@ -14,32 +14,45 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, agenix, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      plasma-manager,
+      agenix,
+      ...
+    }@inputs:
     let
       inherit (nixpkgs) lib;
 
       # Función para configurar el sistema y HM
-      mkHost = { hostName, systemModules, users }: nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs hostName; };
-        modules = [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs hostName; };
-            # Mapeamos los usuarios
-            home-manager.users = lib.mapAttrs
-              (name: path: {
+      mkHost =
+        {
+          hostName,
+          systemModules,
+          users,
+        }:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs hostName; };
+          modules = [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs hostName self; };
+              # Mapeamos los usuarios
+              home-manager.users = lib.mapAttrs (name: path: {
                 imports = [
                   path
                   plasma-manager.homeModules.plasma-manager
                 ];
-              })
-              users;
-          }
-        ] ++ systemModules;
-      };
+              }) users;
+            }
+          ]
+          ++ systemModules;
+        };
     in
     {
       nixosConfigurations = {
@@ -52,10 +65,12 @@
             agenix.nixosModules.default
           ];
           users = {
-            andres = { ... }: {
-              imports = [ ./modules/home-manager/users/andres.nix ];
-              _module.args.num_panels = 3;
-            };
+            andres =
+              { ... }:
+              {
+                imports = [ ./modules/home-manager/users/andres.nix ];
+                _module.args.num_panels = 3;
+              };
           };
         };
 
@@ -67,13 +82,17 @@
             agenix.nixosModules.default
           ];
           users = {
-            andres = { ... }: {
-              imports = [ ./modules/home-manager/users/andres.nix ];
-              _module.args.num_panels = 1;
-            };
-            sara = { ... }: {
-              imports = [ ./modules/home-manager/users/sara.nix ];
-            };
+            andres =
+              { ... }:
+              {
+                imports = [ ./modules/home-manager/users/andres.nix ];
+                _module.args.num_panels = 1;
+              };
+            sara =
+              { ... }:
+              {
+                imports = [ ./modules/home-manager/users/sara.nix ];
+              };
           };
         };
 

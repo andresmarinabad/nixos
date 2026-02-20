@@ -28,7 +28,8 @@ in
     nr = "sudo nixos-rebuild switch --flake .#home";
   };
 
-  system.activationScripts.script.text = ''
+  # Script con nombre distinto para no sobrescribir el de common.nix (andres)
+  system.activationScripts.accountsServiceSara = ''
     mkdir -p /var/lib/AccountsService/{icons,users}
     cp ${imagen} /var/lib/AccountsService/icons/${user}
     echo -e "[User]\nIcon=/var/lib/AccountsService/icons/${user}" > /var/lib/AccountsService/users/${user}

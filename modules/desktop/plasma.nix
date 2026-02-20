@@ -1,16 +1,20 @@
 { pkgs, lib, num_panels, ... }:
 
-  let
-    wallpaperImg = ../../assets/img/wallpaper/desierto.jpeg;
-  in
+let
+  wallpaperImg = ../../assets/img/wallpaper/desierto.jpeg;
+in
 
 {
   home.packages = with pkgs; [
-    inter kanit-font
-    kdePackages.spectacle kdePackages.ark kdePackages.gwenview
-    kdePackages.kcalc kdePackages.partitionmanager kdePackages.filelight
-    kdePackages.kate 
-    papirus-icon-theme fastfetch
+    kdePackages.spectacle
+    kdePackages.ark
+    kdePackages.gwenview
+    kdePackages.kcalc
+    kdePackages.partitionmanager
+    kdePackages.filelight
+    kdePackages.kate
+    papirus-icon-theme
+    fastfetch
   ];
 
   programs.plasma = {
@@ -71,8 +75,9 @@
     };
 
     # Panel configuration
-    panels = lib.genList (i: {
-      location = "bottom";
+    panels = lib.genList
+      (i: {
+        location = "bottom";
         screen = 0;
         height = 46;
         floating = true;
@@ -100,7 +105,8 @@
           }
           "org.kde.plasma.showdesktop"
         ];
-    }) num_panels;
+      })
+      num_panels;
 
     # Window rules
     window-rules = [
@@ -113,7 +119,7 @@
     configFile."kwinrc"."Effect-Blur"."NoiseStrength" = 10;
 
   };
-  
+
   programs.kitty = {
     enable = true;
     themeFile = "Monokai";
@@ -122,5 +128,5 @@
 
   programs.konsole.enable = false;
 
-  home.stateVersion = "26.05"; 
+  home.stateVersion = "26.05";
 }

@@ -1,8 +1,10 @@
-{ pkgs, lib, num_panels, ... }:
-
-let
-  wallpaperImg = ../../assets/img/wallpaper/desierto.jpeg;
-in
+{
+  pkgs,
+  lib,
+  num_panels,
+  wallpaperPath ? ../../assets/img/wallpaper/desierto.jpeg,
+  ...
+}:
 
 {
   home.packages = with pkgs; [
@@ -32,7 +34,7 @@ in
       theme = "breeze-dark";
       cursor.theme = "Breeze";
       iconTheme = "Papirus-Dark";
-      wallpaper = wallpaperImg;
+      wallpaper = wallpaperPath;
     };
 
     kwin = {
@@ -54,9 +56,18 @@ in
 
     # Fonts configuration
     fonts = {
-      general = { family = "Inter"; pointSize = 10; };
-      fixedWidth = { family = "JetBrainsMono Nerd Font"; pointSize = 10; };
-      windowTitle = { family = "Kanit"; pointSize = 11; };
+      general = {
+        family = "Inter";
+        pointSize = 10;
+      };
+      fixedWidth = {
+        family = "JetBrainsMono Nerd Font";
+        pointSize = 10;
+      };
+      windowTitle = {
+        family = "Kanit";
+        pointSize = 11;
+      };
     };
 
     # Shortcuts
@@ -75,38 +86,36 @@ in
     };
 
     # Panel configuration
-    panels = lib.genList
-      (i: {
-        location = "bottom";
-        screen = 0;
-        height = 46;
-        floating = true;
-        widgets = [
-          "org.kde.plasma.kickoff"
-          {
-            name = "org.kde.plasma.pager";
-            config = {
-              General.showOnlyCurrentScreen = true;
-              General.showWindowIcons = false;
+    panels = lib.genList (i: {
+      location = "bottom";
+      screen = 0;
+      height = 46;
+      floating = true;
+      widgets = [
+        "org.kde.plasma.kickoff"
+        {
+          name = "org.kde.plasma.pager";
+          config = {
+            General.showOnlyCurrentScreen = true;
+            General.showWindowIcons = false;
+          };
+        }
+        "org.kde.plasma.taskmanager"
+        "org.kde.plasma.marginsseparator"
+        "org.kde.plasma.systemtray"
+        {
+          name = "org.kde.plasma.digitalclock";
+          config = {
+            Appearance = {
+              firstDayOfWeek = "monday";
+              showWeekNumbers = true;
+              showSeconds = "Always";
             };
-          }
-          "org.kde.plasma.taskmanager"
-          "org.kde.plasma.marginsseparator"
-          "org.kde.plasma.systemtray"
-          {
-            name = "org.kde.plasma.digitalclock";
-            config = {
-              Appearance = {
-                firstDayOfWeek = "monday";
-                showWeekNumbers = true;
-                showSeconds = "Always";
-              };
-            };
-          }
-          "org.kde.plasma.showdesktop"
-        ];
-      })
-      num_panels;
+          };
+        }
+        "org.kde.plasma.showdesktop"
+      ];
+    }) num_panels;
 
     # Window rules
     window-rules = [
@@ -123,7 +132,10 @@ in
   programs.kitty = {
     enable = true;
     themeFile = "Monokai";
-    font = { name = "JetBrainsMono Nerd Font"; size = 14; };
+    font = {
+      name = "JetBrainsMono Nerd Font";
+      size = 14;
+    };
   };
 
   programs.konsole.enable = false;

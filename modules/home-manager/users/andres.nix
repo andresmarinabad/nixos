@@ -149,6 +149,10 @@ in
                 name = "Bitwarden EU";
                 url = "https://vault.bitwarden.eu/#/vault?organizationId=d9120928-f044-4e03-8124-b354009c7015&itemId=70759b4d-318e-48d3-9969-b38000a6df6f&action=view";
               }
+              {
+                name = "Hexagonal Architecture";
+                url = "https://medium.com/@pthtantai97/hexagonal-architecture-with-golang-part-1-7f82a364b29";
+              }
             ];
           }
           {

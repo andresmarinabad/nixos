@@ -121,11 +121,9 @@
     window-rules = [
     ];
 
-    # Efectos KWin: minimizar (magic lamp), abrir/cerrar ventanas, "fall apart" tipo Burn My Windows
     configFile."kwinrc"."Plugins"."magiclampEnabled" = true;
     configFile."kwinrc"."Effect-magiclamp"."AnimationDuration" = 250;
-    configFile."kwinrc"."Plugins"."glideEnabled" = true;
-    configFile."kwinrc"."Plugins"."fallapartEnabled" = true;
+    configFile."kwinrc"."Plugins"."translucencyEnabled" = true;
 
     configFile."kwinrc"."Effect-Blur"."BlurRadius" = 12;
     configFile."kwinrc"."Effect-Blur"."NoiseStrength" = 10;

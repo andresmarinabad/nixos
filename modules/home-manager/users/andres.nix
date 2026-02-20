@@ -161,6 +161,10 @@ in
                 url = "https://aistechspace.atlassian.net/jira/software/c/projects/DIB/boards/306";
               }
               {
+                name = "Odoo";
+                url = "https://aistech-space-sl.odoo.com/odoo";
+              }
+              {
                 name = "Bitwarden EU";
                 url = "https://vault.bitwarden.eu/#/vault?organizationId=d9120928-f044-4e03-8124-b354009c7015&itemId=70759b4d-318e-48d3-9969-b38000a6df6f&action=view";
               }

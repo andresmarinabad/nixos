@@ -100,7 +100,19 @@
             General.showWindowIcons = false;
           };
         }
-        "org.kde.plasma.taskmanager"
+        # Task manager con apps fijadas
+        {
+          name = "org.kde.plasma.taskmanager";
+          config = {
+            General.launchers = lib.concatStringsSep "," [
+              "applications:org.kde.dolphin.desktop"
+              "applications:kitty.desktop"
+              "applications:brave-browser.desktop"
+              "applications:bitwarden.desktop"
+              "applications:code.desktop"
+            ];
+          };
+        }
         "org.kde.plasma.marginsseparator"
         "org.kde.plasma.systemtray"
         {

@@ -8,7 +8,7 @@
     nixpkgs-fmt
   ];
 
-  # Varaibles para el usuario
+  # Variables para el usuario
   home.sessionVariables = {
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";

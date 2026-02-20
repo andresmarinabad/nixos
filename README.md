@@ -1,43 +1,85 @@
-# NixOS Config
+# NixOS – Configuración multi-host
 
-## Pasos para la instalación
+Flake con dos hosts: **aistech** (PC trabajo) y **home** (PC casa).
 
-### 1. Preparar el repositorio
+## Requisitos
+
+- Nix con flakes y `nix-command` (ya en la config).
+- Secretos con [agenix](https://github.com/ryantm/agenix); clave age en `~/.ssh/master`.
+
+## Primer build tras clonar el repo
+
+Tras clonar (o copiar) el repo, el sistema aún no tiene flakes activos y Nix exige que el flake esté en un repo git con los archivos commiteados. Haz lo siguiente:
+
+1. **Entrar al directorio del repo**
+   ```bash
+   cd /path/to/nixos
+   ```
+
+2. **Dejar el flake en un estado válido para Nix**
+   - Si clonaste con `git clone`, ya tienes repo. Si no (copia manual), inicializa:
+     ```bash
+     git init
+     ```
+   - Añade todo y haz un commit (el flake suele quejarse si el árbol está sucio o sin commit):
+     ```bash
+     git add .
+     git commit -m "Initial config"
+     ```
+
+3. **Activar flakes para este comando** (si tu NixOS actual aún no tiene `nix-command` y `flakes` en config):
+   ```bash
+   # PC de casa
+   sudo nixos-rebuild switch --flake .#home --option experimental-features 'nix-command flakes'
+
+   # PC de trabajo
+   sudo nixos-rebuild switch --flake .#aistech --option experimental-features 'nix-command flakes'
+   ```
+
+   Si tu NixOS ya tiene flakes activados, puedes omitir `--option ...`:
+   ```bash
+   sudo nixos-rebuild switch --flake .#home
+   sudo nixos-rebuild switch --flake .#aistech
+   ```
+
+4. **Secretos (agenix)**  
+   Asegúrate de tener la clave age en `~/.ssh/master` y los `.age` correspondientes en `modules/agenix/` antes del primer switch.
+
+## Rebuild
+
+En cada host tienes el alias `nr`:
+
+- **aistech:** `nr` → `sudo nixos-rebuild switch --flake .#aistech`
+- **home:** `nr` → `sudo nixos-rebuild switch --flake .#home`
+
+Desde cualquier sitio (con el repo clonado):
 
 ```bash
-# Descargar el repositorio y entrar en la carpeta
-cd nixos
-
-# Copiar el hardware generado por el instalador
-cp /etc/nixos/hardware-configuration.nix ./hosts/linux/
+sudo nixos-rebuild switch --flake /path/to/repo#aistech
+sudo nixos-rebuild switch --flake /path/to/repo#home
 ```
 
-Nix Shell para ejecutar `git` y poder usar `flake`
+## Estructura
 
-```
-nix-shell -p git --run "git init && git add ."
-```
+- `hosts/{aistech,home}/` – configuration.nix y hardware por host.
+- `modules/system/` – módulos NixOS (common, desktop-plasma, agenix, por-host).
+- `modules/home-manager/` – usuarios y common.
+- `modules/desktop/` – Plasma (solo andres).
+- `modules/agenix/` – definición de secretos.
 
-### 2. Copiar la clave para descifrar los secretos
+## Formatear Nix
 
-Copiar desde Bitwarden las claves a `~/.ssh/master` y `~/.ssh/master.pub`
-
-### 3. Aplicar la configuración por primera vez
-
-```
-sudo NIX_CONFIG="extra-experimental-features = nix-command flakes" nixos-rebuild switch --flake .#home
+```bash
+./scripts/format.sh
 ```
 
-y
+O manualmente: `nixpkgs-fmt flake.nix` y los `.nix` en `modules/` y `hosts/`.
 
-```
-sudo NIX_CONFIG="extra-experimental-features = nix-command flakes" nixos-rebuild switch --flake .#aistech
-```
+## CI
 
-En adelante puedes re-aplicar con:
+En cada push a `main`/`master`, GitHub Actions ejecuta:
 
-```
-rebuild
-```
+- `nix flake check --no-build`
+- dry-build de las configs **aistech** y **home**.
 
-### 4. Reiniciar
+Si usas agenix y en CI no hay claves, el dry-build puede fallar; en ese caso conviene ejecutar el build localmente.

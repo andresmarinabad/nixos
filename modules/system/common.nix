@@ -10,7 +10,7 @@ in
   # Bootloader, Red, Reloj, Locales, Fonts, Docker, GNOME, Sonido, etc.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
+
   networking.networkmanager.enable = true;
   networking.firewall.checkReversePath = "loose";
 
@@ -18,17 +18,24 @@ in
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "es_ES.UTF-8"; LC_IDENTIFICATION = "es_ES.UTF-8";
-    LC_MEASUREMENT = "es_ES.UTF-8"; LC_MONETARY = "es_ES.UTF-8";
-    LC_NAME = "es_ES.UTF-8"; LC_NUMERIC = "es_ES.UTF-8";
-    LC_PAPER = "es_ES.UTF-8"; LC_TELEPHONE = "es_ES.UTF-8";
+    LC_ADDRESS = "es_ES.UTF-8";
+    LC_IDENTIFICATION = "es_ES.UTF-8";
+    LC_MEASUREMENT = "es_ES.UTF-8";
+    LC_MONETARY = "es_ES.UTF-8";
+    LC_NAME = "es_ES.UTF-8";
+    LC_NUMERIC = "es_ES.UTF-8";
+    LC_PAPER = "es_ES.UTF-8";
+    LC_TELEPHONE = "es_ES.UTF-8";
     LC_TIME = "es_ES.UTF-8";
   };
 
   programs.zsh.enable = true;
+  # Solo las que usas en Plasma/Kitty/editor (Inter/Kanit en plasma.nix)
   fonts.packages = with pkgs; [
-    jetbrains-mono fira-code fira-code-symbols
-    nerd-fonts.jetbrains-mono nerd-fonts.ubuntu-mono nerd-fonts.ubuntu
+    jetbrains-mono
+    nerd-fonts.jetbrains-mono
+    inter
+    kanit-font
   ];
 
   # Usuarios base que están en ambos PCs
@@ -56,6 +63,8 @@ in
   services.pipewire = { enable = true; alsa.enable = true; pulse.enable = true; };
 
   nixpkgs.config.allowUnfree = true;
+  # Trezor (trezorctl/trezor-suite) - quitar cuando actualicen ecdsa
+  nixpkgs.config.permittedInsecurePackages = [ "python3.13-ecdsa-0.19.1" ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   programs.nano.enable = false;
   programs.vim.enable = true;

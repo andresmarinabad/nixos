@@ -1,25 +1,56 @@
-{ pkgs, lib, num_panels, ... }:
+{ pkgs, lib, num_panels, hostName ? "home", ... }:
 
 let
+  # Settings compartidos VSCode y Cursor
   codeSettings = {
     "editor.fontSize" = 14;
     "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'";
     "editor.fontLigatures" = true;
     "workbench.iconTheme" = "material-icon-theme";
-    "nix.enableLanguageServer" = true;
-    "nix.serverPath" = "nil";
+    "workbench.colorTheme" = "Default Dark+";
+    "window.autoDetectColorScheme" = false;
     "editor.formatOnSave" = true;
     "editor.defaultFormatter" = "esbenp.prettier-vscode";
     "git.autofetch" = true;
     "python.defaultInterpreterPath" = "./.venv/bin/python";
-    "workbench.colorTheme" = "Default Dark+";
-    "window.autoDetectColorScheme" = false;
+    # Nix: LSP nil + formatear al guardar
+    "nix.enableLanguageServer" = true;
+    "nix.serverPath" = "nil";
+    "nix.formatterPath" = "nixpkgs-fmt";
+    "[nix]" = {
+      "editor.defaultFormatter" = "jnoortheen.nix-ide";
+      "editor.formatOnSave" = true;
+    };
+    # Otros format-on-save por lenguaje
+    "[json]" = { "editor.defaultFormatter" = "esbenp.prettier-vscode"; };
+    "[jsonc]" = { "editor.defaultFormatter" = "esbenp.prettier-vscode"; };
+    "[yaml]" = { "editor.defaultFormatter" = "redhat.vscode-yaml"; };
   };
+
+  vscodeExtensions = with pkgs.vscode-extensions; [
+    jnoortheen.nix-ide
+    mkhl.direnv
+    christian-kohler.path-intellisense
+    naumovs.color-highlight
+    eamodio.gitlens
+    ms-azuretools.vscode-docker
+    ms-vscode-remote.remote-ssh
+    pkief.material-icon-theme
+    zhuangtongfa.material-theme
+    redhat.ansible
+    github.vscode-github-actions
+    hashicorp.terraform
+    esbenp.prettier-vscode
+    ms-python.python
+    davidanson.vscode-markdownlint
+    ritwickdey.liveserver
+    redhat.vscode-yaml
+  ];
 in
 
 {
-  imports = [ 
-    ../common.nix  
+  imports = [
+    ../common.nix
     (import ../../desktop/plasma.nix { inherit pkgs lib num_panels; })
   ];
 
@@ -33,36 +64,32 @@ in
     '';
   };
 
-  home.packages = with pkgs; [
-    spotify
-    calibre
-    megasync
-    telegram-desktop
-    trezor-suite
-    trezorctl
-    code-cursor
-    lens
-    (google-cloud-sdk.withExtraComponents [
-      google-cloud-sdk.components.gke-gcloud-auth-plugin
-      google-cloud-sdk.components.kubectl
-    ])
-    bottom
-    bat
-    ripgrep
-    curl
-    wget
-    docker-compose
-    docker
-    postman
-    zsh
-    starship
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-history-substring-search
-    nixfmt
-    fzf
-    protonvpn-gui
-  ];
+  home.packages = with pkgs;
+    [
+      spotify
+      calibre
+      megasync
+      telegram-desktop
+      trezor-suite
+      trezorctl
+      code-cursor
+      bat
+      ripgrep
+      curl
+      wget
+      docker-compose
+      btop
+      fzf
+      protonvpn-gui
+    ]
+    ++ lib.optionals (hostName == "aistech") [
+      k9s
+      bruno
+      (google-cloud-sdk.withExtraComponents [
+        google-cloud-sdk.components.gke-gcloud-auth-plugin
+        google-cloud-sdk.components.kubectl
+      ])
+    ];
 
   # Configuración de Brave
   programs.brave = {
@@ -176,40 +203,26 @@ in
     enableZshIntegration = true;
   };
 
-  # VSCode
+  # VSCode con extensiones y misma config
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
-
-    # Extensiones para vscode 
-    profiles.default.extensions = with pkgs.vscode-extensions; [
-      jnoortheen.nix-ide
-      mkhl.direnv
-      christian-kohler.path-intellisense
-      naumovs.color-highlight
-      eamodio.gitlens
-      ms-azuretools.vscode-docker
-      ms-vscode-remote.remote-ssh
-      pkief.material-icon-theme
-      zhuangtongfa.material-theme
-      redhat.ansible
-      github.vscode-github-actions
-      hashicorp.terraform
-      esbenp.prettier-vscode
-      ms-python.python
-      davidanson.vscode-markdownlint
-      ritwickdey.liveserver
-      redhat.vscode-yaml
-    ];
-
-    # Configuración de settings.json
-    profiles.default.userSettings = codeSettings;
+    profiles.default = {
+      extensions = vscodeExtensions;
+      userSettings = codeSettings;
+    };
   };
 
-  # Sinc settigns de vscode con cursor
+  # Cursor: mismos settings y extensiones (mismo motor que VSCode)
   xdg.configFile."Cursor/User/settings.json".text = builtins.toJSON codeSettings;
+  home.activation.installCursorExtensions = ''
+    CURSOR="${pkgs.code-cursor}/bin/cursor"
+    for ext in jnoortheen.nix-ide mkhl.direnv christian-kohler.path-intellisense naumovs.color-highlight eamodio.gitlens ms-azuretools.vscode-docker ms-vscode-remote.remote-ssh pkief.material-icon-theme zhuangtongfa.material-theme redhat.ansible github.vscode-github-actions hashicorp.terraform esbenp.prettier-vscode ms-python.python davidanson.vscode-markdownlint ritwickdey.liveserver redhat.vscode-yaml; do
+      $CURSOR --install-extension "$ext" 2>/dev/null || true
+    done
+  '';
 
-  home.stateVersion = "26.05"; 
+  home.stateVersion = "26.05";
 
 }
 

@@ -1,0 +1,28 @@
+name: Nix
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Setup Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Check flake (evaluate)
+        run: nix flake check --no-build --no-write-lock-file
+
+      - name: Dry-build aistech
+        run: nix build .#nixosConfigurations.aistech.config.system.build.toplevel --dry-run --no-write-lock-file
+
+      - name: Dry-build home
+        run: nix build .#nixosConfigurations.home.config.system.build.toplevel --dry-run --no-write-lock-file

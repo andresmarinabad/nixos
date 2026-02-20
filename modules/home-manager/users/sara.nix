@@ -9,13 +9,10 @@
     spotify
   ];
 
-  programs.google-chrome = {
-    enable = true;
-    commandLineArgs = [ "--restore-last-session" ];
-  };
-
+  # Un solo navegador: Chromium con Bitwarden y restaurar sesión
   programs.chromium = {
     enable = true;
+    commandLineArgs = [ "--restore-last-session" ];
     extensions = [
       { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
     ];
@@ -63,6 +60,6 @@
 
   };
 
-  home.stateVersion = "26.05"; 
+  home.stateVersion = "26.05";
 
 }

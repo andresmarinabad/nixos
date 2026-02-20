@@ -2,12 +2,12 @@
 {
   imports = [
     ../common.nix
-    ../../agenix 
+    ../../agenix
   ];
-  
+
   # Añadir trabajo
   environment.shellAliases = {
     nr = "sudo nixos-rebuild switch --flake .#aistech";
   };
-  
+
 }

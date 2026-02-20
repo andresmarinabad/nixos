@@ -68,6 +68,7 @@ in
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   programs.nano.enable = false;
   programs.vim.enable = true;
+  environment.variables.EDITOR = "vim";
 
   system.activationScripts.script.text = ''
     mkdir -p /var/lib/AccountsService/{icons,users}

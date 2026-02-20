@@ -1,4 +1,10 @@
-{ pkgs, lib, num_panels, hostName ? "home", ... }:
+{
+  pkgs,
+  lib,
+  num_panels,
+  hostName ? "home",
+  ...
+}:
 
 let
   # Settings compartidos VSCode y Cursor
@@ -22,9 +28,15 @@ let
       "editor.formatOnSave" = true;
     };
     # Otros format-on-save por lenguaje
-    "[json]" = { "editor.defaultFormatter" = "esbenp.prettier-vscode"; };
-    "[jsonc]" = { "editor.defaultFormatter" = "esbenp.prettier-vscode"; };
-    "[yaml]" = { "editor.defaultFormatter" = "redhat.vscode-yaml"; };
+    "[json]" = {
+      "editor.defaultFormatter" = "esbenp.prettier-vscode";
+    };
+    "[jsonc]" = {
+      "editor.defaultFormatter" = "esbenp.prettier-vscode";
+    };
+    "[yaml]" = {
+      "editor.defaultFormatter" = "redhat.vscode-yaml";
+    };
   };
 
   vscodeExtensions = with pkgs.vscode-extensions; [
@@ -64,7 +76,8 @@ in
     '';
   };
 
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     [
       spotify
       calibre
@@ -90,6 +103,171 @@ in
         google-cloud-sdk.components.kubectl
       ])
     ];
+
+  # Marcadores Brave: basado en marcadores.html + carpeta NixOS.
+  xdg.configFile."BraveSoftware/Brave-Browser/Default/Bookmarks" = {
+    force = true; # sobrescribir si ya existe (gestionado por Nix)
+    text =
+      let
+        ts = "13304473600000000";
+        bookmarksList = [
+          {
+            name = "Personal";
+            folder = true;
+            children = [
+              {
+                name = "Mail";
+                url = "https://mail.proton.me/u/0/inbox";
+              }
+              {
+                name = "GitHub";
+                url = "https://github.com/andresmarinabad?tab=repositories";
+              }
+            ];
+          }
+          {
+            name = "Aistech";
+            folder = true;
+            children = [
+              {
+                name = "Mail";
+                url = "https://mail.google.com/mail/u/0/#inbox";
+              }
+              {
+                name = "Calendar";
+                url = "https://calendar.google.com/calendar/u/0/r?pli=1";
+              }
+              {
+                name = "GitHub";
+                url = "https://github.com/orgs/aistechspace/repositories";
+              }
+              {
+                name = "Jira";
+                url = "https://aistechspace.atlassian.net/jira/software/c/projects/DIB/boards/306";
+              }
+              {
+                name = "Bitwarden EU";
+                url = "https://vault.bitwarden.eu/#/vault?organizationId=d9120928-f044-4e03-8124-b354009c7015&itemId=70759b4d-318e-48d3-9969-b38000a6df6f&action=view";
+              }
+            ];
+          }
+          {
+            name = "NixOS";
+            folder = true;
+            children = [
+              {
+                name = "NixOS";
+                url = "https://nixos.org";
+              }
+              {
+                name = "Home Manager";
+                url = "https://nix-community.github.io/home-manager/";
+              }
+              {
+                name = "Search NixOS pkgs";
+                url = "https://search.nixos.org/packages";
+              }
+              {
+                name = "Nixpkgs";
+                url = "https://github.com/nixos/nixpkgs";
+              }
+            ];
+          }
+        ];
+        processItem =
+          item: id:
+          if item ? url then
+            {
+              node = {
+                id = toString id;
+                type = "url";
+                name = item.name;
+                url = item.url;
+                date_added = ts;
+                date_modified = ts;
+              };
+              nextId = id + 1;
+            }
+          else
+            let
+              processed =
+                lib.foldl
+                  (
+                    acc: child:
+                    let
+                      r = processItem child acc.nextId;
+                    in
+                    {
+                      nodes = acc.nodes ++ [ r.node ];
+                      nextId = r.nextId;
+                    }
+                  )
+                  {
+                    nodes = [ ];
+                    nextId = id + 1;
+                  }
+                  item.children;
+            in
+            {
+              node = {
+                id = toString id;
+                type = "folder";
+                name = item.name;
+                date_added = ts;
+                date_modified = ts;
+                children = processed.nodes;
+              };
+              nextId = processed.nextId;
+            };
+        barProcessed =
+          lib.foldl
+            (
+              acc: item:
+              let
+                r = processItem item acc.nextId;
+              in
+              {
+                nodes = acc.nodes ++ [ r.node ];
+                nextId = r.nextId;
+              }
+            )
+            {
+              nodes = [ ];
+              nextId = 10;
+            }
+            bookmarksList;
+        roots = {
+          bookmark_bar = {
+            id = "1";
+            type = "folder";
+            name = "Bookmarks bar";
+            date_added = ts;
+            date_modified = ts;
+            children = barProcessed.nodes;
+          };
+          other = {
+            id = "2";
+            type = "folder";
+            name = "Other Bookmarks";
+            date_added = ts;
+            date_modified = ts;
+            children = [ ];
+          };
+          synced = {
+            id = "3";
+            type = "folder";
+            name = "Mobile bookmarks";
+            date_added = ts;
+            date_modified = ts;
+            children = [ ];
+          };
+        };
+      in
+      builtins.toJSON {
+        version = 1;
+        roots = roots;
+      };
+  };
 
   # Configuración de Brave
   programs.brave = {
@@ -126,7 +304,6 @@ in
   # Aistech GitHub Public Key
   home.file.".ssh/gandalf.pub".text =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICi4Cx3fx7uXitvSOTBzTRsi1ATKLI8dDs0RZy8iKp5c andres.marin@aistechspace.com";
-
 
   # SSH
   programs.ssh = {
@@ -225,4 +402,3 @@ in
   home.stateVersion = "26.05";
 
 }
-

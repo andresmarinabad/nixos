@@ -1,5 +1,7 @@
 # NixOS – Configuración multi-host
 
+[![Nix](https://github.com/andresmarinabad/nixos/actions/workflows/nix.yml/badge.svg?branch=main)](https://github.com/andresmarinabad/nixos/actions/workflows/nix.yml)
+
 Flake con dos hosts: **aistech** (PC trabajo) y **home** (PC casa).
 
 ## Requisitos

@@ -303,11 +303,14 @@ in
   # GIT
   programs.git = {
     enable = true;
-    settings.user.name = "Andres";
-    settings.user.email = "andresmarinabad@protonmail.com";
-    settings.core.editor = "vim";
-
     settings = {
+      user = {
+        name = "Andrés";
+        email = "andresmarinabad@protonmail.com";
+      };
+      code = {
+        editor = "vim";
+      };
       includeIf."gitdir:~/code/work/" = {
         path = "~/code/work/.gitconfig-work";
       };

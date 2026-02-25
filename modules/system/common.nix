@@ -29,6 +29,34 @@ in
     LC_TIME = "es_ES.UTF-8";
   };
 
+  # Habilitar Bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
+  # Configuración específica para los AirPods
+  hardware.bluetooth.settings = {
+    General = {
+      # "dual" o "bredr"
+      ControllerMode = "dual";
+      Experimental = true; # Batería
+    };
+  };
+
+  # Opcional: Habilitar Blueman
+  services.blueman.enable = true;
+
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true; # Esto permite que las apps que usan PulseAudio funcionen con PipeWire
+
+    # Habilitar WirePlumber (el gestor que maneja el Bluetooth inteligentemente)
+    wireplumber.enable = true;
+  };
+
   programs.zsh.enable = true;
   # Solo las que usas en Plasma/Kitty/editor (Inter/Kanit en plasma.nix)
   fonts.packages = with pkgs; [
@@ -42,7 +70,11 @@ in
   users.users.andres = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     description = "Andrés";
     hashedPasswordFile = config.age.secrets.pass-andres.path;
   };
@@ -51,21 +83,27 @@ in
   services.xserver.enable = true;
 
   services.xserver.excludePackages = with pkgs; [ xterm ];
-  services.xserver.xkb = { layout = "es"; variant = ""; };
+  services.xserver.xkb = {
+    layout = "es";
+    variant = "";
+  };
 
-  services.openssh = { enable = true; settings.PasswordAuthentication = false; };
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+  };
   console.keyMap = "es";
 
   services.flatpak.enable = true;
   xdg.portal.enable = true;
 
-  security.rtkit.enable = true;
-  services.pipewire = { enable = true; alsa.enable = true; pulse.enable = true; };
-
   nixpkgs.config.allowUnfree = true;
   # Trezor (trezorctl/trezor-suite) - quitar cuando actualicen ecdsa
   nixpkgs.config.permittedInsecurePackages = [ "python3.13-ecdsa-0.19.1" ];
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   programs.nano.enable = false;
   programs.vim.enable = true;
   environment.variables.EDITOR = "vim";

@@ -303,25 +303,29 @@ in
   # GIT
   programs.git = {
     enable = true;
+
     settings = {
+      core = {
+        editor = "vim";
+      };
       user = {
         name = "Andrés";
         email = "andresmarinabad@protonmail.com";
       };
-      code = {
-        editor = "vim";
-      };
-      includeIf."gitdir:~/code/work/" = {
-        path = "~/code/work/.gitconfig-work";
-      };
     };
-  };
 
-  home.file."code/work/.gitconfig-work".text = ''
-    [user]
-      name = "Gandalf"
-      email = "andres.marin@aistechspace.com"
-  '';
+    includes = [
+      {
+        condition = "gitdir:~/code/work/";
+        contents = {
+          user = {
+            name = "Gandalf";
+            email = "andres.marin@aistechspace.com";
+          };
+        };
+      }
+    ];
+  };
 
   # GitHub Public Key
   home.file.".ssh/andres.pub".text =

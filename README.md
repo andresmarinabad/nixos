@@ -50,19 +50,20 @@ Tras clonar (o copiar) el repo, el sistema aún no tiene flakes activos y Nix ex
 4. **Secretos (agenix)**  
    Asegúrate de tener la clave age en `~/.ssh/master` y los `.age` correspondientes en `modules/agenix/` antes del primer switch.
 
+5. **Enlace a /etc/nixos**
+   Crea un enlace desde /etc/nixos a la raiz del repositorio
+   ```bash
+   sudo ln -s /etc/nixos /home/andres/code/personal/nixos
+   ```
+
 ## Rebuild
 
-En cada host tienes el alias `nr`:
+En cada host utiliza nix helper `nh` así:
 
-- **aistech:** `nr` → `sudo nixos-rebuild switch --flake .#aistech`
-- **home:** `nr` → `sudo nixos-rebuild switch --flake .#home`
+- **aistech:** `nr` -> `nh os switch -H aistech`
+- **home:** `nr` -> `nh os switch -H home`
 
-Desde cualquier sitio (con el repo clonado):
-
-```bash
-sudo nixos-rebuild switch --flake /path/to/repo#aistech
-sudo nixos-rebuild switch --flake /path/to/repo#home
-```
+Desde cualquier sitio (con el repo clonado) se puede hacer `nr` gracias a la configuración de `nh` y al enlace de simbólico de /etc/nixos que apunta al flake del repositorio clonado.
 
 ## Estructura
 

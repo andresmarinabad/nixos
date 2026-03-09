@@ -11,6 +11,10 @@ in
     ../../agenix
   ];
 
+  environment.shellAliases = {
+    nr = "nh os switch -H home";
+  };
+
   # Usuario extra solo para casa
   users.users.sara = {
     isNormalUser = true;
@@ -23,10 +27,6 @@ in
   # Configuración específica de Hardware/Seguridad para casa
   services.trezord.enable = true;
   services.udev.packages = with pkgs; [ trezor-udev-rules ];
-
-  environment.shellAliases = {
-    nr = "sudo nixos-rebuild switch --flake .#home";
-  };
 
   # Script con nombre distinto para no sobrescribir el de common.nix (andres)
   system.activationScripts.accountsServiceSara = ''

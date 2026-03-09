@@ -123,12 +123,13 @@ in
     flake = "/etc/nixos";
     clean = {
       enable = true;
+      dates = "weekly";
       extraArgs = "--keep-since 7d --keep 3";
     };
   };
 
   environment.shellAliases = {
-    ngc = "sudo nix-collect-garbage -d";
+    nhc = "nh clean all --keep 3";
   };
 
   services.displayManager.sddm = {

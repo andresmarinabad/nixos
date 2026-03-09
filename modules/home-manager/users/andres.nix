@@ -391,6 +391,7 @@ in
         "sudo"
         "python"
         "opentofu"
+        "terragrunt"
       ];
     };
   };

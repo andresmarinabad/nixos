@@ -183,16 +183,12 @@ in
                 url = "https://nixos.org";
               }
               {
-                name = "Home Manager";
-                url = "https://nix-community.github.io/home-manager/";
-              }
-              {
                 name = "Search NixOS pkgs";
                 url = "https://search.nixos.org/packages";
               }
               {
-                name = "Nixpkgs";
-                url = "https://github.com/nixos/nixpkgs";
+                name = "MyNixOSSS";
+                url = "https://mynixos.com/";
               }
             ];
           }

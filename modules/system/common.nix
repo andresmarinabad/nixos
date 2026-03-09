@@ -118,7 +118,28 @@ in
     chmod 0444 /var/lib/AccountsService/icons/${user}
   '';
 
+  programs.nh = {
+    enable = true;
+    flake = "/etc/nixos";
+    clean = {
+      enable = true;
+      extraArgs = "--keep-since 7d --keep 3";
+    };
+  };
+
   environment.shellAliases = {
     ngc = "sudo nix-collect-garbage -d";
   };
+
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+    theme = "breeze";
+  };
+
+  services.desktopManager.plasma6.enable = true;
+  programs.dconf.enable = true;
+
+  nix.settings.auto-optimise-store = true;
+  programs.command-not-found.enable = false;
 }

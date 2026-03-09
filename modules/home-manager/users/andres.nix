@@ -338,14 +338,14 @@ in
 
     matchBlocks = {
       # Personal
-      "github.com" = {
+      "p.github.com" = {
         hostname = "github.com";
         user = "git";
         identityFile = "~/.ssh/andres";
       };
 
       # Aistech
-      "as.github.com" = {
+      "github.com" = {
         hostname = "github.com";
         user = "git";
         identityFile = "~/.ssh/gandalf";

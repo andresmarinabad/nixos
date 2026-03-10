@@ -378,6 +378,7 @@ in
     shellAliases = {
       v = "vim";
       ns = "nix-shell -p";
+      tg = "terragrunt";
     };
     oh-my-zsh = {
       enable = true;
@@ -387,7 +388,6 @@ in
         "sudo"
         "python"
         "opentofu"
-        "terragrunt"
       ];
     };
   };

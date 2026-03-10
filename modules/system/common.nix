@@ -30,20 +30,16 @@ in
   };
 
   # Habilitar Bluetooth
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-
-  # Configuración específica para los AirPods
-  hardware.bluetooth.settings = {
-    General = {
-      # "dual" o "bredr"
-      ControllerMode = "dual";
-      Experimental = true; # Batería
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        ControllerMode = "dual";
+        Experimental = true;
+      };
     };
   };
-
-  # Opcional: Habilitar Blueman
-  services.blueman.enable = true;
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;

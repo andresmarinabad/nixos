@@ -108,7 +108,6 @@ in
       docker-compose
       btop
       fzf
-      protonvpn-gui
     ]
     ++ lib.optionals (hostName == "aistech") [
       k9s

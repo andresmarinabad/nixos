@@ -8,6 +8,9 @@
   age.secrets.pass-andres.file = ./pass-andres.age;
   age.secrets.pass-sara.file = ./pass-sara.age;
 
+  # PRIVATE KEY
+  age.secrets.protonvpn-key.file = ./protonvpn-key.age;
+
   # GITHUB SSH
   age.secrets.github-andres = {
     file = ./github-andres.age;

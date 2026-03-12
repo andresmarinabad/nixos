@@ -13,7 +13,7 @@ let
     "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'";
     "editor.fontLigatures" = true;
     "workbench.iconTheme" = "material-icon-theme";
-    "workbench.colorTheme" = "Default Dark+";
+    "workbench.colorTheme" = "Default High Contrast";
     "window.autoDetectColorScheme" = false;
     "editor.formatOnSave" = true;
     "editor.defaultFormatter" = "esbenp.prettier-vscode";

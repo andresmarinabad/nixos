@@ -58,9 +58,22 @@ let
     ritwickdey.liveserver
     redhat.vscode-yaml
   ];
-in
 
-let
+  calibre-custom = pkgs.calibre.overrideAttrs (oldAttrs: {
+    qtWrapperArgs = (oldAttrs.qtWrapperArgs or [ ]) ++ [
+      "--set"
+      "CALIBRE_CONFIG_DIRECTORY"
+      "/home/andres/MEGA/Calibre/Config"
+
+      "--set"
+      "OSCRYPTO_LIBCRYPTO_PATH"
+      "${pkgs.openssl.out}/lib/libcrypto.so"
+      "--set"
+      "OSCRYPTO_LIBSSL_PATH"
+      "${pkgs.openssl.out}/lib/libssl.so"
+    ];
+  });
+
   num_panels = if hostName == "aistech" then 3 else 1;
   wallpaperPath =
     if self != null then
@@ -95,7 +108,6 @@ in
     with pkgs;
     [
       spotify
-      calibre
       megasync
       telegram-desktop
       trezor-suite
@@ -108,6 +120,7 @@ in
       docker-compose
       btop
       fzf
+      calibre-custom
     ]
     ++ lib.optionals (hostName == "aistech") [
       k9s

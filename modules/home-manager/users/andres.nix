@@ -121,6 +121,7 @@ in
       btop
       fzf
       calibre-custom
+      obs-studio
     ]
     ++ lib.optionals (hostName == "aistech") [
       k9s

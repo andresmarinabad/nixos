@@ -169,4 +169,7 @@ in
 
   nix.settings.auto-optimise-store = true;
   programs.command-not-found.enable = false;
+
+  # firmware updates
+  services.fwupd.enable = true;
 }

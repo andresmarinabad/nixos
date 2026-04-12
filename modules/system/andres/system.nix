@@ -15,6 +15,15 @@ in
     nr = "nh os switch -H home";
   };
 
+  fileSystems."/mnt/data" = {
+    device = "/dev/disk/by-uuid/2017c0df-b719-4f90-bd32-a7e63856e22e";
+    fsType = "ext4";
+    options = [
+      "defaults"
+      "nofail"
+    ];
+  };
+
   # Usuario extra solo para casa
   users.users.sara = {
     isNormalUser = true;

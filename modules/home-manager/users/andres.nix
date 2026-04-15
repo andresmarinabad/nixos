@@ -317,20 +317,30 @@ in
       core = {
         editor = "vim";
       };
-      user = {
-        name = "Andrés";
-        email = "andresmarinabad@protonmail.com";
-      };
+
     };
 
     includes = [
       {
+        # Bloque PERSONAL
+        condition = "gitdir:~/code/personal/";
+        contents = {
+          user = {
+            name = "Andrés";
+            email = "andresmarinabad@protonmail.com";
+          };
+          url."git@p.github.com:".insteadOf = "https://github.com/";
+        };
+      }
+      {
+        # Bloque TRABAJO
         condition = "gitdir:~/code/work/";
         contents = {
           user = {
             name = "Gandalf";
             email = "andres.marin@aistechspace.com";
           };
+          url."git@github.com:".insteadOf = "https://github.com/";
         };
       }
     ];

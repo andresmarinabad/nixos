@@ -172,4 +172,7 @@ in
 
   # firmware updates
   services.fwupd.enable = true;
+
+  # ignorar cierre de tapa conectado a la corriente
+  services.logind.settings.Login.HandleLidSwitchExternalPower = "ignore";
 }

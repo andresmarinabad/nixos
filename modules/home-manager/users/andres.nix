@@ -122,6 +122,7 @@ in
       fzf
       calibre-custom
       obs-studio
+      gimp
     ]
     ++ lib.optionals (hostName == "aistech") [
       k9s

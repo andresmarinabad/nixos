@@ -366,6 +366,7 @@ in
         hostname = "github.com";
         user = "git";
         identityFile = "~/.ssh/andres";
+        identitiesOnly = true;
       };
 
       # Aistech
@@ -373,6 +374,7 @@ in
         hostname = "github.com";
         user = "git";
         identityFile = "~/.ssh/gandalf";
+        identitiesOnly = true;
       };
     };
   };

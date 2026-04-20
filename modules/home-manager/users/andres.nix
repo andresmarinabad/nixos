@@ -59,22 +59,8 @@ let
     redhat.vscode-yaml
   ];
 
-  calibre-custom = pkgs.calibre.overrideAttrs (oldAttrs: {
-    qtWrapperArgs = (oldAttrs.qtWrapperArgs or [ ]) ++ [
-      "--set"
-      "CALIBRE_CONFIG_DIRECTORY"
-      "/home/andres/MEGA/Calibre/Config"
-
-      "--set"
-      "OSCRYPTO_LIBCRYPTO_PATH"
-      "${pkgs.openssl.out}/lib/libcrypto.so"
-      "--set"
-      "OSCRYPTO_LIBSSL_PATH"
-      "${pkgs.openssl.out}/lib/libssl.so"
-    ];
-  });
-
   num_panels = if hostName == "aistech" then 3 else 1;
+
   wallpaperPath =
     if self != null then
       self + "/assets/img/wallpaper/desierto.jpeg"
@@ -112,7 +98,6 @@ in
       telegram-desktop
       trezor-suite
       trezorctl
-      code-cursor
       bat
       ripgrep
       curl
@@ -120,9 +105,10 @@ in
       docker-compose
       btop
       fzf
-      calibre-custom
       obs-studio
       gimp
+      (pkgs.callPackage ../../../pkgs/cursor.nix { })
+      (pkgs.callPackage ../../../pkgs/calibre.nix { })
     ]
     ++ lib.optionals (hostName == "aistech") [
       k9s

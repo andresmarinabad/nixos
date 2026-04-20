@@ -404,7 +404,18 @@ in
     shellAliases = {
       v = "vim";
       ns = "nix-shell -p";
+
       tg = "terragrunt";
+      tgi = "terragrunt init --terragrunt-non-interactive";
+      tgp = "terragrunt plan --terragrunt-non-interactive";
+      tga = "terragrunt apply --terragrunt-non-interactive";
+      tgd = "terragrunt destroy";
+
+      # Alias para comandos "run-all"
+      tgia = "terragrunt run-all init --terragrunt-non-interactive";
+      tgpa = "terragrunt run-all plan --terragrunt-non-interactive";
+      tgaa = "terragrunt run-all apply --terragrunt-non-interactive";
+
     };
     oh-my-zsh = {
       enable = true;

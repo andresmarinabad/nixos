@@ -2,7 +2,6 @@
   pkgs,
   lib,
   num_panels,
-  wallpaperPath ? ../../assets/img/wallpaper/desierto.jpeg,
   ...
 }:
 
@@ -34,7 +33,6 @@
       theme = "breeze-dark";
       cursor.theme = "Breeze";
       iconTheme = "Papirus-Dark";
-      wallpaper = wallpaperPath;
     };
 
     kwin = {

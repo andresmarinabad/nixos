@@ -2,7 +2,6 @@
   pkgs,
   lib,
   hostName ? "home",
-  self ? null,
   ...
 }:
 
@@ -63,12 +62,6 @@ let
 
   num_panels = if hostName == "aistech" then 3 else 1;
 
-  wallpaperPath =
-    if self != null then
-      self + "/assets/img/wallpaper/desierto.jpeg"
-    else
-      ../../assets/img/wallpaper/desierto.jpeg;
-
   calibrePkg = pkgs.callPackage ../../../pkgs/calibre.nix { };
 in
 {
@@ -79,7 +72,6 @@ in
         pkgs
         lib
         num_panels
-        wallpaperPath
         ;
     })
   ];
@@ -107,6 +99,8 @@ in
       calibrePkg
       code-cursor
       bambu-studio
+      wl-clipboard
+      xclip
 
       (pkgs.writeShellScriptBin "cursor-sync-extensions" ''
         echo "Sincronizando extensiones de Cursor..."
@@ -128,6 +122,40 @@ in
         google-cloud-sdk.components.kubectl
       ])
     ];
+
+  home.activation.visualSwitch = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    WALLPAPER_DIR="$HOME/.local/share/wallpapers"
+
+    # Creamos un nombre de archivo único basado en los segundos actuales
+    TIMESTAMP=$(date +%s)
+    WALLPAPER_FILE="$WALLPAPER_DIR/switch-$TIMESTAMP.jpg"
+    LOG_FILE="$WALLPAPER_DIR/wallpaper-switch.log"
+
+    mkdir -p "$WALLPAPER_DIR"
+
+    echo "🎨 Iniciando descarga de fondo..." > "$LOG_FILE"
+
+    if ${pkgs.curl}/bin/curl -sL --max-time 10 "https://picsum.photos/3840/2160?random=$RANDOM" -o "$WALLPAPER_FILE"; then
+      echo "✅ Imagen descargada correctamente." >> "$LOG_FILE"
+      
+      export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+      export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+      export WAYLAND_DISPLAY="wayland-0"
+      export DISPLAY=":0"
+      
+      echo "🖥️ Enviando orden directa a Plasma..." >> "$LOG_FILE"
+      
+      # Aplicamos la imagen con el nuevo nombre único
+      ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage "$WALLPAPER_FILE" >> "$LOG_FILE" 2>&1
+      
+      # Limpiamos los fondos de los rebuilds anteriores para no llenar tu disco duro
+      find "$WALLPAPER_DIR" -name "switch-*.jpg" ! -name "switch-$TIMESTAMP.jpg" -type f -delete
+      
+      echo "🎉 Proceso terminado." >> "$LOG_FILE"
+    else
+      echo "❌ Fallo al descargar la imagen." >> "$LOG_FILE"
+    fi
+  '';
 
   # Marcadores Brave: basado en marcadores.html + carpeta NixOS.
   xdg.configFile."BraveSoftware/Brave-Browser/Default/Bookmarks" = {
@@ -423,7 +451,7 @@ in
         "opentofu"
         "docker-compose"
         "extract"
-        "copydir"
+        "copypath"
         "copyfile"
         "z"
 

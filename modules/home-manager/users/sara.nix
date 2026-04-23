@@ -144,8 +144,11 @@
       theme = "breeze";
       cursor.theme = "Breeze";
       iconTheme = "Breeze";
-      wallpaper = ../../../assets/img/wallpaper/tren.jpg;
+      wallpaperPlugin = "org.kde.potd";
     };
+
+    configFile."plasma-org.kde.plasma.desktop-appletsrc"."Containments.1.Wallpaper.org\\\\.kde\\\\.potd.General".Provider =
+      "unsplash";
 
     kwin = {
       virtualDesktops = {

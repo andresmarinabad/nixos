@@ -59,6 +59,8 @@ let
     redhat.vscode-yaml
   ];
 
+  extensionIds = lib.concatMapStringsSep " " (ext: ext.vscodeExtUniqueId) vscodeExtensions;
+
   num_panels = if hostName == "aistech" then 3 else 1;
 
   wallpaperPath =
@@ -66,6 +68,8 @@ let
       self + "/assets/img/wallpaper/desierto.jpeg"
     else
       ../../assets/img/wallpaper/desierto.jpeg;
+
+  calibrePkg = pkgs.callPackage ../../../pkgs/calibre.nix { };
 in
 {
   imports = [
@@ -82,13 +86,6 @@ in
 
   home.username = "andres";
   home.homeDirectory = "/home/andres";
-
-  home.activation = {
-    setupFlatpak = ''
-      ${pkgs.flatpak}/bin/flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-      ${pkgs.flatpak}/bin/flatpak install --user --noninteractive flathub com.bambulab.BambuStudio
-    '';
-  };
 
   home.packages =
     with pkgs;
@@ -107,8 +104,21 @@ in
       fzf
       obs-studio
       gimp
-      (pkgs.callPackage ../../../pkgs/cursor.nix { })
-      (pkgs.callPackage ../../../pkgs/calibre.nix { })
+      calibrePkg
+      code-cursor
+      bambu-studio
+
+      (pkgs.writeShellScriptBin "cursor-sync-extensions" ''
+        echo "Sincronizando extensiones de Cursor..."
+
+        for ext in ${extensionIds}; do
+          echo "Instalando: $ext"
+          # Usamos el comando oficial de cursor
+          cursor --install-extension "$ext" --force
+        done
+
+        echo "¡Sincronización completada!"
+      '')
     ]
     ++ lib.optionals (hostName == "aistech") [
       k9s
@@ -411,6 +421,12 @@ in
         "sudo"
         "python"
         "opentofu"
+        "docker-compose"
+        "extract"
+        "copydir"
+        "copyfile"
+        "z"
+
       ];
     };
   };
@@ -418,8 +434,70 @@ in
   # Starchip prompt
   programs.starship = {
     enable = true;
+    enableZshIntegration = true;
+
     settings = {
       add_newline = true;
+
+      # 1. El símbolo del prompt (cambia de color si el comando anterior falló)
+      character = {
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[✗](bold red)";
+      };
+
+      # 2. ¡Imprescindible en NixOS! Te avisa cuando entras en un nix-shell o devShell
+      nix_shell = {
+        symbol = "❄️ ";
+        format = "via [$symbol$state( \\($name\\))]($style) ";
+      };
+
+      # 3. Tiempo de ejecución: Te dice cuánto tardó un comando si pasa de los 2 segundos (ideal para builds o OpenTofu)
+      cmd_duration = {
+        min_time = 2000;
+        format = "⏱ [$duration]($style) ";
+      };
+
+      # 4. Git vitaminado: Símbolos visuales para saber exactamente el estado de tu repo
+      git_branch = {
+        symbol = "🌱 ";
+      };
+      git_status = {
+        conflicted = "⚔️";
+        ahead = "🏎💨";
+        behind = "🐢";
+        diverged = "😵";
+        untracked = "🤷";
+        modified = "📝";
+        staged = "✅";
+        deleted = "🗑️ ";
+        renamed = "🔄 ";
+        stashed = "📦 ";
+      };
+
+      # 5. Tus herramientas del día a día
+      python = {
+        symbol = "🐍 ";
+        format = "via [$symbol$version (\\($virtualenv\\))]($style) ";
+      };
+
+      docker_context = {
+        symbol = "🐳 ";
+      };
+
+      terraform = {
+        symbol = "🏗️ "; # Este módulo también detecta OpenTofu automáticamente
+      };
+
+      aws = {
+        symbol = "☁️ ";
+        disabled = false; # Cambia a true si no quieres ver tu perfil de AWS todo el rato
+      };
+
+      # 6. Limpieza: Oculta cosas que hacen ruido visual
+      package = {
+        disabled = true; # Oculta la versión de Node/Rust/etc en cada directorio para que no moleste
+      };
+
     };
   };
 
@@ -442,12 +520,6 @@ in
 
   # Cursor: mismos settings y extensiones (mismo motor que VSCode)
   xdg.configFile."Cursor/User/settings.json".text = builtins.toJSON codeSettings;
-  home.activation.installCursorExtensions = ''
-    CURSOR="${pkgs.code-cursor}/bin/cursor"
-    for ext in jnoortheen.nix-ide mkhl.direnv christian-kohler.path-intellisense naumovs.color-highlight eamodio.gitlens ms-azuretools.vscode-docker ms-vscode-remote.remote-ssh pkief.material-icon-theme zhuangtongfa.material-theme redhat.ansible github.vscode-github-actions hashicorp.terraform esbenp.prettier-vscode ms-python.python davidanson.vscode-markdownlint ritwickdey.liveserver redhat.vscode-yaml; do
-      $CURSOR --install-extension "$ext" 2>/dev/null || true
-    done
-  '';
 
   home.stateVersion = "26.05";
 

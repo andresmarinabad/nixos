@@ -175,4 +175,11 @@ in
 
   # ignorar cierre de tapa conectado a la corriente
   services.logind.settings.Login.HandleLidSwitchExternalPower = "ignore";
+
+  # El descubrimiento de impresoras 3D por red
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true; # el sistema resuelva nombres .local
+    openFirewall = true; # para que NixOS no bloquee el tráfico de la impresora
+  };
 }

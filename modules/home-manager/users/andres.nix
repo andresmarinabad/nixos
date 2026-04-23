@@ -463,7 +463,7 @@ in
       };
       git_status = {
         conflicted = "⚔️";
-        ahead = "🏎💨";
+        ahead = "🚀";
         behind = "🐢";
         diverged = "😵";
         untracked = "🤷";

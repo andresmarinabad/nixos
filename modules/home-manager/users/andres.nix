@@ -497,9 +497,9 @@ in
         untracked = "🤷";
         modified = "📝";
         staged = "✅";
-        deleted = "🗑️ ";
-        renamed = "🔄 ";
-        stashed = "📦 ";
+        deleted = "🗑️";
+        renamed = "🔄";
+        stashed = "📦";
       };
 
       # 5. Tus herramientas del día a día

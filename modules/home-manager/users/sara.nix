@@ -144,11 +144,10 @@
       theme = "breeze";
       cursor.theme = "Breeze";
       iconTheme = "Breeze";
-      wallpaperPlugin = "org.kde.potd";
+      wallpaperPictureOfTheDay = {
+        provider = "bing";
+      };
     };
-
-    configFile."plasma-org.kde.plasma.desktop-appletsrc"."Containments.1.Wallpaper.org\\\\.kde\\\\.potd.General".Provider =
-      "unsplash";
 
     kwin = {
       virtualDesktops = {

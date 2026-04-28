@@ -98,7 +98,6 @@ in
       gimp
       calibrePkg
       code-cursor
-      bambu-studio
       wl-clipboard
       xclip
 
@@ -126,7 +125,6 @@ in
   home.activation.visualSwitch = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     WALLPAPER_DIR="$HOME/.local/share/wallpapers"
 
-    # Creamos un nombre de archivo único basado en los segundos actuales
     TIMESTAMP=$(date +%s)
     WALLPAPER_FILE="$WALLPAPER_DIR/switch-$TIMESTAMP.jpg"
     LOG_FILE="$WALLPAPER_DIR/wallpaper-switch.log"
@@ -145,17 +143,26 @@ in
       
       echo "🖥️ Enviando orden directa a Plasma..." >> "$LOG_FILE"
       
-      # Aplicamos la imagen con el nuevo nombre único
       ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage "$WALLPAPER_FILE" >> "$LOG_FILE" 2>&1
-      
-      # Limpiamos los fondos de los rebuilds anteriores para no llenar tu disco duro
-      find "$WALLPAPER_DIR" -name "switch-*.jpg" ! -name "switch-$TIMESTAMP.jpg" -type f -delete
       
       echo "🎉 Proceso terminado." >> "$LOG_FILE"
     else
       echo "❌ Fallo al descargar la imagen." >> "$LOG_FILE"
     fi
   '';
+
+  home.activation = {
+    setupFlatpak = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      ${pkgs.flatpak}/bin/flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+      if ! ${pkgs.flatpak}/bin/flatpak info --user com.bambulab.BambuStudio > /dev/null 2>&1; then
+        echo "📥 Instalando Bambu Studio vía Flatpak por primera vez..."
+        ${pkgs.flatpak}/bin/flatpak install --user --noninteractive flathub com.bambulab.BambuStudio
+      else
+        echo "✅ Bambu Studio ya está instalado. Saltando..."
+      fi
+    '';
+  };
 
   # Marcadores Brave: basado en marcadores.html + carpeta NixOS.
   xdg.configFile."BraveSoftware/Brave-Browser/Default/Bookmarks" = {
@@ -227,6 +234,28 @@ in
               {
                 name = "MyNixOSSS";
                 url = "https://mynixos.com/";
+              }
+            ];
+          }
+          {
+            name = "3D";
+            folder = true;
+            children = [
+              {
+                name = "Thingivers";
+                url = "https://www.thingiverse.com/";
+              }
+              {
+                name = "MakerWorld";
+                url = "https://makerworld.com/es";
+              }
+              {
+                name = "Printables";
+                url = "https://www.printables.com/store";
+              }
+              {
+                name = "Tinkercad";
+                url = "https://www.tinkercad.com/";
               }
             ];
           }

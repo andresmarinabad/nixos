@@ -79,48 +79,45 @@ in
   home.username = "andres";
   home.homeDirectory = "/home/andres";
 
-  home.packages =
-    with pkgs;
-    [
-      spotify
-      megasync
-      telegram-desktop
-      trezor-suite
-      trezorctl
-      bat
-      ripgrep
-      curl
-      wget
-      docker-compose
-      btop
-      fzf
-      obs-studio
-      gimp
-      calibrePkg
-      code-cursor
-      wl-clipboard
-      xclip
+  home.packages = with pkgs; [
+    spotify
+    megasync
+    telegram-desktop
+    trezor-suite
+    trezorctl
+    bat
+    ripgrep
+    curl
+    wget
+    docker-compose
+    btop
+    fzf
+    obs-studio
+    gimp
+    calibrePkg
+    code-cursor
+    wl-clipboard
+    xclip
 
-      (pkgs.writeShellScriptBin "cursor-sync-extensions" ''
-        echo "Sincronizando extensiones de Cursor..."
+    k9s
+    bruno
+    (google-cloud-sdk.withExtraComponents [
+      google-cloud-sdk.components.gke-gcloud-auth-plugin
+      google-cloud-sdk.components.kubectl
+    ])
 
-        for ext in ${extensionIds}; do
-          echo "Instalando: $ext"
-          # Usamos el comando oficial de cursor
-          cursor --install-extension "$ext" --force
-        done
+    (pkgs.writeShellScriptBin "cursor-sync-extensions" ''
+      echo "Sincronizando extensiones de Cursor..."
 
-        echo "¡Sincronización completada!"
-      '')
-    ]
-    ++ lib.optionals (hostName == "aistech") [
-      k9s
-      bruno
-      (google-cloud-sdk.withExtraComponents [
-        google-cloud-sdk.components.gke-gcloud-auth-plugin
-        google-cloud-sdk.components.kubectl
-      ])
-    ];
+      for ext in ${extensionIds}; do
+        echo "Instalando: $ext"
+        # Usamos el comando oficial de cursor
+        cursor --install-extension "$ext" --force
+      done
+
+      echo "¡Sincronización completada!"
+    '')
+  ];
 
   home.activation.visualSwitch = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     WALLPAPER_DIR="$HOME/.local/share/wallpapers"

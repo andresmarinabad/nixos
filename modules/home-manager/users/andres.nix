@@ -58,9 +58,7 @@ let
     redhat.vscode-yaml
   ];
 
-  extensionIds = lib.concatMapStringsSep " " (ext: ext.vscodeExtUniqueId) vscodeExtensions;
-
-  num_panels = if hostName == "aistech" then 3 else 1;
+  num_panels = if hostName == "work" then 3 else 1;
 
   calibrePkg = pkgs.callPackage ../../../pkgs/calibre.nix { };
 in
@@ -95,28 +93,14 @@ in
     obs-studio
     gimp
     calibrePkg
-    code-cursor
     wl-clipboard
     xclip
-
-    k9s
     bruno
     (google-cloud-sdk.withExtraComponents [
       google-cloud-sdk.components.gke-gcloud-auth-plugin
       google-cloud-sdk.components.kubectl
     ])
 
-    (pkgs.writeShellScriptBin "cursor-sync-extensions" ''
-      echo "Sincronizando extensiones de Cursor..."
-
-      for ext in ${extensionIds}; do
-        echo "Instalando: $ext"
-        # Usamos el comando oficial de cursor
-        cursor --install-extension "$ext" --force
-      done
-
-      echo "¡Sincronización completada!"
-    '')
   ];
 
   home.activation.visualSwitch = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -179,40 +163,6 @@ in
               {
                 name = "GitHub";
                 url = "https://github.com/andresmarinabad?tab=repositories";
-              }
-            ];
-          }
-          {
-            name = "Aistech";
-            folder = true;
-            children = [
-              {
-                name = "Mail";
-                url = "https://mail.google.com/mail/u/0/#inbox";
-              }
-              {
-                name = "Calendar";
-                url = "https://calendar.google.com/calendar/u/0/r?pli=1";
-              }
-              {
-                name = "GitHub";
-                url = "https://github.com/orgs/aistechspace/repositories";
-              }
-              {
-                name = "Jira";
-                url = "https://aistechspace.atlassian.net/jira/software/c/projects/DIB/boards/306";
-              }
-              {
-                name = "Odoo";
-                url = "https://aistech-space-sl.odoo.com/odoo";
-              }
-              {
-                name = "Bitwarden EU";
-                url = "https://vault.bitwarden.eu/#/vault?organizationId=d9120928-f044-4e03-8124-b354009c7015&itemId=70759b4d-318e-48d3-9969-b38000a6df6f&action=view";
-              }
-              {
-                name = "Hexagonal Architecture";
-                url = "https://medium.com/@pthtantai97/hexagonal-architecture-with-golang-part-1-7f82a364b29";
               }
             ];
           }
@@ -383,27 +333,23 @@ in
           url."git@p.github.com:".insteadOf = "https://github.com/";
         };
       }
-      {
-        # Bloque TRABAJO
-        condition = "gitdir:~/code/work/";
-        contents = {
-          user = {
-            name = "Gandalf";
-            email = "andres.marin@aistechspace.com";
-          };
-          url."git@github.com:".insteadOf = "https://github.com/";
-        };
-      }
+      # {
+      #   # Bloque TRABAJO
+      #   condition = "gitdir:~/code/work/";
+      #   contents = {
+      #     user = {
+      #       name = "";
+      #       email = "";
+      #     };
+      #     url."git@github.com:".insteadOf = "https://github.com/";
+      #   };
+      # }
     ];
   };
 
   # GitHub Public Key
   home.file.".ssh/andres.pub".text =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICqImXgnyR1mINurbZY0xV5EJmKUQWGv6BxQihpsgxiD";
-
-  # Aistech GitHub Public Key
-  home.file.".ssh/gandalf.pub".text =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICi4Cx3fx7uXitvSOTBzTRsi1ATKLI8dDs0RZy8iKp5c andres.marin@aistechspace.com";
 
   # SSH
   programs.ssh = {
@@ -419,13 +365,13 @@ in
         identitiesOnly = true;
       };
 
-      # Aistech
-      "github.com" = {
-        hostname = "github.com";
-        user = "git";
-        identityFile = "~/.ssh/gandalf";
-        identitiesOnly = true;
-      };
+      # Work
+      # "github.com" = {
+      #   hostname = "github.com";
+      #   user = "git";
+      #   identityFile = "~/.ssh/gandalf";
+      #   identitiesOnly = true;
+      # };
     };
   };
 
@@ -571,9 +517,6 @@ in
       userSettings = codeSettings;
     };
   };
-
-  # Cursor: mismos settings y extensiones (mismo motor que VSCode)
-  xdg.configFile."Cursor/User/settings.json".text = builtins.toJSON codeSettings;
 
   home.stateVersion = "26.05";
 

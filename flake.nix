@@ -57,23 +57,6 @@
     {
       nixosConfigurations = {
 
-        # PC DE TRABAJO (aistech)
-        aistech = mkHost {
-          hostName = "aistech";
-          systemModules = [
-            ./hosts/aistech/configuration.nix
-            agenix.nixosModules.default
-          ];
-          users = {
-            andres =
-              { ... }:
-              {
-                imports = [ ./modules/home-manager/users/andres.nix ];
-                _module.args.num_panels = 3;
-              };
-          };
-        };
-
         # PC DE CASA (home)
         home = mkHost {
           hostName = "home";
@@ -86,7 +69,6 @@
               { ... }:
               {
                 imports = [ ./modules/home-manager/users/andres.nix ];
-                _module.args.num_panels = 1;
               };
             sara =
               { ... }:

@@ -330,20 +330,9 @@ in
             name = "Andrés";
             email = "andresmarinabad@protonmail.com";
           };
-          url."git@p.github.com:".insteadOf = "https://github.com/";
+          url."git@github.com:".insteadOf = "https://github.com/";
         };
       }
-      # {
-      #   # Bloque TRABAJO
-      #   condition = "gitdir:~/code/work/";
-      #   contents = {
-      #     user = {
-      #       name = "";
-      #       email = "";
-      #     };
-      #     url."git@github.com:".insteadOf = "https://github.com/";
-      #   };
-      # }
     ];
   };
 
@@ -358,7 +347,7 @@ in
 
     matchBlocks = {
       # Personal
-      "p.github.com" = {
+      "github.com" = {
         hostname = "github.com";
         user = "git";
         identityFile = "~/.ssh/andres";

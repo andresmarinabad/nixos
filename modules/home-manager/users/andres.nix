@@ -87,7 +87,6 @@ in
     ripgrep
     curl
     wget
-    docker-compose
     btop
     fzf
     obs-studio
@@ -100,6 +99,7 @@ in
       google-cloud-sdk.components.gke-gcloud-auth-plugin
       google-cloud-sdk.components.kubectl
     ])
+    chatgpt
 
   ];
 

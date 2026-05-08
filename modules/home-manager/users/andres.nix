@@ -99,8 +99,7 @@ in
       google-cloud-sdk.components.gke-gcloud-auth-plugin
       google-cloud-sdk.components.kubectl
     ])
-    chatgpt
-
+    ollama
   ];
 
   home.activation.visualSwitch = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

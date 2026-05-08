@@ -182,4 +182,7 @@ in
     nssmdns4 = true; # el sistema resuelva nombres .local
     openFirewall = true; # para que NixOS no bloquee el tráfico de la impresora
   };
+
+  # Service ollama
+  services.ollama.enable = true;
 }

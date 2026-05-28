@@ -6,7 +6,7 @@
 }:
 
 let
-  # Settings compartidos VSCode y Cursor
+  # Settings compartidos VSCode
   codeSettings = {
     "editor.fontSize" = 14;
     "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'";
@@ -40,22 +40,11 @@ let
 
   vscodeExtensions = with pkgs.vscode-extensions; [
     jnoortheen.nix-ide
-    mkhl.direnv
-    christian-kohler.path-intellisense
-    naumovs.color-highlight
-    eamodio.gitlens
-    ms-azuretools.vscode-docker
-    ms-vscode-remote.remote-ssh
-    pkief.material-icon-theme
-    zhuangtongfa.material-theme
-    redhat.ansible
-    github.vscode-github-actions
-    hashicorp.terraform
     esbenp.prettier-vscode
     ms-python.python
-    davidanson.vscode-markdownlint
-    ritwickdey.liveserver
-    redhat.vscode-yaml
+    eamodio.gitlens
+    hashicorp.terraform
+    vscode-icons-team.vscode-icons
   ];
 
   num_panels = if hostName == "work" then 3 else 1;
@@ -99,7 +88,6 @@ in
       google-cloud-sdk.components.gke-gcloud-auth-plugin
       google-cloud-sdk.components.kubectl
     ])
-    ollama
   ];
 
   home.activation.visualSwitch = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

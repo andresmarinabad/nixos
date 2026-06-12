@@ -3,7 +3,7 @@
 
   # Herramientas para todos los perfiles
   home.packages = with pkgs; [
-    bitwarden-desktop
+    #bitwarden-desktop
     nil
     nixpkgs-fmt
   ];

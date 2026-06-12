@@ -124,8 +124,13 @@ in
   xdg.portal.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  # Trezor (trezorctl/trezor-suite) - quitar cuando actualicen ecdsa
-  nixpkgs.config.permittedInsecurePackages = [ "python3.13-ecdsa-0.19.1" ];
+
+  # Trezor (trezorctl/trezor-suite)
+  nixpkgs.config.permittedInsecurePackages = [
+    #"python3.13-ecdsa-0.19.1"
+    #"electron-39.8.10"
+  ];
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -183,9 +188,4 @@ in
     openFirewall = true; # para que NixOS no bloquee el tráfico de la impresora
   };
 
-  # KUBERNETES EN LOCAL
-  services.k3s = {
-    enable = true;
-    role = "server";
-  };
 }

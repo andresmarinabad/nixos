@@ -21,8 +21,5 @@ jobs:
       - name: Check flake (evaluate)
         run: nix flake check --no-build --no-write-lock-file
 
-      - name: Dry-build aistech
-        run: nix build .#nixosConfigurations.aistech.config.system.build.toplevel --dry-run --no-write-lock-file
-
       - name: Dry-build home
         run: nix build .#nixosConfigurations.home.config.system.build.toplevel --dry-run --no-write-lock-file

@@ -1,8 +1,8 @@
-# NixOS – Configuración multi-host
+# NixOS – Configuración
 
 [![Nix](https://github.com/andresmarinabad/nixos/actions/workflows/nix.yml/badge.svg?branch=main)](https://github.com/andresmarinabad/nixos/actions/workflows/nix.yml)
 
-Flake con dos hosts: **aistech** (PC trabajo) y **home** (PC casa).
+Flake con un host: **home** (PC casa).
 
 ## Requisitos
 
@@ -33,42 +33,36 @@ Tras clonar (o copiar) el repo, el sistema aún no tiene flakes activos y Nix ex
 3. **Activar flakes para este comando** (si tu NixOS actual aún no tiene `nix-command` y `flakes` en config):
 
    ```bash
-   # PC de casa
    sudo nixos-rebuild switch --flake .#home --option experimental-features 'nix-command flakes'
-
-   # PC de trabajo
-   sudo nixos-rebuild switch --flake .#aistech --option experimental-features 'nix-command flakes'
    ```
 
    Si tu NixOS ya tiene flakes activados, puedes omitir `--option ...`:
 
    ```bash
    sudo nixos-rebuild switch --flake .#home
-   sudo nixos-rebuild switch --flake .#aistech
    ```
 
-4. **Secretos (agenix)**  
+4. **Secretos (agenix)**
    Asegúrate de tener la clave age en `~/.ssh/master` y los `.age` correspondientes en `modules/agenix/` antes del primer switch.
 
 5. **Enlace a /etc/nixos**
    Crea un enlace desde /etc/nixos a la raiz del repositorio
    ```bash
-   sudo ln -s /etc/nixos /home/andres/code/personal/nixos
+   sudo ln -s /home/andres/code/personal/nixos /etc/nixos
    ```
 
 ## Rebuild
 
-En cada host utiliza nix helper `nh` así:
+Utiliza nix helper `nh`:
 
-- **aistech:** `nr` -> `nh os switch -H aistech`
-- **home:** `nr` -> `nh os switch -H home`
+- `nr` → `nh os switch -H home`
 
-Desde cualquier sitio (con el repo clonado) se puede hacer `nr` gracias a la configuración de `nh` y al enlace de simbólico de /etc/nixos que apunta al flake del repositorio clonado.
+Desde cualquier sitio (con el repo clonado) se puede hacer `nr` gracias a la configuración de `nh` y al enlace simbólico de /etc/nixos que apunta al flake del repositorio clonado.
 
 ## Estructura
 
-- `hosts/{aistech,home}/` – configuration.nix y hardware por host.
-- `modules/system/` – módulos NixOS (common, desktop-plasma, agenix, por-host).
+- `hosts/home/` – configuration.nix y hardware por host.
+- `modules/system/` – módulos NixOS (common, por-host).
 - `modules/home-manager/` – usuarios y common.
 - `modules/desktop/` – Plasma (solo andres).
 - `modules/agenix/` – definición de secretos.
@@ -77,7 +71,7 @@ Desde cualquier sitio (con el repo clonado) se puede hacer `nr` gracias a la con
 
 Los marcadores de **Brave** (andres) y **Chromium** (sara) se generan desde Nix. Edita la lista dentro del `let` que genera el JSON:
 
-- `modules/home-manager/users/andres.nix` (Brave): variable `braveBookmarksJson`, lista `bookmarksList`.
+- `modules/home-manager/users/andres/browsers.nix` (Brave): variable `braveBookmarksJson`, lista `bookmarksList`.
 - `modules/home-manager/users/sara.nix` (Chromium): variable `chromiumBookmarks`, lista `bookmarksList`.
 
 Cada entrada puede ser `{ name = "..."; url = "https://..."; }` o una carpeta: `{ name = "..."; folder = true; children = [ ... ]; }`. Tras cambiar, `home-manager switch` sobrescribe el archivo del perfil por defecto.
@@ -92,9 +86,7 @@ O manualmente: `nixpkgs-fmt flake.nix` y los `.nix` en `modules/` y `hosts/`.
 
 ## CI
 
-En cada push a `main`/`master`, GitHub Actions ejecuta:
+En cada push a `main`, GitHub Actions ejecuta:
 
 - `nix flake check --no-build`
-- dry-build de las configs **aistech** y **home**.
-
-Si usas agenix y en CI no hay claves, el dry-build puede fallar; en ese caso conviene ejecutar el build localmente.
+- dry-build de la config **home**.

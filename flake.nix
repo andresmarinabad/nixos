@@ -73,7 +73,7 @@
             sara =
               { ... }:
               {
-                imports = [ ./modules/home-manager/users/sara.nix ];
+                imports = [ ./modules/home-manager/users/sara ];
               };
           };
         };

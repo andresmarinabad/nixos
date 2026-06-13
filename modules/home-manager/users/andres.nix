@@ -45,6 +45,7 @@ let
     eamodio.gitlens
     hashicorp.terraform
     vscode-icons-team.vscode-icons
+    anthropic.claude-code
   ];
 
   num_panels = if hostName == "work" then 3 else 1;
@@ -332,7 +333,7 @@ in
     enable = true;
     enableDefaultConfig = false;
 
-    matchBlocks = {
+    settings = {
       # Personal
       "github.com" = {
         hostname = "github.com";
@@ -340,14 +341,6 @@ in
         identityFile = "~/.ssh/andres";
         identitiesOnly = true;
       };
-
-      # Work
-      # "github.com" = {
-      #   hostname = "github.com";
-      #   user = "git";
-      #   identityFile = "~/.ssh/gandalf";
-      #   identitiesOnly = true;
-      # };
     };
   };
 

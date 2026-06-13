@@ -68,7 +68,7 @@
             andres =
               { ... }:
               {
-                imports = [ ./modules/home-manager/users/andres.nix ];
+                imports = [ ./modules/home-manager/users/andres ];
               };
             sara =
               { ... }:

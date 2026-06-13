@@ -14,7 +14,7 @@ in
     ./shell.nix
     ./vscode.nix
     ./browsers.nix
-    ../../../desktop/plasma.nix
+    ./plasma.nix
   ];
 
   home.username = "andres";

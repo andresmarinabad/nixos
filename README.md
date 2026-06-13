@@ -2,79 +2,97 @@
 
 [![Nix](https://github.com/andresmarinabad/nixos/actions/workflows/nix.yml/badge.svg?branch=main)](https://github.com/andresmarinabad/nixos/actions/workflows/nix.yml)
 
-Flake con un host: **home** (PC casa).
+Flake con un host: **home** (PC casa), dos usuarios: **andres** y **sara**.
+
+## Instalación rápida
+
+```bash
+git clone https://github.com/andresmarinabad/nixos ~/code/personal/nixos
+cd ~/code/personal/nixos
+./scripts/bootstrap.sh
+```
+
+El script automatiza:
+1. Verificar la clave age (`~/.ssh/master`) — necesaria para descifrar secretos.
+2. Asegurar que el repo tiene un commit válido (requisito de Nix para los flakes).
+3. Crear el enlace simbólico `/etc/nixos` → el repo clonado.
+4. Ejecutar `nixos-rebuild switch --flake .#home` (detecta si hay que activar flakes primero).
+
+> **Antes de ejecutar el script**, copia la clave age a `~/.ssh/master`. Sin ella el build falla al descifrar contraseñas y la clave SSH de GitHub.
 
 ## Requisitos
 
-- Nix con flakes y `nix-command` (ya en la config).
+- Nix con flakes y `nix-command` (ya en la config; el script lo activa si aún no están).
 - Secretos con [agenix](https://github.com/ryantm/agenix); clave age en `~/.ssh/master`.
-
-## Primer build tras clonar el repo
-
-Tras clonar (o copiar) el repo, el sistema aún no tiene flakes activos y Nix exige que el flake esté en un repo git con los archivos commiteados. Haz lo siguiente:
-
-1. **Entrar al directorio del repo**
-
-   ```bash
-   cd /path/to/nixos
-   ```
-
-2. **Dejar el flake en un estado válido para Nix**
-   - Si clonaste con `git clone`, ya tienes repo. Si no (copia manual), inicializa:
-     ```bash
-     git init
-     ```
-   - Añade todo y haz un commit (el flake suele quejarse si el árbol está sucio o sin commit):
-     ```bash
-     git add .
-     git commit -m "Initial config"
-     ```
-
-3. **Activar flakes para este comando** (si tu NixOS actual aún no tiene `nix-command` y `flakes` en config):
-
-   ```bash
-   sudo nixos-rebuild switch --flake .#home --option experimental-features 'nix-command flakes'
-   ```
-
-   Si tu NixOS ya tiene flakes activados, puedes omitir `--option ...`:
-
-   ```bash
-   sudo nixos-rebuild switch --flake .#home
-   ```
-
-4. **Secretos (agenix)**
-   Asegúrate de tener la clave age en `~/.ssh/master` y los `.age` correspondientes en `modules/agenix/` antes del primer switch.
-
-5. **Enlace a /etc/nixos**
-   Crea un enlace desde /etc/nixos a la raiz del repositorio
-   ```bash
-   sudo ln -s /home/andres/code/personal/nixos /etc/nixos
-   ```
 
 ## Rebuild
 
-Utiliza nix helper `nh`:
+Desde cualquier sitio:
 
-- `nr` → `nh os switch -H home`
+```bash
+nr   # alias de: nh os switch -H home
+```
 
-Desde cualquier sitio (con el repo clonado) se puede hacer `nr` gracias a la configuración de `nh` y al enlace simbólico de /etc/nixos que apunta al flake del repositorio clonado.
+Funciona gracias al enlace `/etc/nixos` → repo y a la configuración de `nh`.
 
 ## Estructura
 
-- `hosts/home/` – configuration.nix y hardware por host.
-- `modules/system/` – módulos NixOS (common, por-host).
-- `modules/home-manager/` – usuarios y common.
-- `modules/desktop/` – Plasma (solo andres).
-- `modules/agenix/` – definición de secretos.
+```
+nixos/
+├── flake.nix
+├── hosts/home/                    # hardware-configuration + stateVersion
+├── modules/
+│   ├── system/
+│   │   ├── common.nix             # config NixOS compartida (audio, red, docker, SSH…)
+│   │   └── home/system.nix        # config específica del host (partición /mnt/data, sara, Trezor)
+│   ├── home-manager/
+│   │   ├── common.nix             # paquetes y variables de sesión compartidos
+│   │   ├── lib/
+│   │   │   └── bookmarks.nix      # helper que genera el JSON de marcadores (Brave/Chromium)
+│   │   └── users/
+│   │       ├── andres/
+│   │       │   ├── default.nix    # paquetes, activaciones (wallpaper, Flatpak), megasync
+│   │       │   ├── plasma.nix     # KDE Plasma 6 (tema oscuro, panel, atajos, kitty)
+│   │       │   ├── browsers.nix   # Brave + bookmarks
+│   │       │   ├── git.nix        # git, SSH config, clave pública
+│   │       │   ├── shell.nix      # zsh, starship, direnv, aliases terragrunt
+│   │       │   └── vscode.nix     # VSCode + extensiones
+│   │       └── sara/
+│   │           ├── default.nix    # paquetes (spotify)
+│   │           ├── plasma.nix     # KDE Plasma 6 (tema claro, Bing wallpaper)
+│   │           └── browsers.nix   # Chromium + bookmarks
+│   └── agenix/                    # secretos cifrados (.age) y declaraciones
+├── pkgs/
+│   └── calibre.nix                # wrapper: config en MEGA, guarda si megasync no corre
+└── scripts/
+    ├── bootstrap.sh               # instalación desde cero
+    └── format.sh                  # formatea todos los .nix con nixpkgs-fmt
+```
+
+## Secretos (agenix)
+
+Los secretos se cifran con la clave pública en `modules/agenix/secrets.nix` y se descifran en runtime con la clave privada `~/.ssh/master`.
+
+Secretos declarados:
+- `pass-andres.age` / `pass-sara.age` — contraseñas de login
+- `github-andres.age` — clave SSH privada de GitHub (se coloca en `~/.ssh/andres`)
+- `protonvpn-key.age` — clave WireGuard para ProtonVPN
+
+Para añadir un secreto nuevo:
+```bash
+agenix -e modules/agenix/nuevo-secreto.age
+# luego declararlo en modules/agenix/default.nix y secrets.nix
+```
 
 ## Marcadores del navegador
 
-Los marcadores de **Brave** (andres) y **Chromium** (sara) se generan desde Nix. Edita la lista dentro del `let` que genera el JSON:
+Los marcadores de **Brave** (andres) y **Chromium** (sara) se generan desde Nix. Edita la lista `bookmarksList` en el archivo correspondiente:
 
-- `modules/home-manager/users/andres/browsers.nix` (Brave): variable `braveBookmarksJson`, lista `bookmarksList`.
-- `modules/home-manager/users/sara.nix` (Chromium): variable `chromiumBookmarks`, lista `bookmarksList`.
+- Andres → `modules/home-manager/users/andres/browsers.nix`
+- Sara → `modules/home-manager/users/sara/browsers.nix`
 
-Cada entrada puede ser `{ name = "..."; url = "https://..."; }` o una carpeta: `{ name = "..."; folder = true; children = [ ... ]; }`. Tras cambiar, `home-manager switch` sobrescribe el archivo del perfil por defecto.
+Cada entrada: `{ name = "..."; url = "https://..."; }` o carpeta: `{ name = "..."; folder = true; children = [ ... ]; }`.
+Tras cambiar, el próximo `nr` sobrescribe el archivo de marcadores.
 
 ## Formatear Nix
 
@@ -82,11 +100,9 @@ Cada entrada puede ser `{ name = "..."; url = "https://..."; }` o una carpeta: `
 ./scripts/format.sh
 ```
 
-O manualmente: `nixpkgs-fmt flake.nix` y los `.nix` en `modules/` y `hosts/`.
-
 ## CI
 
 En cada push a `main`, GitHub Actions ejecuta:
 
 - `nix flake check --no-build`
-- dry-build de la config **home**.
+- dry-build de la config **home**

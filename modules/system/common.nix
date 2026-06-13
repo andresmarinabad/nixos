@@ -1,5 +1,5 @@
 # modules/system-common.nix
-{ pkgs, config, ... }:
+{ pkgs, config, hostName, ... }:
 
 let
   user = "andres";
@@ -158,6 +158,7 @@ in
   };
 
   environment.shellAliases = {
+    nr = "nh os switch -H ${hostName}";
     nhc = "nh clean all --keep 3";
   };
 

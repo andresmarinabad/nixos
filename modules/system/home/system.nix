@@ -8,12 +8,7 @@ in
 {
   imports = [
     ../common.nix
-    ../../agenix
   ];
-
-  environment.shellAliases = {
-    nr = "nh os switch -H home";
-  };
 
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/2017c0df-b719-4f90-bd32-a7e63856e22e";

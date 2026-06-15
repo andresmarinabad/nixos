@@ -28,6 +28,8 @@ let
     "[yaml]" = {
       "editor.defaultFormatter" = "redhat.vscode-yaml";
     };
+
+    "claudeCode.claudeProcessWrapper" = "${pkgs.claude-code}/bin/claude";
   };
 
   vscodeExtensions = with pkgs.vscode-extensions; [
@@ -49,4 +51,6 @@ in
       userSettings = codeSettings;
     };
   };
+
+  home.packages = [ pkgs.claude-code ];
 }

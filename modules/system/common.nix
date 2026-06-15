@@ -177,8 +177,19 @@ in
   # firmware updates
   services.fwupd.enable = true;
 
-  # ignorar cierre de tapa conectado a la corriente
-  services.logind.settings.Login.HandleLidSwitchExternalPower = "ignore";
+  services.logind.settings.Login = {
+    HandleLidSwitch              = "suspend"; # tapa con batería
+    HandleLidSwitchExternalPower = "ignore";  # tapa con corriente
+    HandleLidSwitchDocked        = "ignore";
+    HandlePowerKey               = "suspend";
+  };
+
+  services.upower = {
+    percentageLow      = 20;
+    percentageCritical = 10;
+    percentageAction   = 5;
+    criticalPowerAction = "Hibernate";
+  };
 
   # El descubrimiento de impresoras 3D por red
   services.avahi = {

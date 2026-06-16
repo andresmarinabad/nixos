@@ -44,17 +44,16 @@ in
     ])
   ];
 
-  home.activation.visualSwitch = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    WALLPAPER_DIR="$HOME/.local/share/wallpapers"
-    TIMESTAMP=$(date +%s)
-    WALLPAPER_FILE="$WALLPAPER_DIR/switch-$TIMESTAMP.jpg"
-    LOG_FILE="$WALLPAPER_DIR/wallpaper-switch.log"
+  home.activation.visualSwitch =
+    let
+      wallpapersDir = ../../../../assets/wallpapers;
+    in
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      LOG_FILE="$HOME/.local/share/wallpapers/wallpaper-switch.log"
+      mkdir -p "$(dirname "$LOG_FILE")"
 
-    mkdir -p "$WALLPAPER_DIR"
-    echo "Iniciando descarga de fondo..." > "$LOG_FILE"
-
-    if ${pkgs.curl}/bin/curl -sL --max-time 10 "https://picsum.photos/3840/2160?random=$RANDOM" -o "$WALLPAPER_FILE"; then
-      echo "Imagen descargada correctamente." >> "$LOG_FILE"
+      WALLPAPER_FILE=$(ls ${wallpapersDir}/*.jpg | ${pkgs.coreutils}/bin/shuf -n1)
+      echo "Fondo seleccionado: $WALLPAPER_FILE" > "$LOG_FILE"
 
       export XDG_RUNTIME_DIR="/run/user/$(id -u)"
       export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
@@ -63,10 +62,7 @@ in
 
       ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage "$WALLPAPER_FILE" >> "$LOG_FILE" 2>&1
       echo "Proceso terminado." >> "$LOG_FILE"
-    else
-      echo "Fallo al descargar la imagen." >> "$LOG_FILE"
-    fi
-  '';
+    '';
 
   home.activation.setupFlatpak = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     ${pkgs.flatpak}/bin/flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

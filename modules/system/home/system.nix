@@ -2,7 +2,7 @@
 
 let
   user = "sara";
-  imagen = ../../../assets/img/profiles/sara.png;
+  imagen = ../../../assets/profiles/sara.png;
 in
 
 {

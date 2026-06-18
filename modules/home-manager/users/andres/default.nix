@@ -34,6 +34,7 @@ in
     fzf
     obs-studio
     gimp
+    inkscape
     calibrePkg
     wl-clipboard
     xclip

@@ -13,35 +13,6 @@ in
 
   networking.networkmanager.enable = true;
 
-  networking.wg-quick.interfaces.protonvpn = {
-    autostart = true;
-
-    address = [
-      "10.2.0.2/32"
-      "2a07:b944::2:2/128"
-    ];
-    dns = [
-      "10.2.0.1"
-      "2a07:b944::2:1"
-    ];
-
-    privateKeyFile = config.age.secrets.protonvpn-key.path;
-
-    peers = [
-      {
-        publicKey = "CZsF4SuXyZaHrbDSx0aPBsaARzc0SsOSeNhSbt4ljRM=";
-        allowedIPs = [
-          "0.0.0.0/0"
-          "::/0"
-        ];
-        endpoint = "79.127.139.161:51820";
-        persistentKeepalive = 25;
-      }
-    ];
-  };
-
-  networking.firewall.checkReversePath = "loose";
-
   time.timeZone = "Europe/Madrid";
   i18n.defaultLocale = "en_US.UTF-8";
 

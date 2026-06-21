@@ -1,5 +1,10 @@
 # modules/system-common.nix
-{ pkgs, config, hostName, ... }:
+{
+  pkgs,
+  config,
+  hostName,
+  ...
+}:
 
 let
   user = "andres";
@@ -12,6 +17,12 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.networkmanager.enable = true;
+
+  # LOCAL K8s Cluster
+  networking.extraHosts = ''
+    127.0.0.1 traefik.devops.lab
+    127.0.0.1 argocd.devops.lab
+  '';
 
   time.timeZone = "Europe/Madrid";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -149,16 +160,16 @@ in
   services.fwupd.enable = true;
 
   services.logind.settings.Login = {
-    HandleLidSwitch              = "suspend"; # tapa con batería
-    HandleLidSwitchExternalPower = "ignore";  # tapa con corriente
-    HandleLidSwitchDocked        = "ignore";
-    HandlePowerKey               = "suspend";
+    HandleLidSwitch = "suspend"; # tapa con batería
+    HandleLidSwitchExternalPower = "ignore"; # tapa con corriente
+    HandleLidSwitchDocked = "ignore";
+    HandlePowerKey = "suspend";
   };
 
   services.upower = {
-    percentageLow      = 20;
+    percentageLow = 20;
     percentageCritical = 10;
-    percentageAction   = 5;
+    percentageAction = 5;
     criticalPowerAction = "Hibernate";
   };
 

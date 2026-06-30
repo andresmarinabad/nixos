@@ -19,9 +19,11 @@ in
   networking.networkmanager.enable = true;
 
   # LOCAL K8s Cluster
-  networking.extraHosts = ''
+ networking.extraHosts = ''
     127.0.0.1 traefik.devops.lab
     127.0.0.1 argocd.devops.lab
+    127.0.0.1 epub-to-audiobook.devops.lab 
+    127.0.0.1 flower.devops.lab
   '';
 
   time.timeZone = "Europe/Madrid";

@@ -23,6 +23,7 @@ in
   home.packages = with pkgs; [
     spotify
     megasync
+    gnome-disk-utility
     telegram-desktop
     trezor-suite
     trezorctl
@@ -74,17 +75,4 @@ in
     fi
   '';
 
-  home.file.".config/autostart/megasync.desktop".text = ''
-    [Desktop Entry]
-    Type=Application
-    Version=1.0
-    Name=Megasync
-    Comment=MegaSync Client
-    Exec=${pkgs.megasync}/bin/megasync --tray
-    Icon=megasync
-    Terminal=false
-    Categories=Network;System;
-    StartupNotify=false
-    X-GNOME-Autostart-enabled=true
-  '';
 }

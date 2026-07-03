@@ -73,6 +73,7 @@ in
       echo "Instalando Bambu Studio via Flatpak..."
       ${pkgs.flatpak}/bin/flatpak install --user --noninteractive flathub com.bambulab.BambuStudio
     fi
+
   '';
 
 }

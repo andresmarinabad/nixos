@@ -6,20 +6,6 @@
 }:
 
 let
-  calibre-custom = pkgs.calibre.overrideAttrs (oldAttrs: {
-    qtWrapperArgs = (oldAttrs.qtWrapperArgs or [ ]) ++ [
-      "--set"
-      "CALIBRE_CONFIG_DIRECTORY"
-      "/home/andres/MEGA/Calibre/Config"
-      "--set"
-      "OSCRYPTO_LIBCRYPTO_PATH"
-      "${pkgs.openssl.out}/lib/libcrypto.so"
-      "--set"
-      "OSCRYPTO_LIBSSL_PATH"
-      "${pkgs.openssl.out}/lib/libssl.so"
-    ];
-  });
-
   calibre-safe = writeShellScriptBin "calibre" ''
     MEGA_COUNT=$(${pkgs.procps}/bin/pgrep -i -c "megasync")
 
@@ -30,7 +16,11 @@ let
       exit 1
     fi
 
-    exec ${calibre-custom}/bin/calibre "$@"
+    export CALIBRE_CONFIG_DIRECTORY="/home/andres/MEGA/Calibre/Config"
+    export OSCRYPTO_LIBCRYPTO_PATH="${pkgs.openssl.out}/lib/libcrypto.so"
+    export OSCRYPTO_LIBSSL_PATH="${pkgs.openssl.out}/lib/libssl.so"
+
+    exec ${pkgs.calibre}/bin/calibre "$@"
   '';
 
 in
@@ -38,6 +28,6 @@ symlinkJoin {
   name = "calibre-safe";
   paths = [
     calibre-safe
-    calibre-custom
+    pkgs.calibre
   ];
 }

@@ -51,7 +51,11 @@ if [[ "$CURRENT_LINK" == "$REPO_DIR" ]]; then
   info "/etc/nixos ya apunta a $REPO_DIR"
 else
   info "Creando enlace /etc/nixos → $REPO_DIR"
-  sudo rm -rf /etc/nixos
+  if [[ -e /etc/nixos || -L /etc/nixos ]]; then
+    BACKUP="/etc/nixos.backup.$(date +%Y%m%d-%H%M%S)"
+    info "Guardando la configuración anterior en $BACKUP"
+    sudo mv /etc/nixos "$BACKUP"
+  fi
   sudo ln -s "$REPO_DIR" /etc/nixos
 fi
 
@@ -66,6 +70,15 @@ else
   warn "Flakes no habilitados en el sistema actual; activándolos solo para este comando..."
   sudo nixos-rebuild switch --flake "$REPO_DIR#$HOST" \
     --option experimental-features 'nix-command flakes'
+fi
+
+# ── 5. Aplicaciones Flatpak ───────────────────────────────────────────────────────────────
+info "Configurando aplicaciones Flatpak..."
+flatpak remote-add --user --if-not-exists flathub \
+  https://flathub.org/repo/flathub.flatpakrepo
+
+if ! flatpak info --user com.bambulab.BambuStudio >/dev/null 2>&1; then
+  flatpak install --user --noninteractive flathub com.bambulab.BambuStudio
 fi
 
 echo ""

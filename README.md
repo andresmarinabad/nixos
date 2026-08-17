@@ -17,8 +17,12 @@ El script automatiza:
 2. Asegurar que el repo tiene un commit válido (requisito de Nix para los flakes).
 3. Crear el enlace simbólico `/etc/nixos` → el repo clonado.
 4. Ejecutar `nixos-rebuild switch --flake .#home` (detecta si hay que activar flakes primero).
+5. Configurar Flathub e instalar Bambu Studio.
 
 > **Antes de ejecutar el script**, copia la clave age a `~/.ssh/master`. Sin ella el build falla al descifrar contraseñas y la clave SSH de GitHub.
+
+> **Hardware nuevo:** regenera `hosts/home/hardware-configuration.nix` y revisa
+> el UUID de `/mnt/data` en `modules/system/home/system.nix` antes del bootstrap.
 
 ## Requisitos
 
@@ -76,7 +80,6 @@ Los secretos se cifran con la clave pública en `modules/agenix/secrets.nix` y s
 Secretos declarados:
 - `pass-andres.age` / `pass-sara.age` — contraseñas de login
 - `github-andres.age` — clave SSH privada de GitHub (se coloca en `~/.ssh/andres`)
-- `protonvpn-key.age` — clave WireGuard para ProtonVPN
 
 Para añadir un secreto nuevo:
 ```bash

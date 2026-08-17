@@ -8,7 +8,7 @@ let
     "editor.fontSize" = 14;
     "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'";
     "editor.fontLigatures" = true;
-    "workbench.iconTheme" = "material-icon-theme";
+    "workbench.iconTheme" = "vscode-icons";
     "workbench.colorTheme" = "Default High Contrast";
     "window.autoDetectColorScheme" = false;
     "editor.formatOnSave" = true;
@@ -41,6 +41,7 @@ let
       ms-python.python
       eamodio.gitlens
       hashicorp.terraform
+      redhat.vscode-yaml
       vscode-icons-team.vscode-icons
     ])
     ++ [
@@ -56,6 +57,4 @@ in
       userSettings = codeSettings;
     };
   };
-
-  home.packages = [ ];
 }

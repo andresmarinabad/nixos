@@ -108,7 +108,6 @@
                 "applications:org.kde.dolphin.desktop"
                 "applications:kitty.desktop"
                 "applications:brave-browser.desktop"
-                "applications:bitwarden.desktop"
                 "applications:code.desktop"
               ];
             };

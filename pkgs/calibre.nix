@@ -1,8 +1,7 @@
-{
-  pkgs,
-  writeShellScriptBin,
-  symlinkJoin,
-  ...
+{ pkgs
+, writeShellScriptBin
+, symlinkJoin
+, ...
 }:
 
 let

@@ -1,8 +1,6 @@
-{
-  pkgs,
-  lib,
-  inputs,
-  ...
+{ pkgs
+, inputs
+, ...
 }:
 
 let
@@ -45,40 +43,36 @@ in
     wl-clipboard
     xclip
     bruno
+    opentofu
+    terragrunt
+    jq
+    yq-go
+    shellcheck
     (google-cloud-sdk.withExtraComponents [
       google-cloud-sdk.components.gke-gcloud-auth-plugin
       google-cloud-sdk.components.kubectl
     ])
   ];
 
-  home.activation.visualSwitch =
+  systemd.user.services.random-wallpaper =
     let
       wallpapersDir = ../../../../assets/wallpapers;
     in
-    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      LOG_FILE="$HOME/.local/share/wallpapers/wallpaper-switch.log"
-      mkdir -p "$(dirname "$LOG_FILE")"
-
-      WALLPAPER_FILE=$(ls ${wallpapersDir}/*.jpg | ${pkgs.coreutils}/bin/shuf -n1)
-      echo "Fondo seleccionado: $WALLPAPER_FILE" > "$LOG_FILE"
-
-      export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-      export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
-      export WAYLAND_DISPLAY="wayland-0"
-      export DISPLAY=":0"
-
-      ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage "$WALLPAPER_FILE" >> "$LOG_FILE" 2>&1
-      echo "Proceso terminado." >> "$LOG_FILE"
-    '';
-
-  home.activation.setupFlatpak = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${pkgs.flatpak}/bin/flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-    if ! ${pkgs.flatpak}/bin/flatpak info --user com.bambulab.BambuStudio > /dev/null 2>&1; then
-      echo "Instalando Bambu Studio via Flatpak..."
-      ${pkgs.flatpak}/bin/flatpak install --user --noninteractive flathub com.bambulab.BambuStudio
-    fi
-
-  '';
+    {
+      Unit = {
+        Description = "Seleccionar un fondo de pantalla aleatorio";
+        After = [ "plasma-workspace.target" ];
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = pkgs.writeShellScript "random-wallpaper" ''
+          wallpaper="$(${pkgs.findutils}/bin/find ${wallpapersDir} -maxdepth 1 -type f -name '*.jpg' | ${pkgs.coreutils}/bin/shuf -n 1)"
+          if [ -n "$wallpaper" ]; then
+            ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage "$wallpaper"
+          fi
+        '';
+      };
+      Install.WantedBy = [ "plasma-workspace.target" ];
+    };
 
 }

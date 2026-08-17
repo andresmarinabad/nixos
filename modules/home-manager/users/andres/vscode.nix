@@ -1,6 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 let
+
+  marketplace = inputs.nix-vscode-extensions.extensions.x86_64-linux.vscode-marketplace;
+
   codeSettings = {
     "editor.fontSize" = 14;
     "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'";
@@ -29,18 +32,20 @@ let
       "editor.defaultFormatter" = "redhat.vscode-yaml";
     };
 
-    "claudeCode.claudeProcessWrapper" = "${pkgs.claude-code}/bin/claude";
   };
 
-  vscodeExtensions = with pkgs.vscode-extensions; [
-    jnoortheen.nix-ide
-    esbenp.prettier-vscode
-    ms-python.python
-    eamodio.gitlens
-    hashicorp.terraform
-    vscode-icons-team.vscode-icons
-    anthropic.claude-code
-  ];
+  vscodeExtensions =
+    (with pkgs.vscode-extensions; [
+      jnoortheen.nix-ide
+      esbenp.prettier-vscode
+      ms-python.python
+      eamodio.gitlens
+      hashicorp.terraform
+      vscode-icons-team.vscode-icons
+    ])
+    ++ [
+      marketplace.openai.chatgpt
+    ];
 in
 {
   programs.vscode = {
@@ -52,5 +57,5 @@ in
     };
   };
 
-  home.packages = [ pkgs.claude-code ];
+  home.packages = [ ];
 }

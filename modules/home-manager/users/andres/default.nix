@@ -1,11 +1,16 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }:
 
 let
   calibrePkg = pkgs.callPackage ../../../../pkgs/calibre.nix { };
+  megasyncPkg = (import inputs.nixpkgs-megasync {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  }).megasync;
 in
 {
   imports = [
@@ -22,7 +27,7 @@ in
 
   home.packages = with pkgs; [
     spotify
-    megasync
+    megasyncPkg
     gnome-disk-utility
     telegram-desktop
     trezor-suite

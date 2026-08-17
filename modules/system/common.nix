@@ -1,9 +1,8 @@
 # modules/system-common.nix
-{
-  pkgs,
-  config,
-  hostName,
-  ...
+{ pkgs
+, config
+, hostName
+, ...
 }:
 
 let
@@ -12,6 +11,8 @@ let
 in
 
 {
+  networking.hostName = hostName;
+
   # Bootloader, Red, Reloj, Locales, Fonts, Docker, GNOME, Sonido, etc.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -19,7 +20,7 @@ in
   networking.networkmanager.enable = true;
 
   # LOCAL K8s Cluster
- networking.extraHosts = ''
+  networking.extraHosts = ''
     127.0.0.1 traefik.devops.lab
     127.0.0.1 argocd.devops.lab
     127.0.0.1 epub-to-audiobook.devops.lab 
@@ -96,10 +97,6 @@ in
     variant = "";
   };
 
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-  };
   console.keyMap = "es";
 
   services.flatpak.enable = true;

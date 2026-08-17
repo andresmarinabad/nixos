@@ -22,23 +22,22 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      plasma-manager,
-      agenix,
-      ...
+    { self
+    , nixpkgs
+    , home-manager
+    , plasma-manager
+    , agenix
+    , ...
     }@inputs:
     let
       inherit (nixpkgs) lib;
 
       # Función para configurar el sistema y HM
       mkHost =
-        {
-          hostName,
-          systemModules,
-          users,
+        { hostName
+        , systemModules
+        , users
+        ,
         }:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -50,12 +49,14 @@
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = { inherit inputs hostName self; };
               # Mapeamos los usuarios
-              home-manager.users = lib.mapAttrs (name: path: {
-                imports = [
-                  path
-                  plasma-manager.homeModules.plasma-manager
-                ];
-              }) users;
+              home-manager.users = lib.mapAttrs
+                (name: path: {
+                  imports = [
+                    path
+                    plasma-manager.homeModules.plasma-manager
+                  ];
+                })
+                users;
             }
           ]
           ++ systemModules;

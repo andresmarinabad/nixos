@@ -1,10 +1,18 @@
 { pkgs
 , inputs
+, lib
 , ...
 }:
 
 let
   calibrePkg = pkgs.callPackage ../../../../pkgs/calibre.nix { };
+  wallpapersDir = ../../../../assets/wallpapers;
+  randomWallpaperScript = pkgs.writeShellScript "random-wallpaper" ''
+    wallpaper="$(${pkgs.findutils}/bin/find ${wallpapersDir} -maxdepth 1 -type f -name '*.jpg' | ${pkgs.coreutils}/bin/shuf -n 1)"
+    if [ -n "$wallpaper" ]; then
+      ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage "$wallpaper"
+    fi
+  '';
   megasyncPkg = (import inputs.nixpkgs-megasync {
     system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
@@ -54,25 +62,22 @@ in
     ])
   ];
 
-  systemd.user.services.random-wallpaper =
-    let
-      wallpapersDir = ../../../../assets/wallpapers;
-    in
-    {
-      Unit = {
-        Description = "Seleccionar un fondo de pantalla aleatorio";
-        After = [ "plasma-workspace.target" ];
-      };
-      Service = {
-        Type = "oneshot";
-        ExecStart = pkgs.writeShellScript "random-wallpaper" ''
-          wallpaper="$(${pkgs.findutils}/bin/find ${wallpapersDir} -maxdepth 1 -type f -name '*.jpg' | ${pkgs.coreutils}/bin/shuf -n 1)"
-          if [ -n "$wallpaper" ]; then
-            ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage "$wallpaper"
-          fi
-        '';
-      };
-      Install.WantedBy = [ "plasma-workspace.target" ];
+  systemd.user.services.random-wallpaper = {
+    Unit = {
+      Description = "Seleccionar un fondo de pantalla aleatorio";
+      After = [ "plasma-workspace.target" ];
     };
+    Service = {
+      Type = "oneshot";
+      ExecStart = randomWallpaperScript;
+    };
+    Install.WantedBy = [ "plasma-workspace.target" ];
+  };
+
+  home.activation.randomWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if ${pkgs.systemd}/bin/systemctl --user --quiet is-active plasma-workspace.target; then
+      $DRY_RUN_CMD ${randomWallpaperScript}
+    fi
+  '';
 
 }

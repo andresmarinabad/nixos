@@ -8,7 +8,7 @@ let
     "editor.fontSize" = 14;
     "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'";
     "editor.fontLigatures" = true;
-    "workbench.iconTheme" = "vscode-icons";
+    "workbench.iconTheme" = "material-icon-theme";
     "workbench.colorTheme" = "Default High Contrast";
     "window.autoDetectColorScheme" = false;
     "editor.formatOnSave" = true;
@@ -42,7 +42,7 @@ let
       eamodio.gitlens
       hashicorp.terraform
       redhat.vscode-yaml
-      vscode-icons-team.vscode-icons
+      pkief.material-icon-theme
     ])
     ++ [
       marketplace.openai.chatgpt

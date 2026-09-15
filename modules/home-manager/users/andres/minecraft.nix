@@ -1,0 +1,55 @@
+{ pkgs, inputs, ... }:
+
+let
+  prismPkgs = pkgs.extend inputs.prismnix.overlays.default;
+  serversDat = pkgs.runCommand "minecraft-servers.dat" { } ''
+    printf '%s' 'CgAACQAHc2VydmVycwoAAAABCAACaXAAD2xvY2FsaG9zdDoyNTU2MwgABG5hbWUAFVNlcnZpZG9yIGRlIE1pbmVjcmFmdAAA' \
+      | ${pkgs.coreutils}/bin/base64 --decode > "$out"
+  '';
+in
+{
+  imports = [
+    inputs.prismnix.homeModules.prismnix
+  ];
+
+  programs.prismnix = {
+    enable = true;
+
+    instances."Minecraft 1.21.4" = {
+      file."servers.dat" = {
+        source = serversDat;
+        target = "servers.dat";
+        copy = true;
+      };
+
+      minecraft = {
+        enable = true;
+        version = "1.21.4";
+
+        mod-loader = {
+          enable = true;
+          loader = "fabric";
+        };
+
+        shader-loader = {
+          enable = true;
+          loader = "iris";
+        };
+
+        packages = [
+          prismPkgs.prismnix.sodium
+          prismPkgs.prismnix.complementary-reimagined
+        ];
+
+        default-links.enable = true;
+        allowed-symlinks.enable = true;
+      };
+
+      config.memory = {
+        override = true;
+        min = 2048;
+        max = 4096;
+      };
+    };
+  };
+}

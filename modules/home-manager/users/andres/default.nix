@@ -1,7 +1,8 @@
-{ pkgs
-, inputs
-, lib
-, ...
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
 }:
 
 let
@@ -13,10 +14,11 @@ let
       ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage "$wallpaper"
     fi
   '';
-  megasyncPkg = (import inputs.nixpkgs-megasync {
-    system = pkgs.stdenv.hostPlatform.system;
-    config.allowUnfree = true;
-  }).megasync;
+  megasyncPkg =
+    (import inputs.nixpkgs-megasync {
+      system = pkgs.stdenv.hostPlatform.system;
+      config.allowUnfree = true;
+    }).megasync;
 in
 {
   imports = [
@@ -26,6 +28,7 @@ in
     ./vscode.nix
     ./browsers.nix
     ./plasma.nix
+    ./minecraft.nix
   ];
 
   home.username = "andres";
@@ -37,7 +40,6 @@ in
     gnome-disk-utility
     telegram-desktop
     trezor-suite
-    trezorctl
     bat
     ripgrep
     curl
@@ -56,23 +58,13 @@ in
     jq
     yq-go
     shellcheck
-    (google-cloud-sdk.withExtraComponents [
-      google-cloud-sdk.components.gke-gcloud-auth-plugin
-      google-cloud-sdk.components.kubectl
-    ])
+    # (google-cloud-sdk.withExtraComponents [
+    #   google-cloud-sdk.components.gke-gcloud-auth-plugin
+    #   google-cloud-sdk.components.kubectl
+    # ])
+    lazydocker
+    #prismlauncher
   ];
-
-  systemd.user.services.random-wallpaper = {
-    Unit = {
-      Description = "Seleccionar un fondo de pantalla aleatorio";
-      After = [ "plasma-workspace.target" ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = randomWallpaperScript;
-    };
-    Install.WantedBy = [ "plasma-workspace.target" ];
-  };
 
   home.activation.randomWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if ${pkgs.systemd}/bin/systemctl --user --quiet is-active plasma-workspace.target; then

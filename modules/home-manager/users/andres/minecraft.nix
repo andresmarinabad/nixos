@@ -37,7 +37,25 @@ in
         };
 
         packages = [
+          # Rendimiento
           prismPkgs.prismnix.sodium
+          prismPkgs.prismnix.lithium
+          prismPkgs.prismnix.ferrite-core
+          prismPkgs.prismnix.entityculling
+          prismPkgs.prismnix.immediatelyfast
+
+          # Recetas e información
+          #prismPkgs.prismnix.emi
+          prismPkgs.prismnix.rei
+          prismPkgs.prismnix.jade
+          prismPkgs.prismnix.appleskin
+          prismPkgs.prismnix.mouse-tweaks
+
+          # Mapas
+          prismPkgs.prismnix.xaeros-minimap
+          prismPkgs.prismnix.xaeros-world-map
+
+          # Shaders
           prismPkgs.prismnix.complementary-reimagined
         ];
 

@@ -50,15 +50,21 @@ in
           prismPkgs.prismnix.immediatelyfast
 
           # Recetas e información
-          #prismPkgs.prismnix.emi
           prismPkgs.prismnix.rei
           prismPkgs.prismnix.jade
           prismPkgs.prismnix.appleskin
           prismPkgs.prismnix.mouse-tweaks
 
+          # Inventario
+          prismPkgs.prismnix.inventory-profiles-next
+
           # Mapas
           prismPkgs.prismnix.xaeros-minimap
           prismPkgs.prismnix.xaeros-world-map
+
+          # Exploración
+          prismPkgs.prismnix.dungeons-and-taverns
+          prismPkgs.prismnix.waystones
 
           # Shaders
           prismPkgs.prismnix.complementary-reimagined

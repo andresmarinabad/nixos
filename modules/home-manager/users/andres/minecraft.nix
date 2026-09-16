@@ -37,6 +37,11 @@ in
         };
 
         packages = [
+          # Dependencias
+          prismPkgs.prismnix.fabric-api
+          prismPkgs.prismnix.architectury-api
+          prismPkgs.prismnix.cloth-config
+
           # Rendimiento
           prismPkgs.prismnix.sodium
           prismPkgs.prismnix.lithium

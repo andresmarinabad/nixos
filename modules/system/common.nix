@@ -1,8 +1,9 @@
 # modules/system-common.nix
-{ pkgs
-, config
-, hostName
-, ...
+{
+  pkgs,
+  config,
+  hostName,
+  ...
 }:
 
 let
@@ -141,6 +142,9 @@ in
   environment.shellAliases = {
     nr = "nh os switch -H ${hostName}";
     nhc = "nh clean all --keep 3";
+    ld = "lazydocker";
+    lg = "lazygit";
+    pl = "prismlauncher";
   };
 
   services.displayManager.sddm = {

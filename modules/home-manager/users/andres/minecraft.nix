@@ -41,6 +41,9 @@ in
           prismPkgs.prismnix.fabric-api
           prismPkgs.prismnix.architectury-api
           prismPkgs.prismnix.cloth-config
+          prismPkgs.prismnix.fabric-language-kotlin
+          prismPkgs.prismnix.libipn
+          prismPkgs.prismnix.balm
 
           # Rendimiento
           prismPkgs.prismnix.sodium

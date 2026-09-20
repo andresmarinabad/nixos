@@ -29,8 +29,8 @@
       enable = true;
 
       configFile.kdeglobals.General = {
-        TerminalApplication = "kitty";
-        TerminalService = "kitty.desktop";
+        TerminalApplication = "ghostty";
+        TerminalService = "ghostty.desktop";
       };
 
       workspace = {
@@ -74,7 +74,7 @@
       };
 
       shortcuts = {
-        "services/kitty.desktop" = {
+        "services/ghostty.desktop" = {
           "_launch" = [
             "Ctrl+Alt+T"
           ];
@@ -106,7 +106,7 @@
             config = {
               General.launchers = lib.concatStringsSep "," [
                 "applications:org.kde.dolphin.desktop"
-                "applications:kitty.desktop"
+                "applications:ghostty.desktop"
                 "applications:brave-browser.desktop"
                 "applications:code.desktop"
               ];
@@ -138,12 +138,24 @@
       configFile."kwinrc"."Effect-Blur"."NoiseStrength" = 10;
     };
 
-    programs.kitty = {
+    programs.ghostty = {
       enable = true;
-      themeFile = "Monokai";
-      font = {
-        name = "JetBrainsMono Nerd Font";
-        size = 14;
+
+      settings = {
+        theme = "Monokai Pro Spectrum";
+        # theme = "Starlight";
+
+        font-family = "JetBrainsMono Nerd Font";
+        font-size = 14;
+
+        background-opacity = 0.95;
+        background-blur = true;
+
+        shell-integration = "zsh";
+
+        keybind = [
+          "ctrl+backspace=text:\\x15"
+        ];
       };
     };
 

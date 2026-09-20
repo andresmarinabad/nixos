@@ -60,22 +60,6 @@
         format = "⏱ [$duration]($style) ";
       };
 
-      git_branch = {
-        symbol = "🌱 ";
-      };
-      git_status = {
-        conflicted = "⚔️";
-        ahead = "🚀";
-        behind = "🐢";
-        diverged = "😵";
-        untracked = "🤷";
-        modified = "📝";
-        staged = "✅";
-        deleted = "🗑️";
-        renamed = "🔄";
-        stashed = "📦";
-      };
-
       python = {
         symbol = "🐍 ";
         format = "via [$symbol$version (\\($virtualenv\\))]($style) ";
@@ -97,6 +81,7 @@
       package = {
         disabled = true;
       };
+
     };
   };
 

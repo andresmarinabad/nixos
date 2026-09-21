@@ -142,8 +142,7 @@
       enable = true;
 
       settings = {
-        theme = "Monokai Pro Spectrum";
-        # theme = "Starlight";
+        theme = "Doom One";
 
         font-family = "JetBrainsMono Nerd Font";
         font-size = 14;

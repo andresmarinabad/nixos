@@ -13,6 +13,7 @@ cd ~/code/personal/nixos
 ```
 
 El script automatiza:
+
 1. Verificar la clave age (`~/.ssh/master`) — necesaria para descifrar secretos.
 2. Asegurar que el repo tiene un commit válido (requisito de Nix para los flakes).
 3. Crear el enlace simbólico `/etc/nixos` → el repo clonado.
@@ -23,6 +24,50 @@ El script automatiza:
 
 > **Hardware nuevo:** regenera `hosts/home/hardware-configuration.nix` y revisa
 > el UUID de `/mnt/data` en `modules/system/home/system.nix` antes del bootstrap.
+
+## Disko
+
+Cada host tiene su propia definición de discos en `hosts/<host>/disko.nix`.
+
+Esta configuración **no se importa en `configuration.nix`** y no forma parte del `nixos-rebuild` habitual. Se utiliza únicamente desde el instalador/Live ISO para particionar y montar el disco durante una instalación desde cero.
+
+### Instalación desde cero
+
+Arranca una ISO de NixOS y clona el repositorio:
+
+```bash
+git clone https://github.com/andresmarinabad/nixos ~/code/personal/nixos
+cd ~/code/personal/nixos
+```
+
+Comprueba primero que `hosts/<host>/disko.nix` apunta al dispositivo correcto:
+
+```nix
+device = "/dev/nvme0n1";
+```
+
+**ATENCIÓN:** ejecutar Disko en modo destructivo borra las particiones y los datos del disco indicado.
+
+Desde la ISO, ejecuta Disko con la configuración del host correspondiente y, después, instala NixOS siguiendo el procedimiento de instalación definido por el proyecto.
+
+```bash
+sudo nix \
+  --experimental-features "nix-command flakes" \
+  run github:nix-community/disko/latest -- \
+  --mode destroy,format,mount \
+  ./hosts/<host>/disko.nix
+```
+
+La configuración de Disko debe mantenerse sincronizada con:
+
+```text
+hosts/<host>/
+├── configuration.nix
+├── hardware-configuration.nix
+└── disko.nix
+```
+
+`configuration.nix` y `hardware-configuration.nix` describen el sistema NixOS que se ejecutará normalmente; `disko.nix` describe cómo preparar físicamente el disco para una instalación nueva.
 
 ## Requisitos
 
@@ -78,10 +123,12 @@ nixos/
 Los secretos se cifran con la clave pública en `modules/agenix/secrets.nix` y se descifran en runtime con la clave privada `~/.ssh/master`.
 
 Secretos declarados:
+
 - `pass-andres.age` / `pass-sara.age` — contraseñas de login
 - `github-andres.age` — clave SSH privada de GitHub (se coloca en `~/.ssh/andres`)
 
 Para añadir un secreto nuevo:
+
 ```bash
 agenix -e modules/agenix/nuevo-secreto.age
 # luego declararlo en modules/agenix/default.nix y secrets.nix

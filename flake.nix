@@ -29,6 +29,17 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -38,10 +49,16 @@
       home-manager,
       plasma-manager,
       agenix,
+      nix-index-database,
+      treefmt-nix,
       ...
     }@inputs:
     let
       inherit (nixpkgs) lib;
+
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+      };
 
       # Función para configurar el sistema y HM
       mkHost =
@@ -55,6 +72,7 @@
           specialArgs = { inherit inputs hostName; };
           modules = [
             home-manager.nixosModules.home-manager
+            nix-index-database.nixosModules.nix-index
 
             {
               home-manager.useGlobalPkgs = true;
@@ -96,7 +114,11 @@
               };
           };
         };
-
       };
+
+      formatter.x86_64-linux = treefmt-nix.lib.mkWrapper pkgs {
+        programs.nixfmt.enable = true;
+      };
+
     };
 }

@@ -35,42 +35,42 @@ in
   home.homeDirectory = "/home/andres";
 
   home.packages = with pkgs; [
-	  megasyncPkg
-	  gnome-disk-utility
-	  telegram-desktop
-	  trezor-suite
-	
-	  # CLI / terminal
-	  bat
-	  ripgrep
-	  fd
-	  curl
-	  wget
-	  btop
-	  fzf
-	  jq
-	  yq-go
-	
-	  # DevOps
-	  opentofu
-	  terragrunt
-	  k9s
-	  shellcheck
-	  lazydocker
-	  lazygit
-	
-	  # Files
-	  yazi
-	
-	  # Desktop
-	  obs-studio
-	  gimp
-	  inkscape
-	  calibrePkg
-	  wl-clipboard
-	  xclip
-	  bruno
-	];
+    megasyncPkg
+    gnome-disk-utility
+    telegram-desktop
+    trezor-suite
+
+    # CLI / terminal
+    bat
+    ripgrep
+    fd
+    curl
+    wget
+    btop
+    fzf
+    jq
+    yq-go
+
+    # DevOps
+    opentofu
+    terragrunt
+    k9s
+    shellcheck
+    lazydocker
+    lazygit
+
+    # Files
+    yazi
+
+    # Desktop
+    obs-studio
+    gimp
+    inkscape
+    calibrePkg
+    wl-clipboard
+    xclip
+    bruno
+  ];
 
   home.activation.randomWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if ${pkgs.systemd}/bin/systemctl --user --quiet is-active plasma-workspace.target; then

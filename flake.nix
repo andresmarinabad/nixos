@@ -24,6 +24,11 @@
       url = "github:qacow37/prismnix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -50,6 +55,7 @@
           specialArgs = { inherit inputs hostName; };
           modules = [
             home-manager.nixosModules.home-manager
+
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -72,6 +78,7 @@
         # PC DE CASA (home)
         home = mkHost {
           hostName = "home";
+
           systemModules = [
             ./hosts/home/configuration.nix
             agenix.nixosModules.default

@@ -72,7 +72,43 @@ else
     --option experimental-features 'nix-command flakes'
 fi
 
-# ── 5. Aplicaciones Flatpak ───────────────────────────────────────────────────────────────
+# ── 5. Repositorios personales ───────────────────────────────────────────────
+info "Configurando repositorios personales..."
+
+REPOS_DIR="$HOME/code/personal"
+mkdir -p "$REPOS_DIR"
+
+# Formato:
+#   "URL_GIT|nombre_directorio"
+#
+# Añade aquí los repositorios que quieras clonar
+# automáticamente en una instalación nueva.
+REPOS=(
+  "git@github.com:andresmarinabad/REPO-1.git|REPO-1"
+  "git@github.com:andresmarinabad/REPO-2.git|REPO-2"
+  "git@github.com:andresmarinabad/REPO-3.git|REPO-3"
+)
+
+clone_if_missing() {
+  local url="$1"
+  local name="$2"
+  local destination="$REPOS_DIR/$name"
+
+  if [[ -d "$destination/.git" ]]; then
+    info "Repositorio $name ya existe"
+    return
+  fi
+
+  info "Clonando $name..."
+  git clone "$url" "$destination"
+}
+
+for repo in "${REPOS[@]}"; do
+  IFS='|' read -r url name <<< "$repo"
+  clone_if_missing "$url" "$name"
+done
+
+# ── 6. Aplicaciones Flatpak ───────────────────────────────────────────────────────────────
 info "Configurando aplicaciones Flatpak..."
 flatpak remote-add --user --if-not-exists flathub \
   https://flathub.org/repo/flathub.flatpakrepo

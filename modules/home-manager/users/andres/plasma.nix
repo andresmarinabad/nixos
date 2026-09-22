@@ -138,6 +138,12 @@
       configFile."kwinrc"."Effect-Blur"."NoiseStrength" = 10;
     };
 
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        gtk-enable-primary-paste = true;
+      };
+    };
+
     programs.ghostty = {
       enable = true;
 
@@ -155,6 +161,9 @@
         keybind = [
           "ctrl+backspace=text:\\x15"
         ];
+
+        copy-on-select = true;
+
       };
     };
 

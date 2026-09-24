@@ -5,6 +5,7 @@
   home.packages = with pkgs; [
     nil
     nixpkgs-fmt
+    bitwarden-desktop
   ];
 
   # Variables para el usuario

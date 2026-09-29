@@ -3,8 +3,8 @@
 {
   imports = [
     ./common.nix
-    ../modules/home-manager/users/sara/browsers.nix
-    ../modules/home-manager/users/sara/plasma.nix
+    ../modules/home-manager/programs/brave-sara.nix
+    ../modules/home-manager/desktop/plasma-sara.nix
   ];
 
   home.username = "sara";

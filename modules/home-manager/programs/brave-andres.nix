@@ -1,7 +1,7 @@
 { lib, ... }:
 
 let
-  bookmarks = import ../../lib/bookmarks.nix { inherit lib; };
+  bookmarks = import ../lib/bookmarks.nix { inherit lib; };
 
   bookmarksList = [
     {

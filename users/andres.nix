@@ -23,12 +23,12 @@ in
 {
   imports = [
     ./common.nix
-    ../modules/home-manager/users/andres/git.nix
-    ../modules/home-manager/users/andres/shell.nix
-    ../modules/home-manager/users/andres/vscode.nix
-    ../modules/home-manager/users/andres/browsers.nix
-    ../modules/home-manager/users/andres/plasma.nix
-    ../modules/home-manager/users/andres/minecraft.nix
+    ../modules/home-manager/programs/git.nix
+    ../modules/home-manager/shell/zsh.nix
+    ../modules/home-manager/programs/vscode.nix
+    ../modules/home-manager/programs/brave-andres.nix
+    ../modules/home-manager/desktop/plasma-andres.nix
+    ../modules/home-manager/programs/minecraft.nix
   ];
 
   home.username = "andres";

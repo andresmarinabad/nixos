@@ -2,12 +2,12 @@
 
 let
   user = "sara";
-  imagen = ../../../assets/profiles/sara.png;
+  imagen = ../../assets/profiles/sara.png;
 in
 
 {
   imports = [
-    ../common.nix
+    ./common.nix
   ];
 
   fileSystems."/mnt/data" = {

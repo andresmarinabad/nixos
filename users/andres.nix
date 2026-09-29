@@ -6,8 +6,8 @@
 }:
 
 let
-  calibrePkg = pkgs.callPackage ../../../../pkgs/calibre.nix { };
-  wallpapersDir = ../../../../assets/wallpapers;
+  calibrePkg = pkgs.callPackage ../pkgs/calibre.nix { };
+  wallpapersDir = ../assets/wallpapers;
   randomWallpaperScript = pkgs.writeShellScript "random-wallpaper" ''
     wallpaper="$(${pkgs.findutils}/bin/find ${wallpapersDir} -maxdepth 1 -type f -name '*.jpg' | ${pkgs.coreutils}/bin/shuf -n 1)"
     if [ -n "$wallpaper" ]; then
@@ -22,13 +22,13 @@ let
 in
 {
   imports = [
-    ../../common.nix
-    ./git.nix
-    ./shell.nix
-    ./vscode.nix
-    ./browsers.nix
-    ./plasma.nix
-    ./minecraft.nix
+    ./common.nix
+    ../modules/home-manager/users/andres/git.nix
+    ../modules/home-manager/users/andres/shell.nix
+    ../modules/home-manager/users/andres/vscode.nix
+    ../modules/home-manager/users/andres/browsers.nix
+    ../modules/home-manager/users/andres/plasma.nix
+    ../modules/home-manager/users/andres/minecraft.nix
   ];
 
   home.username = "andres";

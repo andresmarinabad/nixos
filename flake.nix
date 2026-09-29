@@ -105,12 +105,12 @@
             andres =
               { ... }:
               {
-                imports = [ ./modules/home-manager/users/andres ];
+                imports = [ ./users/andres.nix ];
               };
             sara =
               { ... }:
               {
-                imports = [ ./modules/home-manager/users/sara ];
+                imports = [ ./users/sara.nix ];
               };
           };
         };

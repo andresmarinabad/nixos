@@ -7,7 +7,7 @@ in
 
 {
   imports = [
-    ./common.nix
+    ../common/system.nix
   ];
 
   fileSystems."/mnt/data" = {

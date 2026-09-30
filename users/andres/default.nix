@@ -22,7 +22,7 @@ let
 in
 {
   imports = [
-    ../common.nix
+    ../../config/common/user.nix
     ./git.nix
     ./zsh.nix
     ./vscode.nix

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../common.nix
+    ../../config/common/user.nix
     ./brave.nix
     ./plasma.nix
   ];

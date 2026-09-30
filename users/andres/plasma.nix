@@ -106,9 +106,9 @@
             config = {
               General.launchers = lib.concatStringsSep "," [
                 "applications:org.kde.dolphin.desktop"
-                "applications:ghostty.desktop"
                 "applications:brave-browser.desktop"
                 "applications:code.desktop"
+                "applications:bitwarden.desktop"
               ];
             };
           }

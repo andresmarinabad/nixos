@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./common.nix
-    ../modules/home-manager/programs/brave-sara.nix
-    ../modules/home-manager/desktop/plasma-sara.nix
+    ../common.nix
+    ./brave.nix
+    ./plasma.nix
   ];
 
   home.username = "sara";

@@ -105,12 +105,12 @@
             andres =
               { ... }:
               {
-                imports = [ ./users/andres.nix ];
+                imports = [ ./users/andres ];
               };
             sara =
               { ... }:
               {
-                imports = [ ./users/sara.nix ];
+                imports = [ ./users/sara ];
               };
           };
         };

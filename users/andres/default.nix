@@ -29,6 +29,7 @@ in
     ./brave.nix
     ./plasma.nix
     ./minecraft.nix
+    ./dolphin.nix
   ];
 
   home.username = "andres";

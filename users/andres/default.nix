@@ -71,6 +71,7 @@ in
     wl-clipboard
     xclip
     bruno
+    dbeaver-bin
   ];
 
   home.activation.randomWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

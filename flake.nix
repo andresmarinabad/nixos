@@ -95,7 +95,7 @@
 
         # PC DE CASA (home)
         home = mkHost {
-          hostName = "home";
+          hostName = "Nix";
 
           systemModules = [
             ./hosts/home/configuration.nix

@@ -4,6 +4,5 @@ let
 in
 {
   "pass-andres.age".publicKeys = [ master ];
-  "pass-sara.age".publicKeys = [ master ];
   "github-andres.age".publicKeys = [ master ];
 }

@@ -6,7 +6,6 @@
 
   # PASSWORDS
   age.secrets.pass-andres.file = ./pass-andres.age;
-  age.secrets.pass-sara.file = ./pass-sara.age;
 
   # GITHUB SSH
   age.secrets.github-andres = {

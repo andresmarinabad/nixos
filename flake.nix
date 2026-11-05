@@ -1,15 +1,17 @@
 {
-  description = "NixOS - Multi-host configuration";
+  description = "NixOS configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # MEGAsync se mantiene estable para no recompilarlo con cada actualización
-    # del nixpkgs principal. Para actualizarlo, cambia esta revisión a mano.
+    # MEGAsync se mantiene estable para evitar recompilaciones
     nixpkgs-megasync.url = "github:nixos/nixpkgs/9ae611a455b90cf061d8f332b977e387bda8e1ca";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     agenix.url = "github:ryantm/agenix";
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
@@ -39,7 +41,6 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
   outputs =
@@ -54,71 +55,48 @@
       ...
     }@inputs:
     let
-      inherit (nixpkgs) lib;
+      system = "x86_64-linux";
+      hostName = "Nix";
 
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-      };
-
-      # Función para configurar el sistema y HM
-      mkHost =
-        {
-          hostName,
-          systemModules,
-          users,
-        }:
-        nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs hostName; };
-          modules = [
-            home-manager.nixosModules.home-manager
-            nix-index-database.nixosModules.nix-index
-
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs hostName self; };
-              # Mapeamos los usuarios
-              home-manager.users = lib.mapAttrs (name: path: {
-                imports = [
-                  path
-                  plasma-manager.homeModules.plasma-manager
-                ];
-              }) users;
-            }
-          ]
-          ++ systemModules;
-        };
+      pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      nixosConfigurations = {
+      nixosConfigurations.${hostName} = nixpkgs.lib.nixosSystem {
+        inherit system;
 
-        # PC DE CASA (home)
-        home = mkHost {
-          hostName = "Nix";
-
-          systemModules = [
-            ./hosts/home/configuration.nix
-            agenix.nixosModules.default
-          ];
-          users = {
-            andres =
-              { ... }:
-              {
-                imports = [ ./users/andres ];
-              };
-            sara =
-              { ... }:
-              {
-                imports = [ ./users/sara ];
-              };
-          };
+        specialArgs = {
+          inherit inputs hostName;
         };
+
+        modules = [
+          ./hosts/home/configuration.nix
+
+          agenix.nixosModules.default
+          home-manager.nixosModules.home-manager
+          nix-index-database.nixosModules.nix-index
+
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+
+              extraSpecialArgs = {
+                inherit inputs self hostName;
+              };
+
+              users.andres = {
+                imports = [
+                  ./users/andres
+                  plasma-manager.homeModules.plasma-manager
+                ];
+              };
+            };
+          }
+        ];
       };
 
-      formatter.x86_64-linux = treefmt-nix.lib.mkWrapper pkgs {
+      formatter.${system} = treefmt-nix.lib.mkWrapper pkgs {
         programs.nixfmt.enable = true;
       };
-
     };
 }
